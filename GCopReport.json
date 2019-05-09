@@ -1,0 +1,53 @@
+{
+  "Items": [
+    {
+      "Analyzer": "LongMethodAnalyzer",
+      "OccurrenceCount": 63,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "MY-PC"
+    },
+    {
+      "Analyzer": "ImmutableMethodsAnalyzer",
+      "OccurrenceCount": 4,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "MY-PC"
+    },
+    {
+      "Analyzer": "UseDirectIdPropertyAnalyzer",
+      "OccurrenceCount": 1,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "MY-PC"
+    },
+    {
+      "Analyzer": "ObjectInitializerAnalyzer",
+      "OccurrenceCount": 1,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "MY-PC"
+    },
+    {
+      "Analyzer": "RemoveUnnecessaryBracesAnalyzer",
+      "OccurrenceCount": 2,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "MY-PC"
+    },
+    {
+      "Analyzer": "OrderByWhereLinqAnalyzer",
+      "OccurrenceCount": 1,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "MY-PC"
+    },
+    {
+      "Analyzer": "UnusedMethodsAnalyzer",
+      "OccurrenceCount": 37,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "MY-PC"
+    }
+  ]
+}

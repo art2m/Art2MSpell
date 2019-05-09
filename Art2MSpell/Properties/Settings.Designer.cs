@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Spell_It.Properties
+namespace Art2MSpell.Properties
 {
 
 

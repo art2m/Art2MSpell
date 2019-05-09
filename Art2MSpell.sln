@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spell-It", "Spell-It\Spell-It.csproj", "{41CF05C3-FB80-461F-8D4F-4928EDD486D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art2MSpell", "Art2MSpell\Art2MSpell.csproj", "{41CF05C3-FB80-461F-8D4F-4928EDD486D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {ED342121-9047-476A-89A4-54536A34C7E6}
+		SolutionGuid = {5E276D3E-6412-49F7-9667-B5DA6072BAA3}
 	EndGlobalSection
 EndGlobal

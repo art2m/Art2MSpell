@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Spell_It.Properties
+namespace Art2MSpell.Properties
 {
 
 
@@ -44,10 +44,9 @@ namespace Spell_It.Properties
             {
                 if ((resourceMan == null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Spell_It.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Art2MSpell.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
-                }
-                return resourceMan;
+                }return resourceMan;
             }
         }
 
