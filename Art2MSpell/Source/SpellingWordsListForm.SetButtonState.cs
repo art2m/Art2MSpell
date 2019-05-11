@@ -341,7 +341,7 @@ namespace Art2MSpell.Source
 
             this.SetButtonEnabledStat_CancelButtonClicked();
 
-            this.SetDeleteSpellingListButtonState(true);
+            this.SetDeleteSpellingListButtonState(false);
         }
 
         /// <summary>

@@ -131,10 +131,16 @@ namespace Art2MSpell.Source
             }
 
             this.cboWord.Text = string.Empty;
+
             SpellingPropertiesClass.EditingSpellingList = false;
+
             SpellingPropertiesClass.SpellingWordTextBoxValue = string.Empty;
+            
             this.SetButtonsEnabledState_CancelOperationButtonClicked();
+
             this.ChangeControls_BackgroundColors();
+
+            this.SetTabOrderCancelOperationButton();
         }
 
         /// <summary>
@@ -168,16 +174,6 @@ namespace Art2MSpell.Source
                 }
             }
 
-            this.Close();
-        }
-
-        /// <summary>
-        ///     Handles the Click event of the Close control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnCloseMenuItemClick(object sender, EventArgs e)
-        {
             this.Close();
         }
 
@@ -233,29 +229,6 @@ namespace Art2MSpell.Source
             this.lstWordsList.Items.RemoveAt(SpellingPropertiesClass.SelectedWordIndex);
             this.SetButtonsEnabledState_EditItemButtonClicked();
             this.ChangeControls_BackgroundColors();
-        }
-
-        /// <summary>
-        ///     Handles the Click event of the OpenSpellingListMenuItem control. Opens the file menu for user to select a
-        ///     spelling list.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnOpenSpellingListMenuItemClick(object sender, EventArgs e)
-        {
-            using (var openDlg = new OpenFileDialog())
-            {
-                openDlg.ShowDialog();
-                SpellingPropertiesClass.SpellingListPath = openDlg.FileName;
-                if (!this.DisplaySpellingWords())
-                {
-                    return;
-                }
-
-                this.lstWordsList.Enabled = true;
-                this.SetButtonsEnabledState_OpenSpellingListButtonStateClicked();
-                this.ChangeControls_BackgroundColors();
-            }
         }
 
         /// <summary>
@@ -326,6 +299,7 @@ namespace Art2MSpell.Source
             this.btnSaveList.TabIndex = 1;
             this.btnClose.TabIndex = 2;
         }
+
         #endregion Controls Click Event
 
         #region Private Methods
@@ -579,7 +553,7 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
         private void SpellingWordsList_Load(object sender, EventArgs e)
         {
-            this.pnlMain.BackColor = Color.PaleGoldenrod;
+            this.BackColor = Color.PaleGoldenrod;
             this.pnlWordList.BackColor = Color.SandyBrown;
             this.pnlWord.BackColor = Color.BurlyWood;
             this.SetButtonsEnabledState_FormLoadEvent();
@@ -605,6 +579,7 @@ namespace Art2MSpell.Source
             this.SetButtonsEnabledState_WordsListSelectedIndexChanges();
             this.ChangeControls_BackgroundColors();
         }
+
         #endregion Private Methods
     }
 }

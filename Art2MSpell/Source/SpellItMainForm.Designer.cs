@@ -51,7 +51,7 @@
             this.spellToolStripMenuItem});
             this.MainMenuMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainMenuMenuStrip.Name = "MainMenuMenuStrip";
-            this.MainMenuMenuStrip.Size = new System.Drawing.Size(784, 24);
+            this.MainMenuMenuStrip.Size = new System.Drawing.Size(780, 24);
             this.MainMenuMenuStrip.TabIndex = 0;
             this.MainMenuMenuStrip.Text = "MainMenu";
             // 
@@ -143,11 +143,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(780, 557);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.MainMenuMenuStrip);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MainMenuStrip = this.MainMenuMenuStrip;
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(800, 600);
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "SpellItMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Spelling  Program";
