@@ -84,7 +84,7 @@
             this.mnuOpenSpellingList.Name = "mnuOpenSpellingList";
             this.mnuOpenSpellingList.Size = new System.Drawing.Size(169, 22);
             this.mnuOpenSpellingList.Text = "Open Spelling List";
-            this.mnuOpenSpellingList.Click += new System.EventHandler(this.OpenSpellingListMenuItem_Click);
+            this.mnuOpenSpellingList.Click += new System.EventHandler(this.OnOpenSpellingListMenuItemClick);
             // 
             // toolStripSeparator1
             // 
@@ -96,7 +96,7 @@
             this.mnuClose.Name = "mnuClose";
             this.mnuClose.Size = new System.Drawing.Size(169, 22);
             this.mnuClose.Text = "Close";
-            this.mnuClose.Click += new System.EventHandler(this.CloseMenuItem_Click);
+            this.mnuClose.Click += new System.EventHandler(this.OnCloseMenuItemClick);
             // 
             // btnClose
             // 
@@ -106,7 +106,7 @@
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.CloseButton_Click);
+            this.btnClose.Click += new System.EventHandler(this.OnCloseButtonClick);
             // 
             // pnlMain
             // 
@@ -139,7 +139,7 @@
             this.btnDeleteList.TabIndex = 4;
             this.btnDeleteList.Text = "Delete Spelling List";
             this.btnDeleteList.UseVisualStyleBackColor = true;
-            this.btnDeleteList.Click += new System.EventHandler(this.DeleteSpellingList_Click);
+            this.btnDeleteList.Click += new System.EventHandler(this.OnDeleteSpellingListClick);
             // 
             // btnOpenist
             // 
@@ -150,7 +150,7 @@
             this.btnOpenist.Text = "Open Spelling List";
             this.spelListToolTip.SetToolTip(this.btnOpenist, "Open spelling list to edit or delete.");
             this.btnOpenist.UseVisualStyleBackColor = true;
-            this.btnOpenist.Click += new System.EventHandler(this.SelectSpellingListButton_Click);
+            this.btnOpenist.Click += new System.EventHandler(this.OnSelectSpellingListButtonClick);
             // 
             // btnSaveList
             // 
@@ -161,7 +161,7 @@
             this.btnSaveList.Text = "Save Spelling List";
             this.spelListToolTip.SetToolTip(this.btnSaveList, "Select to save the new spelling list.");
             this.btnSaveList.UseVisualStyleBackColor = true;
-            this.btnSaveList.Click += new System.EventHandler(this.SaveSpellingListButton_Click);
+            this.btnSaveList.Click += new System.EventHandler(this.OnSaveSpellingListButtonClick);
             // 
             // btnCreateNewList
             // 
@@ -172,7 +172,7 @@
             this.btnCreateNewList.Text = "Create New Spelling List";
             this.spelListToolTip.SetToolTip(this.btnCreateNewList, "Select to create a new spelling list.");
             this.btnCreateNewList.UseVisualStyleBackColor = true;
-            this.btnCreateNewList.Click += new System.EventHandler(this.CreateNewListButton_Click);
+            this.btnCreateNewList.Click += new System.EventHandler(this.OnCreateNewListButtonClick);
             // 
             // btnClearist
             // 
@@ -183,7 +183,7 @@
             this.btnClearist.Text = "Clear Spelling List";
             this.spelListToolTip.SetToolTip(this.btnClearist, "Select to clear the spelling list currently displayed.");
             this.btnClearist.UseVisualStyleBackColor = true;
-            this.btnClearist.Click += new System.EventHandler(this.ClearSpellingListButton_Click);
+            this.btnClearist.Click += new System.EventHandler(this.OnClearSpellingListButtonClick);
             // 
             // lstWordsList
             // 
@@ -226,7 +226,7 @@
             this.btnAddWordToList.Text = "Add Word To List";
             this.spelListToolTip.SetToolTip(this.btnAddWordToList, "Select to add currently displayed word to the spelling list.");
             this.btnAddWordToList.UseVisualStyleBackColor = true;
-            this.btnAddWordToList.Click += new System.EventHandler(this.AddWordToListButton_Click);
+            this.btnAddWordToList.Click += new System.EventHandler(this.OnAddWordToListButtonClick);
             // 
             // btnCancelOperation
             // 
@@ -237,7 +237,7 @@
             this.btnCancelOperation.Text = "Cancel Operation";
             this.spelListToolTip.SetToolTip(this.btnCancelOperation, "Select to cancel the current operation.");
             this.btnCancelOperation.UseVisualStyleBackColor = true;
-            this.btnCancelOperation.Click += new System.EventHandler(this.CancelOperationButton_Click);
+            this.btnCancelOperation.Click += new System.EventHandler(this.OnCancelOperationButtonClick);
             // 
             // btnEditWord
             // 
@@ -248,7 +248,7 @@
             this.btnEditWord.Text = "Edit Word";
             this.spelListToolTip.SetToolTip(this.btnEditWord, "Select to edit currently displayed word.");
             this.btnEditWord.UseVisualStyleBackColor = true;
-            this.btnEditWord.Click += new System.EventHandler(this.EditWordButton_Click);
+            this.btnEditWord.Click += new System.EventHandler(this.OnEditWordButtonClick);
             // 
             // btnDeleteWord
             // 
@@ -259,7 +259,7 @@
             this.btnDeleteWord.Text = "Delete Word";
             this.spelListToolTip.SetToolTip(this.btnDeleteWord, "Select to delete the selected word from the spelling list.");
             this.btnDeleteWord.UseVisualStyleBackColor = true;
-            this.btnDeleteWord.Click += new System.EventHandler(this.DeleteWordButton_Click);
+            this.btnDeleteWord.Click += new System.EventHandler(this.OnDeleteWordButtonClick);
             // 
             // btnAddNewWord
             // 
@@ -270,7 +270,7 @@
             this.btnAddNewWord.Text = "Add New Word";
             this.spelListToolTip.SetToolTip(this.btnAddNewWord, "Select  to add a new word.");
             this.btnAddNewWord.UseVisualStyleBackColor = true;
-            this.btnAddNewWord.Click += new System.EventHandler(this.AddNewWordButton_Click);
+            this.btnAddNewWord.Click += new System.EventHandler(this.OnAddNewWordButtonClick);
             // 
             // SpellingListOpenFileDialog
             // 

@@ -1,4 +1,11 @@
-﻿// Art2MSpell
+﻿// //-----------------------------------------------------------------------------------------------------------------------------------
+// <copyright file="None">
+// 
+// Company copyright tag.
+// 
+//  </copyright>
+// 
+// Art2MSpell
 // 
 // SpellingListsClass.cs
 // 
@@ -6,7 +13,7 @@
 // 
 // art2m@live.com
 // 
-// 05  09  2019
+// 05  10  2019
 // 
 // 05  05   2019
 // 
@@ -20,32 +27,34 @@
 // GNU General Public License for more details.
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Speech.Synthesis;
-using Art2MSpell.Collections;
-using NHunspell;
+// //-----------------------------------------------------------------------------------------------------------------------------------
 
 namespace Art2MSpell.Classes
-
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Reflection;
+    using System.Speech.Synthesis;
+    using Collections;
+    using NHunspell;
+
     /// <summary>
     ///     Spelling list class reads and writes spelling list to file. Retrieves path to spelling lists.
     /// </summary>
     public static class SpellingListsClass
     {
+        /// <summary>Declare speech synthesizer object.</summary>
         private static readonly SpeechSynthesizer Ss = new SpeechSynthesizer();
-
-        #region Public Methods
 
         /// <summary>
         ///     Check to see if the word is already in the list box.
         /// </summary>
         /// <param name="word">The word to check for.</param>
         /// <returns>True if word is all ready in the list else false.</returns>
+        /// <created>,5/10/2019</created>
+        /// <changed>,5/10/2019</changed>
         public static bool CheckForDuplicateWordInList(string word)
         {
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
@@ -55,21 +64,20 @@ namespace Art2MSpell.Classes
             }
 
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-
             for (var index = 0; index < PossibleWordsListCollection.ItemsCount(); index++)
             {
                 var spell = PossibleWordsListCollection.GetItemAt(index);
                 var same = string.Compare(word, spell, StringComparison.CurrentCultureIgnoreCase);
-
                 if (same != 0)
                 {
                     continue;
                 }
 
                 MyMessages.InformationMessage = "This word is all ready in the list of spelling words. " + word;
-                MyMessages.ShowInformationMessageBox(MyMessages.InformationMessage, MyMessages.NameOfClass,
+                MyMessages.ShowInformationMessageBox(
+                    MyMessages.InformationMessage,
+                    MyMessages.NameOfClass,
                     MyMessages.NameOfMethod);
-
                 return true;
             }
 
@@ -77,10 +85,33 @@ namespace Art2MSpell.Classes
         }
 
         /// <summary>
-        ///     Check the spelling word.
+        ///     Gets list of possible correct spelling for misspelled word.
         /// </summary>
-        /// <param name="word">The word to be checked for correct spelling.</param>
-        /// <returns></returns>
+        /// <param name="word">Misspelled word.</param>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
+        public static void CheckForSuggestionsMissSpelledWord(string word)
+        {
+            List<string> suggestions;
+            using (var hunspell = new Hunspell("en_us.aff", "en_us.dic"))
+            {
+                suggestions = hunspell.Suggest(word);
+            }
+
+            foreach (var item in suggestions)
+            {
+                SuggestedWordsCollection.AddItem(item);
+            }
+        }
+
+        /// <summary>
+        ///     Check spelling word for the correct spelling.
+        ///     If incorrect spelling the get a list of possible correct spelling.
+        /// </summary>
+        /// <param name="word">The word to check spelling on.</param>
+        /// <returns>True if word is spelled correctly else false.</returns>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
         public static bool CheckUserEnteredSpellingWord(string word)
         {
             using (var hunspell = new Hunspell("en_us.aff", "en_us.dic"))
@@ -96,36 +127,16 @@ namespace Art2MSpell.Classes
         }
 
         /// <summary>
-        ///     Gets possible correct spelling for misspelled word.
+        ///     Reads the spelling list from the file the user has opened.
         /// </summary>
-        /// <param name="word">Misspelled word.</param>
-        /// <returns>list with suggestions.</returns>
-        public static void CheckForSuggestionsMissSpelledWord(string word)
-        {
-            List<string> suggestions;
-
-            using (var hunspell = new Hunspell("en_us.aff", "en_us.dic"))
-            {
-                suggestions = hunspell.Suggest(word);
-            }
-
-            foreach (var item in suggestions)
-            {
-                SuggestedWordsCollection.AddItem(item);
-            }
-        }
-
-        /// <summary>
-        ///     Reads the spelling words to collection.
-        /// </summary>
-        /// <param name="filePath">The file path.</param>
-        /// <returns>True if words read in and added to collection else false.</returns>
+        /// <param name="filePath">The file path to the spelling list user wishes to open.</param>
+        /// <returns>True if the spelling list words are added to collection else false.</returns>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
         public static bool ReadSpellingWordsToCollection(string filePath)
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-
             SpellingWordsCollection.ClearCollection();
-
             try
             {
                 if (!File.Exists(filePath))
@@ -139,17 +150,18 @@ namespace Art2MSpell.Classes
                     string word;
                     while ((word = fileRead.ReadLine()) != null)
                     {
-                        if (!SpellingPropertiesClass.FirstWordIsArt2MSpellHeader &&
-                            Validation.ValidateThisIsArt2MSpellSpellingList(word))
-                            // If is Art2mSpell!! then continue do not add to collection. This is a UDo_Spell
-                            // spelling list.
+                        Debug.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
+                        if (!SpellingPropertiesClass.FirstWordIsArt2MSpellHeader)
                         {
-                            SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
-                            continue;
+                            if (Validation.ValidateThisIsArt2MSpellSpellingList(word))
+                            {
+                                SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
+                                continue;
+                            }
                         }
 
                         // check for valid spell list by checking words are all letters and not empty.
-                        if (!Validation.ValidateIsSpellingList(word))
+                        if (!Validation.ValidateSpellingWord(word))
                         {
                             return false;
                         }
@@ -163,26 +175,43 @@ namespace Art2MSpell.Classes
             catch (ArgumentException ex)
             {
                 MyMessages.ErrorMessage = "Invalid file path. " + filePath;
-                MyMessages.BuildErrorString(MyMessages.NameOfClass, MyMessages.NameOfMethod, MyMessages.ErrorMessage,
+                MyMessages.BuildErrorString(
+                    MyMessages.NameOfClass,
+                    MyMessages.NameOfMethod,
+                    MyMessages.ErrorMessage,
                     ex.Message);
-
                 return false;
             }
             catch (IOException ex)
             {
                 MyMessages.ErrorMessage = "Read error has occurred. " + filePath;
-                MyMessages.BuildErrorString(MyMessages.NameOfClass, MyMessages.NameOfMethod, MyMessages.ErrorMessage,
+                MyMessages.BuildErrorString(
+                    MyMessages.NameOfClass,
+                    MyMessages.NameOfMethod,
+                    MyMessages.ErrorMessage,
                     ex.Message);
-
                 return false;
             }
         }
 
         /// <summary>
-        ///     Writes the spelling words from collection to file.
+        ///     Say the string passed into it.
         /// </summary>
-        /// <param name="filePath">The file path.</param>
-        /// <returns>True if words wrote from collection to file else false.</returns>
+        /// <param name="word">The word or can be string.</param>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
+        public static void SpeakString(string word)
+        {
+            Ss.Speak(word);
+        }
+
+        /// <summary>
+        ///     Writes spelling list user entered from the collection to the file.
+        /// </summary>
+        /// <param name="filePath">The file path to write the spelling words to.</param>
+        /// <returns>True if spelling words written to file else false.</returns>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
         public static bool WriteSpellingWordsFromCollectionToFile(string filePath)
         {
             try
@@ -191,9 +220,8 @@ namespace Art2MSpell.Classes
                 using (fileWrite = new StreamWriter(filePath, false))
                 {
                     var cnt = SpellingWordsCollection.ItemsCount();
-
                     fileWrite.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
-
+                    Debug.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
                     for (var i = 0; i < cnt; i++)
                     {
                         var word = SpellingWordsCollection.GetItemAt(i);
@@ -206,30 +234,23 @@ namespace Art2MSpell.Classes
             catch (ArgumentException ex)
             {
                 MyMessages.ErrorMessage = "Invalid file path. " + filePath;
-                MyMessages.BuildErrorString(MyMessages.NameOfClass, MyMessages.NameOfMethod, MyMessages.ErrorMessage,
+                MyMessages.BuildErrorString(
+                    MyMessages.NameOfClass,
+                    MyMessages.NameOfMethod,
+                    MyMessages.ErrorMessage,
                     ex.Message);
-
                 return false;
             }
             catch (IOException ex)
             {
                 MyMessages.ErrorMessage = "Write error has occurred. " + filePath;
-                MyMessages.BuildErrorString(MyMessages.NameOfClass, MyMessages.NameOfMethod, MyMessages.ErrorMessage,
+                MyMessages.BuildErrorString(
+                    MyMessages.NameOfClass,
+                    MyMessages.NameOfMethod,
+                    MyMessages.ErrorMessage,
                     ex.Message);
-
                 return false;
             }
         }
-
-        /// <summary>
-        ///     Speak string passed into method.
-        /// </summary>
-        /// <param name="word">The string to speak</param>
-        public static void SpeakString(string word)
-        {
-            Ss.Speak(word);
-        }
-
-        #endregion Public Methods
     }
 }

@@ -61,7 +61,9 @@
     <Compile Include="Classes\MyMessages.cs" />
     <Compile Include="Classes\SpellingListsClass.cs" />
     <Compile Include="Classes\SpellingPropertiesClass.cs" />
-    <Compile Include="Classes\Validation.cs" />
+    <Compile Include="Classes\Validation.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Collections\PossibleWordsListCollection.cs" />
     <Compile Include="Collections\SpellingWordsCollection.cs" />
     <Compile Include="Collections\SuggestedWordsCollection.cs" />

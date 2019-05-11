@@ -1,188 +1,209 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.IO;
-using System.Reflection;
-using System.Windows.Forms;
-using JetBrains.Annotations;
+﻿// //-----------------------------------------------------------------------------------------------------------------------------------
+// <copyright file="None">
+// 
+// Company copyright tag.
+// 
+//  </copyright>
+// 
+// Art2MSpell
+// 
+// Validation.cs
+// 
+// art2m
+// 
+// art2m@live.com
+// 
+// 05  10  2019
+// 
+// 05  08   2019
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// //-----------------------------------------------------------------------------------------------------------------------------------
 
 namespace Art2MSpell.Classes
 {
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Reflection;
+    using JetBrains.Annotations;
+
     /// <summary>
     ///     Validates data.
     /// </summary>
     public static class Validation
     {
-        #region Private Fields
+        /// <summary>
+        ///     The first string in the Spelling list. Means if exists that the Spelling list is a Spell-It list.
+        /// </summary>
+        private const string Spelling = "Art2mSpell!!";
 
         /// <summary>
-        ///     The first string in the spelling list. Means if exists that the spelling list is a Spell-It list.
+        ///     Check spelling word has no white space which could indicate two words only one word is allowed.
+        ///     Only letters allowed in the spelling word.
         /// </summary>
-        private const string spelling = "Art2mSpell!!";
-
-        #endregion Private Fields
-
-        #region Public Methods
-
-        /// <summary>
-        ///     Validates is spelling list bu checking that there is only
-        ///     one <paramref name="word" /> on each line of the text file.
-        /// </summary>
-        /// <param name="word">
-        ///     The value.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="bool" />. true if only one word per line else false.
-        /// </returns>
-        public static bool ValidateIsSpellingList([NotNull] string word)
+        /// <param name="value">Word to check spelling.</param>
+        /// <returns>true if no empty space and has letters only.</returns>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
+        public static bool ValidateSpellingWord([NotNull] string value)
         {
-            Contract.Requires(!string.IsNullOrEmpty(word));
+            Contract.Requires(value != null);
 
-            if (word == null)
+            if (!ValidateStringValueNotEmptyNotWhiteSpace(value))
             {
-                throw new ArgumentNullException(nameof(word));
+                return false;
             }
-
-            if (!ValidateStringValueNotEmptyNotWhiteSpace(word))
+            else if (!ValidateStringOneWord(value))
             {
                 return false;
             }
 
-            return ValidateSpellingWord(word);
+            return ValidateSpellingWordHasLettersOnly(value);
         }
 
         /// <summary>
-        ///     Checks the spelling <paramref name="word" /> for letters only.
+        ///     Check that there are only letters in the spelling word.
         /// </summary>
-        /// <param name="word">
-        ///     The value.
-        /// </param>
-        /// <returns>
-        ///     true if letters only else false.
-        /// </returns>
-        public static bool ValidateSpellingWordHasLettersOnly([NotNull] string word)
+        /// <param name="value">The spelling word to be checked.</param>
+        /// <returns>True if only letters in the spelling word else false.</returns>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
+        public static bool ValidateSpellingWordHasLettersOnly([NotNull] string value)
         {
-            Contract.Requires(!string.IsNullOrEmpty(word));
+            Contract.Requires(!string.IsNullOrEmpty(value));
 
-            var caption = MethodBase.GetCurrentMethod().Name;
+            MyMessages.NameOfClass = typeof(Validation).FullName;
 
-            foreach (var letter in word)
+            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+
+            try
             {
-                var msg = "Invalid character in value:  " + letter;
-
-                if (char.IsLetter(letter))
+                foreach (var letter in value)
                 {
-                    continue;
+                    if (char.IsLetter(letter))
+                    {
+                        continue;
+                    }
+
+                    MyMessages.ErrorMessage = "Invalid character in string:  " + letter;
+                    throw new NotSupportedException();
                 }
 
-                MessageBox.Show(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                return true;
+            }
+            catch (NotSupportedException e)
+            {
+                var msg = string.Concat(MyMessages.ErrorMessage, e);
+                MyMessages.ShowErrorMessageBox(msg, MyMessages.NameOfClass, MyMessages.NameOfMethod);
                 return false;
             }
-
-            return true;
         }
 
         /// <summary>
-        ///     Validates the string <paramref name="value" /> is not empty and not white space.
+        ///     Check for space in value this will means either space in word that does not belong or
+        ///     two words instead of one spelling word.
         /// </summary>
-        /// <param name="value">
-        ///     The value.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="bool" />. true if string is not empty. found else false.
-        /// </returns>
+        /// <param name="value">The spelling word to validate.</param>
+        /// <returns>True if no space is found else false.</returns>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
+        public static bool ValidateStringOneWord(string value)
+        {
+            MyMessages.NameOfClass = typeof(Validation).FullName;
+
+            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+
+            MyMessages.ErrorMessage =
+                "Check to see if space in word or if two words are entered. Spaces and double words are not allowed. correct this then add the word again. ";
+            try
+            {
+                var index = value.IndexOf(' ');
+
+                if (index > -1)
+                {
+                    throw new NotSupportedException();
+                }
+
+                return true;
+            }
+            catch (NotSupportedException e)
+            {
+                var msg = string.Concat(MyMessages.ErrorMessage, e);
+                MyMessages.ShowErrorMessageBox(msg, MyMessages.NameOfClass, MyMessages.NameOfMethod);
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///     If empty not valid spelling word
+        /// </summary>
+        /// <param name="value">The spelling word to be checked.</param>
+        /// <returns>True if not empty else false.</returns>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
         public static bool ValidateStringValueNotEmptyNotWhiteSpace([NotNull] string value)
         {
+            MyMessages.NameOfClass = typeof(Validation).FullName;
+
+            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+
             value = value.Trim();
 
-            return value.Length != 0;
+            try
+            {
+                MyMessages.ErrorMessage = "The value is not valid. ";
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new NotSupportedException();
+                }
+
+                if (value.Length == 0)
+                {
+                    throw new NotSupportedException();
+                }
+
+                return true;
+            }
+            catch (NotSupportedException e)
+            {
+                var msg = string.Concat(MyMessages.ErrorMessage, e);
+
+                MyMessages.ShowErrorMessageBox(msg, MyMessages.NameOfClass, MyMessages.NameOfMethod);
+                return false;
+            }
         }
 
         /// <summary>
-        ///     Validates it is spelling list.
+        ///     Validates that this is a valid spelling list file.
         /// </summary>
-        /// <param name="word">The <paramref name="word" />.</param>
-        /// <returns>true if spelling list else false</returns>
-        /// <exception cref="ArgumentNullException">If word is null</exception>
+        /// <param name="word"> first word in the spelling list file.</param>
+        /// <returns>true if valid spelling list file else false.</returns>
+        /// <created>art2m,5/10/2019</created>
+        /// <changed>art2m,5/10/2019</changed>
         public static bool ValidateThisIsArt2MSpellSpellingList([NotNull] string word)
         {
             Contract.Requires(!string.IsNullOrEmpty(word));
 
-            if (word == null)
-            {
-                const string Msg = "The file path can not be null";
-                throw new ArgumentNullException(nameof(word), Msg);
-            }
-
             if (!ValidateStringValueNotEmptyNotWhiteSpace(word))
             {
                 return false;
             }
 
-            SpellingPropertiesClass.Art2MSpellSpellingList = word.Equals(spelling);
+            var valid = string.Compare(
+                SpellingPropertiesClass.GetArt2MSpellHeader,
+                Spelling,
+                StringComparison.CurrentCultureIgnoreCase);
 
-            return SpellingPropertiesClass.Art2MSpellSpellingList;
+            return SpellingPropertiesClass.Art2MSpellSpellingList = valid == 0;
         }
-
-        /// <summary>
-        ///     Checks for invalid characters file path.
-        /// </summary>
-        /// <param name="filePath">The file path.</param>
-        /// <returns><see langword="true" /> if invalid characters found else false.</returns>
-        private static bool CheckForInvalidCharactersFilePath([NotNull] string filePath)
-        {
-            Contract.Requires(filePath != null);
-
-            var invalidPathChars = Path.GetInvalidPathChars();
-
-            foreach (var invalid in invalidPathChars)
-            {
-                var index = filePath.IndexOf(invalid);
-
-                if (index <= 0)
-                {
-                    continue;
-                }
-
-                // invalid char found.
-                var caption = MethodBase.GetCurrentMethod().Name;
-                var msg = "You have an invalid character in your file path. This must be fixed prior to saving.  "
-                          + invalid;
-                MessageBox.Show(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Validates the spelling <paramref name="word" />.
-        /// </summary>
-        /// <param name="word">The word.</param>
-        /// <returns> true if valid else false.;</returns>
-        private static bool ValidateSpellingWord([NotNull] string word)
-        {
-            Contract.Requires(word != null);
-
-            var caption = MethodBase.GetCurrentMethod().Name;
-
-            if (word.IndexOf(' ') > 0)
-            {
-                const string Msg = "Invalid spelling list more then one value on each line.";
-                MessageBox.Show(Msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (!ValidateSpellingWordHasLettersOnly(word))
-            {
-                const string Msg = "Invalid spelling list only letters are allowed in the word to be spelled.";
-                MessageBox.Show(Msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            return true;
-        }
-
-        #endregion Public Methods
     }
 }
