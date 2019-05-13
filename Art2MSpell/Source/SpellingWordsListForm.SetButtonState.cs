@@ -116,7 +116,7 @@ namespace Art2MSpell.Source
             this.SetDeleteSelectedWordButtonState(!StateVal);
             this.SetEditItemButtonState(!StateVal);
             this.SetSaveListButtonState(!StateVal);
-            this.SetSelectSpellingListButtonState(!StateVal);
+            this.SetSelectSpellingListButtonState(StateVal);
 
             this.SetWordsListBoxState(StateVal);
             this.SetWordsTextBoxState(!StateVal);
@@ -137,7 +137,7 @@ namespace Art2MSpell.Source
             this.SetDeleteSelectedWordButtonState(!StateVal);
             this.SetDeleteSpellingListButtonState(!StateVal);
             this.SetEditItemButtonState(!StateVal);
-            this.SetSaveListButtonEnabledState_DeleteSelectedWordButtonClicked();
+            this.SetButtonSaveEnabledState_OnButtonDeleteSelectedWordClicked();
             this.SetSelectSpellingListButtonState(!StateVal);
             this.SetWordsListBoxState(StateVal);
             this.SetWordsTextBoxState(!StateVal);
@@ -219,7 +219,7 @@ namespace Art2MSpell.Source
             this.SetAddToListButtonState(!StateVal);
             this.SetCancelOperationButtonState(!StateVal);
             this.SetClearListButtonState(!StateVal);
-            this.SetCreateNewListButtonState(!StateVal);
+            this.SetCreateNewListButtonState(StateVal);
             this.SetDeleteSelectedWordButtonState(!StateVal);
             this.SetDeleteSpellingListButtonState(StateVal);
             this.SetEditItemButtonState(!StateVal);
@@ -400,7 +400,7 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the save list button enabled state when delete selected word button selected.
         /// </summary>
-        private void SetSaveListButtonEnabledState_DeleteSelectedWordButtonClicked()
+        private void SetButtonSaveEnabledState_OnButtonDeleteSelectedWordClicked()
         {
             if (this.lstWords.Items.Count > 0)
             {

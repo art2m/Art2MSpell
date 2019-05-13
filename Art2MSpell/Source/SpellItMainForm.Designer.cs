@@ -108,9 +108,10 @@
             // 
             // btnDisplaySpellingWords
             // 
-            this.btnDisplaySpellingWords.Location = new System.Drawing.Point(209, 245);
+            this.btnDisplaySpellingWords.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisplaySpellingWords.Location = new System.Drawing.Point(199, 245);
             this.btnDisplaySpellingWords.Name = "btnDisplaySpellingWords";
-            this.btnDisplaySpellingWords.Size = new System.Drawing.Size(140, 44);
+            this.btnDisplaySpellingWords.Size = new System.Drawing.Size(160, 44);
             this.btnDisplaySpellingWords.TabIndex = 0;
             this.btnDisplaySpellingWords.Text = "Practice Spelling Words";
             this.spellItToolTip.SetToolTip(this.btnDisplaySpellingWords, "Display spelling words to spell.");
@@ -119,6 +120,7 @@
             // 
             // ExitButton
             // 
+            this.ExitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExitButton.Location = new System.Drawing.Point(657, 490);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(108, 32);
@@ -130,9 +132,10 @@
             // 
             // btnSpellingList
             // 
-            this.btnSpellingList.Location = new System.Drawing.Point(426, 245);
+            this.btnSpellingList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSpellingList.Location = new System.Drawing.Point(416, 245);
             this.btnSpellingList.Name = "btnSpellingList";
-            this.btnSpellingList.Size = new System.Drawing.Size(140, 44);
+            this.btnSpellingList.Size = new System.Drawing.Size(160, 44);
             this.btnSpellingList.TabIndex = 1;
             this.btnSpellingList.Text = "Spelling List";
             this.spellItToolTip.SetToolTip(this.btnSpellingList, "Create, edit, or delete a spelling list.");

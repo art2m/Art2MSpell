@@ -202,8 +202,12 @@ namespace Art2MSpell.Classes
                 SpellingPropertiesClass.GetArt2MSpellHeader,
                 word,
                 StringComparison.CurrentCultureIgnoreCase);
+            if (valid == 0)
+            {
+                return true;
+            }
 
-            return SpellingPropertiesClass.Art2MSpellSpellingList = valid == 0;
+            return false;
         }
     }
 }

@@ -1,22 +1,22 @@
 ﻿// //-----------------------------------------------------------------------------------------------------------------------------------
 // <copyright file="None">
-// 
+//
 // Company copyright tag.
-// 
+//
 //  </copyright>
-// 
+//
 // Art2MSpell
-// 
+//
 // SpellingListsClass.cs
-// 
+//
 // art2m
-// 
+//
 // art2m@live.com
-// 
+//
 // 05  10  2019
-// 
+//
 // 05  05   2019
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -52,11 +52,12 @@ namespace Art2MSpell.Classes
         /// <summary>
         ///     Check to see if the word is already in the list box.
         /// </summary>
-        /// <param name="word">The word to check for.</param>
+        /// <param name="duplicate">The items from the list box.</param>
+        /// /// <param name="addWord">The word to check for.</param>
         /// <returns>True if word is all ready in the list else false.</returns>
         /// <created>,5/10/2019</created>
         /// <changed>,5/10/2019</changed>
-        public static bool CheckDuplicateWord(string word, List<string> duplicate)
+        public static bool CheckDuplicateWord(List<string> duplicate, string addWord)
         {
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
             if (declaringType != null)
@@ -66,24 +67,64 @@ namespace Art2MSpell.Classes
 
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
-            for (var index = 0; index < duplicate.Count; index++)
+            if (!LoopThrewWordsList(duplicate, addWord))
             {
-                var spell = duplicate.ElementAt(index);
-                var same = string.Compare(word, spell, StringComparison.CurrentCultureIgnoreCase);
-                if (same != 0)
-                {
-                    continue;
-                }
+                return false;
+            }
 
-                MyMessages.InformationMessage = "This word is all ready in the list of spelling words. " + word;
+            MyMessages.InformationMessage = "The word entered is all ready in the list of spelling words. ";
                 MyMessages.ShowInformationMessageBox(
                     MyMessages.InformationMessage,
                     MyMessages.NameOfClass,
                     MyMessages.NameOfMethod);
+
+                return true;
+        }
+
+        /// <summary>
+        ///  Loop threw the words from the list box. Call method to check for duplicate words.
+        /// </summary>
+        /// <param name="duplicate">The list of words contained in the list box.</param>
+        /// <param name="addWord">The word being added by user.</param>
+        /// <returns>True if duplicate word found in lest box else false.</returns>
+        /// <created>art2m,5/13/2019</created>
+        /// <changed>art2m,5/13/2019</changed>
+        private static bool LoopThrewWordsList(IReadOnlyCollection<string> duplicate, string addWord)
+        {
+            for (var index = 0; index < duplicate.Count; index++)
+            {
+                // If false not duplicate.
+                if (!CompareWordListToNewWord(duplicate.ElementAt(index), addWord))
+                {
+                    continue;
+                }
+
+                // true  duplicate word.
                 return true;
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Compare the words in the list with new word to add.
+        /// </summary>
+        /// /// <param name="listWord">The word from the list box to be compared with new word.</param>
+        /// <param name="addWord">The word to be evaluated.</param>
+        /// <returns>True if word to be added matches the word from the list else false.</returns>
+        /// <created>art2m,5/13/2019</created>
+        /// <changed>art2m,5/13/2019</changed>
+        private static bool CompareWordListToNewWord(string listWord, string addWord)
+        {
+            var same = string.Compare(listWord, addWord, StringComparison.CurrentCultureIgnoreCase);
+
+            if (same != 0)
+            {
+                return false;
+            }
+
+            return true;
+
         }
 
         /// <summary>
@@ -102,7 +143,7 @@ namespace Art2MSpell.Classes
 
             foreach (var item in suggestions)
             {
-                DictionaryWords.AddItem(item);
+                DictionaryWordscollection.AddItem(item);
             }
         }
 
@@ -178,22 +219,28 @@ namespace Art2MSpell.Classes
         public static bool ReadFile(string filePath)
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-            SpellingWords.ClearCollection();
+            SpellingWordsCollection.ClearCollection();
             try
             {
+                var cnt = 0;
                 StreamReader fileRead;
                 using (fileRead = new StreamReader(filePath))
                 {
                     string word;
                     while ((word = fileRead.ReadLine()) != null)
                     {
+                        if (SpellingPropertiesClass.Art2MSpellSpellingList && cnt == 0)
+                        {
+                            cnt = 1;
+                            continue;
+                        }
                         // check for valid spell list by checking words are all letters and not empty.
                         if (!Validation.ValidateSpellingWord(word))
                         {
                             return false;
                         }
 
-                        SpellingWords.AddItem(word);
+                        SpellingWordsCollection.AddItem(word);
                     }
                 }
 
@@ -246,12 +293,12 @@ namespace Art2MSpell.Classes
                 StreamWriter fileWrite;
                 using (fileWrite = new StreamWriter(filePath, false))
                 {
-                    var cnt = SpellingWords.ItemsCount();
+                    var cnt = SpellingWordsCollection.ItemsCount();
                     fileWrite.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
                     Debug.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
                     for (var i = 0; i < cnt; i++)
                     {
-                        var word = SpellingWords.GetItemAt(i);
+                        var word = SpellingWordsCollection.GetItemAt(i);
                         fileWrite.WriteLine(word);
                     }
                 }

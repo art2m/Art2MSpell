@@ -130,6 +130,7 @@ namespace Art2MSpell.Source
             this.SetQuitButtonState(!StateVal);
             this.SetRepeatWordButtonState(!StateVal);
             this.SetSpellingWordGroupBoxState(StateVal);
+            this.SetScoreGroupBoxState(StateVal);
             this.SetStartButtonState(StateVal);
         }
 
@@ -146,7 +147,7 @@ namespace Art2MSpell.Source
             this.SetPauseButtonState(StateVal);
             this.SetQuitButtonState(StateVal);
             this.SetRepeatWordButtonState(StateVal);
-            this.SetScoreGroupBoxState(!StateVal);
+            this.SetScoreGroupBoxState(StateVal);
             this.SetSpellingWordGroupBoxState(StateVal);
             this.SetStartButtonState(!StateVal);
         }
@@ -162,7 +163,7 @@ namespace Art2MSpell.Source
             this.SetOpenSpellingListButtonState(!StateVal);
             this.SetOpenSpellingListMenuItemState(!StateVal);
             this.SetPauseButtonState(!StateVal);
-            this.SetQuitButtonState(StateVal);
+            this.SetQuitButtonState(!StateVal);
             this.SetRepeatWordButtonState(!StateVal);
             this.SetSpellingWordGroupBoxState(StateVal);
             this.SetStartButtonState(StateVal);

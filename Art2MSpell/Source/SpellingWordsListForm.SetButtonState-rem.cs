@@ -219,7 +219,7 @@ namespace Art2MSpell.Source
             this.SetAddToListButtonState(!StateVal);
             this.SetCancelOperationButtonState(!StateVal);
             this.SetClearListButtonState(!StateVal);
-            this.SetCreateNewListButtonState(!StateVal);
+            this.SetCreateNewListButtonState(StateVal);
             this.SetDeleteSelectedWordButtonState(!StateVal);
             this.SetDeleteSpellingListButtonState(StateVal);
             this.SetEditItemButtonState(!StateVal);

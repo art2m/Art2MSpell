@@ -1,7 +1,7 @@
 ﻿//---------------------------------------------------------------------------------------------------------------
 // Art2MSpell
 //
-// DictionaryWords.cs
+// DictionaryWordscollection.cs
 //
 // File:     Art2MSpell.sln
 //
@@ -26,7 +26,7 @@ namespace Art2MSpell.Collections
     /// <summary>
     /// Holds suggested words for a misspelled word.
     /// </summary>
-    public static class DictionaryWords
+    public static class DictionaryWordscollection
     {
         /// <summary>
         /// Contains collection of words to possibly become a spelling list.

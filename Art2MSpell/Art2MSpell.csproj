@@ -64,8 +64,8 @@
     <Compile Include="Classes\Validation.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Collections\SpellingWords.cs" />
-    <Compile Include="Collections\DictionaryWords.cs" />
+    <Compile Include="Collections\SpellingWordsCollection.cs" />
+    <Compile Include="Collections\DictionaryWordscollection.cs" />
     <Compile Include="Source\PracticeSpellingWordsForm.cs">
       <SubType>Form</SubType>
     </Compile>

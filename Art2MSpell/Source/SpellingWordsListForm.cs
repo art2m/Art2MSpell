@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  12  2019
+// 05  13  2019
 // 
 // 05  05   2019
 // 
@@ -38,20 +38,37 @@ namespace Art2MSpell.Source
     /// <seealso cref="System.Windows.Forms.Form" />
     public partial class SpellingWordsListForm : Form
     {
+        /// <summary>Holds items from list box so they can be checked against word to be added for duplicate.</summary>
         private List<string> duplicate;
 
-        // Holds the initial with of the form.
+        /// <summary>Holds the initial with of the form.</summary>
         private int formWidth;
 
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="SpellingWordsListForm" />
-        /// </summary>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
+        /// <summary>Initializes a new instance of the <see cref="SpellingWordsListForm" /> class.</summary>
         public SpellingWordsListForm()
         {
             this.InitializeComponent();
+        }
+
+        /// <summary>
+        ///     write spelling words from collection to file.
+        /// </summary>
+        /// <param name="filePath">The path to the spelling list file.</param>
+        /// <returns>true if spelling list is written to file else false.</returns>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private static bool WriteWordsToFile(string filePath)
+        {
+            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            if (!SpellingList.WriteToFile(filePath))
+            {
+                return false;
+            }
+
+            const string MsgSuccess = "Your spelling list has been created successfully.";
+
+            MyMessages.ShowInformationMessage(MsgSuccess, MyMessages.NameOfMethod);
+            return true;
         }
 
         /// <summary>
@@ -61,9 +78,9 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private void AddSuggestions()
         {
-            for (var index = 0; index < DictionaryWords.ItemsCount(); index++)
+            for (var index = 0; index < DictionaryWordscollection.ItemsCount(); index++)
             {
-                this.cboWord.Items.Add(DictionaryWords.GetItemAt(index));
+                this.cboWord.Items.Add(DictionaryWordscollection.GetItemAt(index));
             }
 
             this.cboWord.DroppedDown = true;
@@ -79,7 +96,7 @@ namespace Art2MSpell.Source
         {
             foreach (var listItem in this.lstWords.Items)
             {
-                SpellingWords.AddItem(listItem.ToString().Trim());
+                SpellingWordsCollection.AddItem(listItem.ToString().Trim());
             }
 
             return this.lstWords.Items.Count >= 1;
@@ -92,9 +109,9 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private void AddWordsToListBox()
         {
-            for (var index = 0; index < SpellingWords.ItemsCount(); index++)
+            for (var index = 0; index < SpellingWordsCollection.ItemsCount(); index++)
             {
-                this.lstWords.Items.Add(SpellingWords.GetItemAt(index));
+                this.lstWords.Items.Add(SpellingWordsCollection.GetItemAt(index));
             }
         }
 
@@ -111,7 +128,8 @@ namespace Art2MSpell.Source
                 return;
             }
 
-            if (!this.CheckWordSpelling(word))
+            // If true found duplicate word.
+            if (this.CheckWordSpelling(word))
             {
                 this.cboWord.Text = string.Empty;
                 return;
@@ -149,7 +167,7 @@ namespace Art2MSpell.Source
         ///     Check to see if the word is all ready contained in the list box.
         /// </summary>
         /// <param name="word">The word to be added to the list box.</param>
-        /// <returns></returns>
+        /// <returns>True if no duplicate word found in the list box else false.</returns>
         /// <created>art2m,5/12/2019</created>
         /// <changed>art2m,5/12/2019</changed>
         private bool CheckListBoxForWord(string word)
@@ -160,7 +178,7 @@ namespace Art2MSpell.Source
                 this.duplicate.Add(item.ToString());
             }
 
-            if (!SpellingList.CheckDuplicateWord(word, this.duplicate))
+            if (!SpellingList.CheckDuplicateWord(this.duplicate, word))
             {
                 return false;
             }
@@ -196,12 +214,11 @@ namespace Art2MSpell.Source
         /// </summary>
         private void FillListBoxWithWordsList()
         {
-            if (SpellingWords.ItemsCount() < 1)
+            if (SpellingWordsCollection.ItemsCount() < 1)
             {
                 return;
             }
-
-            this.AddWordsToListBox();
+                 this.AddWordsToListBox();
         }
 
         /// <summary>
@@ -214,8 +231,13 @@ namespace Art2MSpell.Source
         {
             if (!SpellingList.ReadHeader(SpellingPropertiesClass.SpellingListPath))
             {
+                SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = false;
+                SpellingPropertiesClass.Art2MSpellSpellingList = false;
                 return false;
             }
+
+            SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
+            SpellingPropertiesClass.Art2MSpellSpellingList = true;
 
             if (!SpellingList.ReadFile(SpellingPropertiesClass.SpellingListPath))
             {
@@ -244,14 +266,14 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnButtonAddWordToList(object sender, EventArgs e)
         {
-            var word = this.cboWord.Text.Trim();
+            var addWord = this.cboWord.Text.Trim();
 
-            if (!Validation.ValidateSpellingWord(word))
+            if (!Validation.ValidateSpellingWord(addWord))
             {
                 return;
             }
 
-            this.AddWordToListBox(word);
+            this.AddWordToListBox(addWord);
             this.SetTabOrderAddNewWordButton();
         }
 
@@ -322,6 +344,7 @@ namespace Art2MSpell.Source
         private void OnButtonCreateNewList(object sender, EventArgs e)
         {
             SpellingPropertiesClass.CreatingNewSpellingList = true;
+            this.lstWords.Items.Clear();
             this.SetButtonsEnabledState_CreateNewListButtonClicked();
             this.ChangeControlsBackgroundColors();
         }
@@ -412,6 +435,8 @@ namespace Art2MSpell.Source
 
                 SpellingPropertiesClass.SpellingListPath = openDlg.FileName;
 
+                this.lstWords.Items.Clear();
+
                 if (!this.GetWordsFromFile())
                 {
                     return;
@@ -467,7 +492,7 @@ namespace Art2MSpell.Source
         /// </summary>
         private void SaveSpellingWordsToSpellingList()
         {
-            SpellingWords.ClearCollection();
+            SpellingWordsCollection.ClearCollection();
             if (!this.AddWordsToCollection())
             {
                 return;
@@ -593,28 +618,6 @@ namespace Art2MSpell.Source
             var left = width - this.pnlWord.Width / 2;
 
             this.pnlWord.Left = left;
-        }
-
-
-        /// <summary>
-        ///     write spelling words from collection to file.
-        /// </summary>
-        /// <param name="filePath">The path to the spelling list file.</param>
-        /// <returns>true if spelling list is written to file else false.</returns>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        private static bool WriteWordsToFile(string filePath)
-        {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-            if (!SpellingList.WriteToFile(filePath))
-            {
-                return false;
-            }
-
-            const string MsgSuccess = "Your spelling list has been created successfully.";
-
-            MyMessages.ShowInformationMessage(MsgSuccess, MyMessages.NameOfMethod);
-            return true;
         }
     }
 }

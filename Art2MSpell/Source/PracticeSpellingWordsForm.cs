@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  09  2019
+// 05  13  2019
 // 
 // 05  05   2019
 // 
@@ -24,6 +24,7 @@
 namespace Art2MSpell.Source
 {
     using System;
+    using System.Drawing;
     using System.Speech.Synthesis;
     using System.Text;
     using System.Windows.Forms;
@@ -33,6 +34,11 @@ namespace Art2MSpell.Source
     /// <summary>Displays form for creating and editing spelling lists.</summary>
     public partial class PracticeSpellingWordsForm : Form
     {
+        /// <summary>
+        /// array of list box words.
+        /// </summary>
+        private string[] allWords;
+
         /// <summary>
         ///     The number of words spelled correctly.
         /// </summary>
@@ -53,43 +59,26 @@ namespace Art2MSpell.Source
         /// </summary>
         private int wrong;
 
+        /// <summary>Holds the initial with of the form.</summary>
+        private int formWidth;
+
+        private int grpbxScoreLeft;
+
+        private int grpbxSpellLeft;
+
         /// <summary>Initializes a new instance of the <see cref="PracticeSpellingWordsForm" /> class.</summary>
         public PracticeSpellingWordsForm()
         {
             this.InitializeComponent();
         }
 
-        /// <summary>Gets the spelling words from spelling list.</summary>
-        /// <returns>True if spelling list files is read into the collection else false,</returns>
-        private static bool GetSpellingWordsFromSpellingList()
-        {
-            return SpellingList.ReadFile(SpellingPropertiesClass.SpellingListPath);
-        }
-
-        /// <summary>
-        ///     Says the spelling word.
-        /// </summary>
-        /// <param name="word">The word to be asked for spelling.</param>
-        private static void SaySpellingWord(string word)
-        {
-            using (var synth = new SpeechSynthesizer())
-            {
-                synth.Speak(word);
-            }
-        }
-
         /// <summary>
         ///     Sets the color of the buttons background.
         /// </summary>
         private void ChangeControls_BackgroundColors()
+
         {
             this.SetCloseButton_BackgroundColor();
-
-            if (this.pnlDisplay != null)
-            {
-                this.SetDisplayPanel_BackgroundColor();
-            }
-
             this.SetNextWordButton_BackgroundColor();
             this.SetOpenSpellingListButton_BackgroundColor();
             this.SetPauseButton_BackgroundColor();
@@ -130,6 +119,43 @@ namespace Art2MSpell.Source
             this.ShowWordsScore();
 
             SaySpellingWord(sb.ToString());
+        }
+
+        /// <summary>Gets the spelling words from spelling list.</summary>
+        /// <returns>True if spelling list files is read into the collection else false,</returns>
+        private static bool GetSpellingWordsFromSpellingList()
+        {
+            return SpellingList.ReadFile(SpellingPropertiesClass.SpellingListPath);
+        }
+
+        /// <summary>
+        ///     Get spelling words from file.
+        /// </summary>
+        /// <returns></returns>
+        /// <created>art2m,5/13/2019</created>
+        /// <changed>art2m,5/13/2019</changed>
+        private bool GetWordsFromFile()
+        {
+            if (!SpellingList.ReadHeader(SpellingPropertiesClass.SpellingListPath))
+            {
+                return false;
+            }
+
+            SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
+            SpellingPropertiesClass.Art2MSpellSpellingList = true;
+
+            if (!SpellingList.ReadFile(SpellingPropertiesClass.SpellingListPath))
+            {
+                return false;
+            }
+
+            this.allWords = new string[SpellingWordsCollection.ItemsCount() - 1];
+
+            this.allWords = SpellingWordsCollection.GetAllItems();
+
+            this.txtTotalWords.Text = FormattableString.Invariant($"{SpellingWordsCollection.ItemsCount()}");
+
+            return true;
         }
 
         /// <summary>
@@ -175,18 +201,20 @@ namespace Art2MSpell.Source
 
             this.index++;
 
-            if (this.index == SpellingWords.ItemsCount())
+            if (this.index == this.allWords.Length)
             {
+                this.SetButtonsEnabledState_NextWordButtonClicked();
+                this.SetNextWordButton_BackgroundColor();
+                this.SetPauseButton_BackgroundColor();
+                this.SetRepeatWordButton_BackgroundColor();
+                this.SetQuitButton_BackgroundColor();
                 return;
             }
 
-            var word = SpellingWords.GetItemAt(this.index);
-
+            var word = this.allWords[this.index];
             SaySpellingWord(word);
 
             this.txtSpellWord.Text = string.Empty;
-
-            // btnNextWord.Enabled = true;
         }
 
         /// <summary>
@@ -202,7 +230,7 @@ namespace Art2MSpell.Source
 
                 SpellingPropertiesClass.SpellingListPath = openDlg.FileName;
 
-                if (!GetSpellingWordsFromSpellingList())
+                if (!this.GetWordsFromFile())
                 {
                     return;
                 }
@@ -257,7 +285,7 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnQuitButtonClick(object sender, EventArgs e)
         {
-            SpellingWords.ClearCollection();
+            SpellingWordsCollection.ClearCollection();
             this.index = 0;
             SpellingPropertiesClass.OpeningSpellingList = false;
             SpellingPropertiesClass.SpellingListPath = string.Empty;
@@ -274,16 +302,12 @@ namespace Art2MSpell.Source
         {
             this.txtSpellWord.Focus();
 
-            this.index--;
-
-            var word = SpellingWords.GetItemAt(this.index);
+            var word = SpellingWordsCollection.GetItemAt(this.index);
             SaySpellingWord(word);
 
             this.txtSpellWord.Focus();
 
             this.txtSpellWord.Text = string.Empty;
-
-            this.index++;
         }
 
         /// <summary>
@@ -302,8 +326,20 @@ namespace Art2MSpell.Source
             this.SetButtonEnabledState_StartButtonClicked();
             this.ChangeControls_BackgroundColors();
 
-            var word = SpellingWords.GetItemAt(this.index);
+            var word = this.allWords[this.index];
             SaySpellingWord(word);
+        }
+
+        /// <summary>
+        ///     Says the spelling word.
+        /// </summary>
+        /// <param name="word">The word to be asked for spelling.</param>
+        private static void SaySpellingWord(string word)
+        {
+            using (var synth = new SpeechSynthesizer())
+            {
+                synth.Speak(word);
+            }
         }
 
         /// <summary>
@@ -326,7 +362,7 @@ namespace Art2MSpell.Source
         /// </summary>
         private void ShowWordsScore()
         {
-            this.txtWordsCount.Text = FormattableString.Invariant($"{this.index}");
+            this.txtWordsCount.Text = FormattableString.Invariant($"{this.index + 1}");
 
             this.txtWordsCorrect.Text = FormattableString.Invariant($"{this.correct}");
 
@@ -334,16 +370,24 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///     Handles the Load event of the SpellingListDisplayForm control.
+        /// Set Initial controls.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void SpellingListDisplayForm_Load(object sender, EventArgs e)
+        /// <param name="e">Instance containing the event data.</param>
+        /// <created>art2m,5/13/2019</created>
+        /// <changed>art2m,5/13/2019</changed>
+        private void PracticeSpellingWordsForm_Load(object sender, EventArgs e)
         {
             this.index = 0;
 
+            this.formWidth = this.Width;
+            this.grpbxScoreLeft = this.grpbxScore.Left;
+            this.grpbxSpellLeft = this.grpbxSpellingWords.Left;
+
             SpellingPropertiesClass.SpellingListPath = string.Empty;
             SpellingPropertiesClass.OpeningSpellingList = false;
+
+            this.BackColor = Color.Blue;
 
             this.SetControlsEnabledState_FormLoadEvent();
 
@@ -352,6 +396,9 @@ namespace Art2MSpell.Source
             SpellingPropertiesClass.SpellingListPath = string.Empty;
         }
 
-        
+        private void PracticeSpellingWordsForm_Resize(object sender, EventArgs e)
+        {
+
+        }
     }
 }

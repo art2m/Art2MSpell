@@ -1,7 +1,7 @@
 ﻿//---------------------------------------------------------------------------------------------------------------
 // Art2MSpell
 // 
-// SpellingWords.cs
+// SpellingWordsCollection.cs
 //
 // File:     Art2MSpell.sln
 //
@@ -26,7 +26,7 @@ namespace Art2MSpell.Collections
     /// <summary>
     /// Spelling Words Collection Holds words from current spelling list.
     /// </summary>
-    public static class SpellingWords
+    public static class SpellingWordsCollection
 
     {
         #region Fields

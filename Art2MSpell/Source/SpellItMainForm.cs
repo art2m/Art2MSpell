@@ -49,9 +49,9 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void DisplaySpellingWordsButton_Click(object sender, EventArgs e)
         {
-            using (var frmSpellWords = new PracticeSpellingWordsForm())
+            using (var frmPractice = new PracticeSpellingWordsForm())
             {
-                frmSpellWords.ShowDialog();
+                frmPractice.ShowDialog();
             }
         }
 

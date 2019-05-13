@@ -98,10 +98,11 @@
             // 
             // btnCreateNewList
             // 
+            this.btnCreateNewList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreateNewList.Location = new System.Drawing.Point(4, 30);
             this.btnCreateNewList.Margin = new System.Windows.Forms.Padding(4, 30, 3, 3);
             this.btnCreateNewList.Name = "btnCreateNewList";
-            this.btnCreateNewList.Size = new System.Drawing.Size(140, 32);
+            this.btnCreateNewList.Size = new System.Drawing.Size(172, 32);
             this.btnCreateNewList.TabIndex = 37;
             this.btnCreateNewList.Text = "Create New Spelling List";
             this.spelListToolTip.SetToolTip(this.btnCreateNewList, "Select to create a new spelling list.");
@@ -110,10 +111,11 @@
             // 
             // btnOpenist
             // 
+            this.btnOpenist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOpenist.Location = new System.Drawing.Point(4, 105);
             this.btnOpenist.Margin = new System.Windows.Forms.Padding(4, 40, 3, 3);
             this.btnOpenist.Name = "btnOpenist";
-            this.btnOpenist.Size = new System.Drawing.Size(140, 32);
+            this.btnOpenist.Size = new System.Drawing.Size(172, 32);
             this.btnOpenist.TabIndex = 39;
             this.btnOpenist.Text = "Open Spelling List";
             this.spelListToolTip.SetToolTip(this.btnOpenist, "Open spelling list to edit or delete.");
@@ -122,10 +124,11 @@
             // 
             // btnClearist
             // 
+            this.btnClearist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClearist.Location = new System.Drawing.Point(4, 180);
             this.btnClearist.Margin = new System.Windows.Forms.Padding(4, 40, 3, 3);
             this.btnClearist.Name = "btnClearist";
-            this.btnClearist.Size = new System.Drawing.Size(140, 32);
+            this.btnClearist.Size = new System.Drawing.Size(172, 32);
             this.btnClearist.TabIndex = 39;
             this.btnClearist.Text = "Clear Spelling List";
             this.spelListToolTip.SetToolTip(this.btnClearist, "Select to clear the spelling list currently displayed.");
@@ -134,10 +137,11 @@
             // 
             // btnSaveList
             // 
+            this.btnSaveList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveList.Location = new System.Drawing.Point(4, 330);
             this.btnSaveList.Margin = new System.Windows.Forms.Padding(4, 40, 0, 0);
             this.btnSaveList.Name = "btnSaveList";
-            this.btnSaveList.Size = new System.Drawing.Size(140, 32);
+            this.btnSaveList.Size = new System.Drawing.Size(172, 32);
             this.btnSaveList.TabIndex = 41;
             this.btnSaveList.Text = "Save Spelling List";
             this.spelListToolTip.SetToolTip(this.btnSaveList, "Select to save the new spelling list.");
@@ -149,19 +153,22 @@
             this.lstWords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstWords.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstWords.FormattingEnabled = true;
+            this.lstWords.ItemHeight = 16;
             this.lstWords.Location = new System.Drawing.Point(14, 14);
             this.lstWords.Name = "lstWords";
-            this.lstWords.Size = new System.Drawing.Size(551, 368);
+            this.lstWords.Size = new System.Drawing.Size(520, 356);
             this.lstWords.TabIndex = 0;
             this.spelListToolTip.SetToolTip(this.lstWords, "Spelling words list. Select word to edit or delete the spelling list.");
             this.lstWords.SelectedIndexChanged += new System.EventHandler(this.OnWordsListSelectedIndexChanged);
             // 
             // btnAddWordToList
             // 
-            this.btnAddWordToList.Location = new System.Drawing.Point(461, 51);
+            this.btnAddWordToList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddWordToList.Location = new System.Drawing.Point(511, 51);
             this.btnAddWordToList.Name = "btnAddWordToList";
-            this.btnAddWordToList.Size = new System.Drawing.Size(100, 32);
+            this.btnAddWordToList.Size = new System.Drawing.Size(122, 32);
             this.btnAddWordToList.TabIndex = 5;
             this.btnAddWordToList.Text = "Add Word To List";
             this.spelListToolTip.SetToolTip(this.btnAddWordToList, "Select to add currently displayed word to the spelling list.");
@@ -170,9 +177,10 @@
             // 
             // btnCancelOperation
             // 
-            this.btnCancelOperation.Location = new System.Drawing.Point(349, 51);
+            this.btnCancelOperation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelOperation.Location = new System.Drawing.Point(384, 51);
             this.btnCancelOperation.Name = "btnCancelOperation";
-            this.btnCancelOperation.Size = new System.Drawing.Size(100, 32);
+            this.btnCancelOperation.Size = new System.Drawing.Size(122, 32);
             this.btnCancelOperation.TabIndex = 4;
             this.btnCancelOperation.Text = "Cancel Operation";
             this.spelListToolTip.SetToolTip(this.btnCancelOperation, "Select to cancel the current operation.");
@@ -181,9 +189,10 @@
             // 
             // btnEditWord
             // 
-            this.btnEditWord.Location = new System.Drawing.Point(125, 51);
+            this.btnEditWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEditWord.Location = new System.Drawing.Point(130, 51);
             this.btnEditWord.Name = "btnEditWord";
-            this.btnEditWord.Size = new System.Drawing.Size(100, 32);
+            this.btnEditWord.Size = new System.Drawing.Size(122, 32);
             this.btnEditWord.TabIndex = 2;
             this.btnEditWord.Text = "Edit Word";
             this.spelListToolTip.SetToolTip(this.btnEditWord, "Select to edit currently displayed word.");
@@ -192,9 +201,10 @@
             // 
             // btnDeleteWord
             // 
-            this.btnDeleteWord.Location = new System.Drawing.Point(237, 51);
+            this.btnDeleteWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteWord.Location = new System.Drawing.Point(257, 51);
             this.btnDeleteWord.Name = "btnDeleteWord";
-            this.btnDeleteWord.Size = new System.Drawing.Size(100, 32);
+            this.btnDeleteWord.Size = new System.Drawing.Size(122, 32);
             this.btnDeleteWord.TabIndex = 3;
             this.btnDeleteWord.Text = "Delete Word";
             this.spelListToolTip.SetToolTip(this.btnDeleteWord, "Select to delete the selected word from the spelling list.");
@@ -203,9 +213,10 @@
             // 
             // btnAddNewWord
             // 
-            this.btnAddNewWord.Location = new System.Drawing.Point(13, 51);
+            this.btnAddNewWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddNewWord.Location = new System.Drawing.Point(3, 51);
             this.btnAddNewWord.Name = "btnAddNewWord";
-            this.btnAddNewWord.Size = new System.Drawing.Size(100, 32);
+            this.btnAddNewWord.Size = new System.Drawing.Size(122, 32);
             this.btnAddNewWord.TabIndex = 1;
             this.btnAddNewWord.Text = "Add New Word";
             this.spelListToolTip.SetToolTip(this.btnAddNewWord, "Select  to add a new word.");
@@ -235,17 +246,18 @@
             this.flpUpperButtons.Controls.Add(this.btnClearist);
             this.flpUpperButtons.Controls.Add(this.btnDeleteList);
             this.flpUpperButtons.Controls.Add(this.btnSaveList);
-            this.flpUpperButtons.Location = new System.Drawing.Point(614, 37);
+            this.flpUpperButtons.Location = new System.Drawing.Point(573, 37);
             this.flpUpperButtons.Name = "flpUpperButtons";
-            this.flpUpperButtons.Size = new System.Drawing.Size(148, 396);
+            this.flpUpperButtons.Size = new System.Drawing.Size(180, 396);
             this.flpUpperButtons.TabIndex = 46;
             // 
             // btnDeleteList
             // 
+            this.btnDeleteList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteList.Location = new System.Drawing.Point(4, 255);
             this.btnDeleteList.Margin = new System.Windows.Forms.Padding(4, 40, 3, 3);
             this.btnDeleteList.Name = "btnDeleteList";
-            this.btnDeleteList.Size = new System.Drawing.Size(140, 32);
+            this.btnDeleteList.Size = new System.Drawing.Size(172, 32);
             this.btnDeleteList.TabIndex = 40;
             this.btnDeleteList.Text = "Delete Spelling List";
             this.btnDeleteList.UseVisualStyleBackColor = true;
@@ -259,12 +271,13 @@
             this.pnlWordList.Controls.Add(this.lstWords);
             this.pnlWordList.Location = new System.Drawing.Point(19, 36);
             this.pnlWordList.Name = "pnlWordList";
-            this.pnlWordList.Size = new System.Drawing.Size(586, 397);
+            this.pnlWordList.Size = new System.Drawing.Size(548, 397);
             this.pnlWordList.TabIndex = 43;
             // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.Location = new System.Drawing.Point(664, 527);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(108, 32);
@@ -284,14 +297,14 @@
             this.pnlWord.Controls.Add(this.btnAddNewWord);
             this.pnlWord.Location = new System.Drawing.Point(19, 458);
             this.pnlWord.Name = "pnlWord";
-            this.pnlWord.Size = new System.Drawing.Size(600, 99);
+            this.pnlWord.Size = new System.Drawing.Size(639, 99);
             this.pnlWord.TabIndex = 44;
             // 
             // cboWord
             // 
             this.cboWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboWord.FormattingEnabled = true;
-            this.cboWord.Location = new System.Drawing.Point(13, 12);
+            this.cboWord.Location = new System.Drawing.Point(38, 12);
             this.cboWord.Name = "cboWord";
             this.cboWord.Size = new System.Drawing.Size(535, 28);
             this.cboWord.TabIndex = 0;

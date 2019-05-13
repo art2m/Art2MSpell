@@ -6,9 +6,9 @@
 // 
 // art2m@live.com
 // 
-// 05  09  2019
+// 05  13  2019
 // 
-//      2019
+// 05  09   2019
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Drawing;
-
 namespace Art2MSpell.Source
 {
+    using System.Drawing;
+
     public partial class PracticeSpellingWordsForm
     {
         /// <summary>
@@ -35,13 +35,6 @@ namespace Art2MSpell.Source
             this.btnClose.BackColor = this.btnClose.Enabled ? Color.RosyBrown : Color.SlateGray;
         }
 
-        /// <summary>
-        ///     Sets the color of the panel background.
-        /// </summary>
-        private void SetDisplayPanel_BackgroundColor()
-        {
-            this.pnlDisplay.BackColor = Color.BlueViolet;
-        }
 
         /// <summary>
         ///     Sets the color of the next word button background.
