@@ -1,14 +1,14 @@
 ﻿//---------------------------------------------------------------------------------------------------------------
 // Art2MSpell
-// 
-// SpellingWordsCollection.cs
+//
+// DictionaryWords.cs
 //
 // File:     Art2MSpell.sln
 //
 // Author:   art2m_000]
-// Email     art2m@live.com   
-// Company:  
-// Date:     5/9/2019
+// Email     art2m@live.com
+// Company:
+// Date:     5/8/2019
 //
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -24,21 +24,14 @@ using System.Collections.Generic;
 namespace Art2MSpell.Collections
 {
     /// <summary>
-    /// Spelling Words Collection Holds words from current spelling list.
+    /// Holds suggested words for a misspelled word.
     /// </summary>
-    public static class SpellingWordsCollection
-
+    public static class DictionaryWords
     {
-        #region Fields
-
         /// <summary>
-        /// Contains collection of words from a spelling list.
+        /// Contains collection of words to possibly become a spelling list.
         /// </summary>
         private static readonly List<string> WordsList = new List<string>();
-
-        #endregion Fields
-
-        #region Public Methods
 
         /// <summary>
         /// Adds the item.
@@ -145,7 +138,5 @@ namespace Art2MSpell.Collections
         {
             WordsList.Sort();
         }
-
-        #endregion Public Methods
     }
 }

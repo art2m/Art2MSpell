@@ -6,9 +6,9 @@
 //
 // art2m@live.com
 //
-// 05  08  2019
+// 05  12  2019
 //
-//      2019
+// 05  08   2019
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,31 +21,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Drawing;
-
 namespace Art2MSpell.Source
 {
-    /// <summary>Create new spelling list. Edit existing spelling list.</summary>
+    using System.Drawing;
+
+    /// <summary>
+    ///     Set background colors for controls.
+    /// </summary>
     public partial class SpellingWordsListForm
     {
-        /// <summary>Sets the color of the buttons when add new item button is clicked.</summary>
-        private void SetAddNewItemButtonClickedBackgroundColor()
-        {
-            this.SetAddNewItemButton_BackgroundColor();
-            this.SetAddToListButton_BackgroundColor();
-            this.SetCancelOperationButton_BackgroundColor();
-            this.SetClearListButton_BackgroundColor();
-            this.SetClearListButton_BackgroundColor();
-            this.SetDeleteSelectedWord_BackgroundColor();
-            this.SetEditItemButton_BackgroundColor();
-            this.SetSaveListButton_BackgroundColor();
-            this.SetWordsTextBoxState(false);
-            this.SetWordTextBox_BackgroundColor();
-        }
-
         /// <summary>
         ///     Sets the background color for the add button based on button state.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetAddNewItemButton_BackgroundColor()
         {
             if (this.btnAddNewWord.Enabled)
@@ -60,6 +49,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the color of the add to list button background.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetAddToListButton_BackgroundColor()
         {
             if (this.btnAddWordToList.Enabled)
@@ -74,6 +65,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the background color for the clear button based on button state.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetCancelOperationButton_BackgroundColor()
         {
             if (this.btnCancelOperation.Enabled)
@@ -88,6 +81,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the state of the clear list button background color.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetClearListButton_BackgroundColor()
         {
             if (this.btnClearist.Enabled)
@@ -102,6 +97,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the background color for the close button based on button state.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetCloseButton_BackgroundColor()
         {
             if (this.btnClose.Enabled)
@@ -116,6 +113,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the background color for the create new list button based on button state.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetCreateNewListButton_BackgroundColor()
         {
             if (this.btnCreateNewList.Enabled)
@@ -130,6 +129,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the background color for the delete list button based on button state.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetDeleteListButton_BackgroundColor()
         {
             if (this.btnDeleteList.Enabled)
@@ -144,6 +145,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the background color for the delete selected word button based on button state.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetDeleteSelectedWord_BackgroundColor()
         {
             if (this.btnDeleteWord.Enabled)
@@ -158,6 +161,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the color of the edit item button background.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetEditItemButton_BackgroundColor()
         {
             if (this.btnEditWord.Enabled)
@@ -172,6 +177,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the state of the save list button background color for.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetSaveListButton_BackgroundColor()
         {
             if (this.btnSaveList.Enabled)
@@ -186,6 +193,8 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the background color for the select spelling list button based on the state.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetSelectSpellingListButton_BackgroundColor()
         {
             if (this.btnOpenist.Enabled)
@@ -200,20 +209,24 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the state of the words ListBox background color.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetWordsListBox_BackgroundColor()
         {
-            if (this.lstWordsList.Enabled)
+            if (this.lstWords.Enabled)
             {
-                this.lstWordsList.BackColor = Color.LightYellow;
+                this.lstWords.BackColor = Color.LightYellow;
                 return;
             }
 
-            this.lstWordsList.BackColor = Color.SlateGray;
+            this.lstWords.BackColor = Color.SlateGray;
         }
 
         /// <summary>
         ///     Sets the state of the word text box background color.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetWordTextBox_BackgroundColor()
         {
             if (this.cboWord.Enabled)

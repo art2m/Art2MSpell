@@ -59,14 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\MyMessages.cs" />
-    <Compile Include="Classes\SpellingListsClass.cs" />
+    <Compile Include="Classes\SpellingList.cs" />
     <Compile Include="Classes\SpellingPropertiesClass.cs" />
     <Compile Include="Classes\Validation.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Collections\PossibleWordsListCollection.cs" />
-    <Compile Include="Collections\SpellingWordsCollection.cs" />
-    <Compile Include="Collections\SuggestedWordsCollection.cs" />
+    <Compile Include="Collections\SpellingWords.cs" />
+    <Compile Include="Collections\DictionaryWords.cs" />
     <Compile Include="Source\PracticeSpellingWordsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,10 +78,10 @@
     <Compile Include="Source\PracticeSpellingWordsForm.SetButtonState.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\SpellingWordsListForm.SetButtonState.cs">
+    <Compile Include="Source\SpellingWordsListForm.SetBackgroundColor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\SpellingWordsListForm.SetBackgroundColor.cs">
+    <Compile Include="Source\SpellingWordsListForm.SetButtonState.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\SpellItMainForm.cs">

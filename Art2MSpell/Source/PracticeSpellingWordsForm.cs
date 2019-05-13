@@ -63,7 +63,7 @@ namespace Art2MSpell.Source
         /// <returns>True if spelling list files is read into the collection else false,</returns>
         private static bool GetSpellingWordsFromSpellingList()
         {
-            return SpellingListsClass.ReadSpellingWordsToCollection(SpellingPropertiesClass.SpellingListPath);
+            return SpellingList.ReadFile(SpellingPropertiesClass.SpellingListPath);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Art2MSpell.Source
 
             var sb = new StringBuilder();
 
-            if (SpellingListsClass.CheckUserEnteredSpellingWord(word))
+            if (SpellingList.CheckWord(word))
             {
                 this.correct++;
 
@@ -175,12 +175,12 @@ namespace Art2MSpell.Source
 
             this.index++;
 
-            if (this.index == SpellingWordsCollection.ItemsCount())
+            if (this.index == SpellingWords.ItemsCount())
             {
                 return;
             }
 
-            var word = SpellingWordsCollection.GetItemAt(this.index);
+            var word = SpellingWords.GetItemAt(this.index);
 
             SaySpellingWord(word);
 
@@ -257,7 +257,7 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnQuitButtonClick(object sender, EventArgs e)
         {
-            SpellingWordsCollection.ClearCollection();
+            SpellingWords.ClearCollection();
             this.index = 0;
             SpellingPropertiesClass.OpeningSpellingList = false;
             SpellingPropertiesClass.SpellingListPath = string.Empty;
@@ -276,7 +276,7 @@ namespace Art2MSpell.Source
 
             this.index--;
 
-            var word = SpellingWordsCollection.GetItemAt(this.index);
+            var word = SpellingWords.GetItemAt(this.index);
             SaySpellingWord(word);
 
             this.txtSpellWord.Focus();
@@ -302,7 +302,7 @@ namespace Art2MSpell.Source
             this.SetButtonEnabledState_StartButtonClicked();
             this.ChangeControls_BackgroundColors();
 
-            var word = SpellingWordsCollection.GetItemAt(this.index);
+            var word = SpellingWords.GetItemAt(this.index);
             SaySpellingWord(word);
         }
 
@@ -351,5 +351,7 @@ namespace Art2MSpell.Source
 
             SpellingPropertiesClass.SpellingListPath = string.Empty;
         }
+
+        
     }
 }

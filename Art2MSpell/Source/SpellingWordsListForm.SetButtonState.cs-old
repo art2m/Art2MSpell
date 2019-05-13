@@ -1,15 +1,15 @@
 ﻿// Art2MSpell
-//
+// 
 // SpellingWordsListForm.SetButtonState.cs
-//
+// 
 // art2m
-//
+// 
 // art2m@live.com
-//
-// 05  08  2019
-//
-//      2019
-//
+// 
+// 05  12  2019
+// 
+// 05  08   2019
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -28,12 +28,12 @@ namespace Art2MSpell.Source
     /// <summary>This class is for setting button states.</summary>
     public partial class SpellingWordsListForm
     {
-        #region Set Buttons Enabled State When Button Is Selected
-
         /// <summary>
-        ///     Sets the buttons enabled state when the add to list butt0n is Selected.
+        /// Sets the buttons enabled state when the add to list butt0n is Selected.
         /// </summary>
-        private void SetButtonsEnabledState_AddToListButtonClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void AddToListButtonSetState()
         {
             const bool StateVal = true;
 
@@ -42,7 +42,7 @@ namespace Art2MSpell.Source
             this.SetCancelOperationButtonState(!StateVal);
             this.SetClearListButtonState(!StateVal);
             this.SetCreateNewListButtonState(!StateVal);
-            this.SetDeleteButtonEnableState_AddToListButtonClicked();
+            this.DeleteButtonSetState();
             this.SetDeleteSelectedWordButtonState(!StateVal);
             this.SetDeleteSpellingListButtonState(!StateVal);
             this.SetEditItemButtonState(!StateVal);
@@ -51,11 +51,13 @@ namespace Art2MSpell.Source
             this.SetWordsListBoxState(StateVal);
             this.SetWordsTextBoxState(!StateVal);
         }
-
+      
         /// <summary>
-        ///     Sets the buttons enabled state when the cancel operation button is selected.
+        /// Sets the buttons enabled state when the cancel operation button is selected.
         /// </summary>
-        private void SetButtonsEnabledState_CancelOperationButtonClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void CancelOperationButtonSetStates()
         {
             const bool StateVal = true;
 
@@ -79,9 +81,11 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///     Sets the buttons enabled state when the clear list button is selected.
+        ///  Sets the buttons enabled state when the clear list button is clicked.
         /// </summary>
-        private void SetButtonsEnabledState_ClearListButtonClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void ClearListButtonSetStates()
         {
             const bool StateVal = true;
 
@@ -103,7 +107,7 @@ namespace Art2MSpell.Source
         /// <summary>
         ///     Sets the buttons enabled state when the create new list button is selected.
         /// </summary>
-        private void SetButtonsEnabledState_CreateNewListButtonClicked()
+        private void CreateNewListButtonSetState()
         {
             const bool StateVal = true;
 
@@ -122,10 +126,13 @@ namespace Art2MSpell.Source
             this.SetWordsTextBoxState(!StateVal);
         }
 
+      
         /// <summary>
-        ///     Sets the buttons enabled state when the delete selected word button is selected.
+        /// Sets the buttons enabled state when the delete selected word button is selected.
         /// </summary>
-        private void SetButtonsEnabledState_DeleteSelectedWordButtonClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void DeleteSelectedWordButtonSetState()
         {
             const bool StateVal = true;
 
@@ -143,10 +150,13 @@ namespace Art2MSpell.Source
             this.SetWordsTextBoxState(!StateVal);
         }
 
+       
         /// <summary>
-        ///     Sets the buttons enabled state when the delete spelling list button is selected.
+        /// Sets the buttons enabled state when the delete spelling list button is selected.
         /// </summary>
-        private void SetButtonsEnabledState_DeleteSpellingListButtonClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void DeleteSpellingListButtonSetState()
         {
             const bool StateVal = true;
 
@@ -164,10 +174,13 @@ namespace Art2MSpell.Source
             this.SetWordsTextBoxState(!StateVal);
         }
 
+       
         /// <summary>
-        ///     Sets the buttons enabled state when the edit item button is selected.
+        /// Sets the buttons enabled state when the edit item button is selected.
         /// </summary>
-        private void SetButtonsEnabledState_EditItemButtonClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void EditItemButtonSetState()
         {
             const bool StateVal = true;
 
@@ -185,10 +198,13 @@ namespace Art2MSpell.Source
             this.SetWordsTextBoxState(StateVal);
         }
 
+       
         /// <summary>
-        ///     Sets the state of the Buttons when form is loading.
+        /// Sets the state of the Buttons when form is loading.
         /// </summary>
-        private void SetButtonsEnabledState_FormLoadEvent()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void FormLoadEventSetState()
         {
             const bool StateVal = true;
 
@@ -208,10 +224,13 @@ namespace Art2MSpell.Source
             this.SetWordsTextBoxState(!StateVal);
         }
 
+        
         /// <summary>
-        ///     Sets the buttons enabled state When the open spelling list button is selected.
+        /// Sets the buttons enabled state When the open spelling list button is selected.
         /// </summary>
-        private void SetButtonsEnabledState_OpenSpellingListButtonStateClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void OpenSpellingListButtonStateSetState()
         {
             const bool StateVal = true;
 
@@ -230,9 +249,11 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///     Sets the buttons enabled state When saving spelling list button is selected.
+        /// Sets the buttons enabled state When saving spelling list button is selected.
         /// </summary>
-        private void SetButtonsEnabledState_SaveSpellingListButtonStateClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void SaveSpellingListButtonSetState()
         {
             const bool StateVal = true;
 
@@ -251,17 +272,20 @@ namespace Art2MSpell.Source
             this.SetWordsTextBoxState(!StateVal);
         }
 
+      
         /// <summary>
-        ///     Sets the buttons enabled state when selected index changed.
+        /// Sets the buttons enabled state when selected index changed.
         /// </summary>
-        private void SetButtonsEnabledState_WordsListSelectedIndexChanges()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void ListSelectedIndexChangesSetState()
         {
             const bool StateVal = true;
 
             this.SetAddNewItemButtonState(!StateVal);
             this.SetAddToListButtonState(!StateVal);
             this.SetCancelOperationButtonState(!StateVal);
-            this.SetClearListButtonState_WordsListSelectedIndexChanged();
+            this.WordsListSelectedIndexChangedSetState();
             this.SetCloseButtonState(StateVal);
             this.SetCreateNewListButtonState(!StateVal);
             this.SetDeleteSelectedWordButtonState(StateVal);
@@ -273,9 +297,11 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///     Sets the clear list button state when the words list selected index changes.
+        /// Sets the clear list button state when the words list selected index changes.
         /// </summary>
-        private void SetClearListButtonState_WordsListSelectedIndexChanged()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void WordsListSelectedIndexChangedSetState()
         {
             if (SpellingPropertiesClass.SpellingListIsDirty)
             {
@@ -286,10 +312,13 @@ namespace Art2MSpell.Source
             this.SetClearListButtonState(true);
         }
 
+       
         /// <summary>
-        ///     Sets the create new spelling list button enabled state when cancel operation button clicked.
+        /// Sets the create new spelling list button enabled state when cancel operation button clicked.
         /// </summary>
-        private void SetButtonEnabledStat_CancelButtonClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void CancelButtonSetState()
         {
             if (SpellingPropertiesClass.CreatingNewSpellingList)
             {
@@ -298,9 +327,11 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///     Sets the buttons enabled state when add new item button is selected.
+        /// Sets the buttons enabled state when add new item button is selected.
         /// </summary>
-        private void SetButtonsEnabledState_AddNewButtonClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void AddNewButtonSetState()
         {
             const bool StateVal = true;
 
@@ -318,10 +349,13 @@ namespace Art2MSpell.Source
             this.SetWordsTextBoxState(StateVal);
         }
 
+     
         /// <summary>
-        ///     Sets the delete button enable state when the add to list button is selected.
+        /// Sets the delete button enable state when the add to list button is selected.
         /// </summary>
-        private void SetDeleteButtonEnableState_AddToListButtonClicked()
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void DeleteButtonSetState()
         {
             if (SpellingPropertiesClass.SpellingListIsDirty)
             {
@@ -332,16 +366,19 @@ namespace Art2MSpell.Source
             this.SetDeleteSpellingListButtonState(false);
         }
 
+        
         /// <summary>
-        ///     Sets the delete list button state when cancel operation button is selected.
+        /// Sets the delete list button state when cancel operation button is selected.
         /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
         private void SetDeleteListButtonState_CancelOperationButtonClicked()
         {
             this.SetDeleteSpellingListButtonEnabledState_CancelOperationButtonClicked();
 
-            this.SetButtonEnabledStat_CancelButtonClicked();
+            this.CancelButtonSetState();
 
-            this.SetDeleteSpellingListButtonState(true);
+            this.SetDeleteSpellingListButtonState(false);
         }
 
         /// <summary>
@@ -438,10 +475,6 @@ namespace Art2MSpell.Source
 
             this.SetSaveListButtonState(false);
         }
-
-        #endregion Set Buttons Enabled State When Button Is Selected
-
-        #region Set Enabled State Of Each Individual Control
 
         /// <summary>
         ///     Sets the state of the add new item button.
@@ -559,7 +592,5 @@ namespace Art2MSpell.Source
         {
             this.cboWord.Enabled = stateVal;
         }
-
-        #endregion Set Enabled State Of Each Individual Control
     }
 }

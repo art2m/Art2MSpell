@@ -1,14 +1,14 @@
 ﻿//---------------------------------------------------------------------------------------------------------------
 // Art2MSpell
-//
-// PossibleWordsListCollection.cs
+// 
+// SpellingWords.cs
 //
 // File:     Art2MSpell.sln
 //
 // Author:   art2m_000]
-// Email     art2m@live.com
-// Company:
-// Date:     5/8/2019
+// Email     art2m@live.com   
+// Company:  
+// Date:     5/9/2019
 //
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -23,12 +23,22 @@ using System.Collections.Generic;
 
 namespace Art2MSpell.Collections
 {
-    public static class PossibleWordsListCollection
+    /// <summary>
+    /// Spelling Words Collection Holds words from current spelling list.
+    /// </summary>
+    public static class SpellingWords
+
     {
+        #region Fields
+
         /// <summary>
-        /// Contains collection of words to possibly become a spelling list.
+        /// Contains collection of words from a spelling list.
         /// </summary>
         private static readonly List<string> WordsList = new List<string>();
+
+        #endregion Fields
+
+        #region Public Methods
 
         /// <summary>
         /// Adds the item.
@@ -52,10 +62,7 @@ namespace Art2MSpell.Collections
         /// </summary>
         /// <param name="word">Check if the word is contained in the collection.</param>
         /// <returns><c>true</c> if the specified word contains item; otherwise, <c>false</c>.</returns>
-        public static bool ContainsItem(string word)
-        {
-            return WordsList.Contains(word);
-        }
+        public static bool ContainsItem(string word) => WordsList.Contains(word);
 
         /// <summary>
         /// Gets all items.
@@ -65,7 +72,8 @@ namespace Art2MSpell.Collections
         {
             var count = WordsList.Count;
 
-            if (count - 1 < 1)
+            // No genre Folders Found
+            if ((count - 1) < 1)
             {
                 return System.Array.Empty<string>();
             }
@@ -86,39 +94,27 @@ namespace Art2MSpell.Collections
         /// </summary>
         /// <param name="index">The items index.</param>
         /// <returns>The item.</returns>
-        public static string GetItemAt(int index)
-        {
-            return WordsList[index];
-        }
+        public static string GetItemAt(int index) => WordsList[index];
 
         /// <summary>
         /// Gets the index of the item.
         /// </summary>
         /// <param name="word">The word to find index for.</param>
         /// <returns>Return the index of the item.</returns>
-        public static int GetItemIndex(string word)
-        {
-            return WordsList.IndexOf(word);
-        }
+        public static int GetItemIndex(string word) => WordsList.IndexOf(word);
 
         /// <summary>
         /// Items the count.
         /// </summary>
         /// <returns>The items count.</returns>
-        public static int ItemsCount()
-        {
-            return WordsList.Count;
-        }
+        public static int ItemsCount() => WordsList.Count;
 
         /// <summary>
         /// Removes the item.
         /// </summary>
         /// <param name="word">The word to be removed.</param>
         /// <returns>true if word removed else false.</returns>
-        public static bool RemoveItem(string word)
-        {
-            return WordsList.Remove(word);
-        }
+        public static bool RemoveItem(string word) => WordsList.Remove(word);
 
         /// <summary>
         /// Removes the item at.
@@ -134,6 +130,8 @@ namespace Art2MSpell.Collections
 
             // Check to see if item is no longer in collection
             return !ContainsItem(item);
+
+            // Item still in collection remove failed.
         }
 
         /// <summary>
@@ -143,5 +141,7 @@ namespace Art2MSpell.Collections
         {
             WordsList.Sort();
         }
+
+        #endregion Public Methods
     }
 }

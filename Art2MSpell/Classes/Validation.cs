@@ -200,7 +200,7 @@ namespace Art2MSpell.Classes
 
             var valid = string.Compare(
                 SpellingPropertiesClass.GetArt2MSpellHeader,
-                Spelling,
+                word,
                 StringComparison.CurrentCultureIgnoreCase);
 
             return SpellingPropertiesClass.Art2MSpellSpellingList = valid == 0;
