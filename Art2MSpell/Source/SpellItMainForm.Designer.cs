@@ -35,13 +35,13 @@
             this.spellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNewSpellList = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDisplaySpellingWords = new System.Windows.Forms.ToolStripMenuItem();
-            this.pnlMain = new System.Windows.Forms.Panel();
-            this.btnDisplaySpellingWords = new System.Windows.Forms.Button();
-            this.ExitButton = new System.Windows.Forms.Button();
-            this.btnSpellingList = new System.Windows.Forms.Button();
             this.spellItToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.ExitButton = new System.Windows.Forms.Button();
+            this.btnPracticeSpellingWords = new System.Windows.Forms.Button();
+            this.btnSpellingList = new System.Windows.Forms.Button();
+            this.flpButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.MainMenuMenuStrip.SuspendLayout();
-            this.pnlMain.SuspendLayout();
+            this.flpButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainMenuMenuStrip
@@ -51,7 +51,7 @@
             this.spellToolStripMenuItem});
             this.MainMenuMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainMenuMenuStrip.Name = "MainMenuMenuStrip";
-            this.MainMenuMenuStrip.Size = new System.Drawing.Size(780, 24);
+            this.MainMenuMenuStrip.Size = new System.Drawing.Size(784, 24);
             this.MainMenuMenuStrip.TabIndex = 0;
             this.MainMenuMenuStrip.Text = "MainMenu";
             // 
@@ -83,7 +83,7 @@
             // mnuNewSpellList
             // 
             this.mnuNewSpellList.Name = "mnuNewSpellList";
-            this.mnuNewSpellList.Size = new System.Drawing.Size(198, 22);
+            this.mnuNewSpellList.Size = new System.Drawing.Size(137, 22);
             this.mnuNewSpellList.Text = "Spelling List";
             this.mnuNewSpellList.ToolTipText = "Create, edit, or delete a spenning list.";
             this.mnuNewSpellList.Click += new System.EventHandler(this.SpellListMenuItem_Click);
@@ -91,75 +91,78 @@
             // mnuDisplaySpellingWords
             // 
             this.mnuDisplaySpellingWords.Name = "mnuDisplaySpellingWords";
-            this.mnuDisplaySpellingWords.Size = new System.Drawing.Size(198, 22);
-            this.mnuDisplaySpellingWords.Text = "Practice Spelling Words";
+            this.mnuDisplaySpellingWords.Size = new System.Drawing.Size(137, 22);
+            this.mnuDisplaySpellingWords.Text = "Practice";
             this.mnuDisplaySpellingWords.ToolTipText = "Display spelling words to spell.";
-            this.mnuDisplaySpellingWords.Click += new System.EventHandler(this.DisplaySpellingWordsMenuItem_Click);
-            // 
-            // pnlMain
-            // 
-            this.pnlMain.Controls.Add(this.btnDisplaySpellingWords);
-            this.pnlMain.Controls.Add(this.ExitButton);
-            this.pnlMain.Controls.Add(this.btnSpellingList);
-            this.pnlMain.Location = new System.Drawing.Point(5, 24);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(774, 534);
-            this.pnlMain.TabIndex = 1;
-            // 
-            // btnDisplaySpellingWords
-            // 
-            this.btnDisplaySpellingWords.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisplaySpellingWords.Location = new System.Drawing.Point(199, 245);
-            this.btnDisplaySpellingWords.Name = "btnDisplaySpellingWords";
-            this.btnDisplaySpellingWords.Size = new System.Drawing.Size(160, 44);
-            this.btnDisplaySpellingWords.TabIndex = 0;
-            this.btnDisplaySpellingWords.Text = "Practice Spelling Words";
-            this.spellItToolTip.SetToolTip(this.btnDisplaySpellingWords, "Display spelling words to spell.");
-            this.btnDisplaySpellingWords.UseVisualStyleBackColor = true;
-            this.btnDisplaySpellingWords.Click += new System.EventHandler(this.DisplaySpellingWordsButton_Click);
+            this.mnuDisplaySpellingWords.Click += new System.EventHandler(this.PracticeWordsMenuItem_Click);
             // 
             // ExitButton
             // 
+            this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ExitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExitButton.Location = new System.Drawing.Point(657, 490);
+            this.ExitButton.Location = new System.Drawing.Point(664, 517);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(108, 32);
-            this.ExitButton.TabIndex = 2;
+            this.ExitButton.TabIndex = 5;
             this.ExitButton.Text = "Exit";
             this.spellItToolTip.SetToolTip(this.ExitButton, "Exit the  spelling program.");
             this.ExitButton.UseVisualStyleBackColor = true;
             this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
+            // btnPracticeSpellingWords
+            // 
+            this.btnPracticeSpellingWords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPracticeSpellingWords.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPracticeSpellingWords.Location = new System.Drawing.Point(13, 6);
+            this.btnPracticeSpellingWords.Name = "btnPracticeSpellingWords";
+            this.btnPracticeSpellingWords.Size = new System.Drawing.Size(160, 44);
+            this.btnPracticeSpellingWords.TabIndex = 5;
+            this.btnPracticeSpellingWords.Text = "Practice Spelling Words";
+            this.spellItToolTip.SetToolTip(this.btnPracticeSpellingWords, "Display spelling words to spell.");
+            this.btnPracticeSpellingWords.UseVisualStyleBackColor = true;
+            this.btnPracticeSpellingWords.Click += new System.EventHandler(this.PracticeWordsButton_Click);
+            // 
             // btnSpellingList
             // 
+            this.btnSpellingList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSpellingList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSpellingList.Location = new System.Drawing.Point(416, 245);
+            this.btnSpellingList.Location = new System.Drawing.Point(276, 9);
+            this.btnSpellingList.Margin = new System.Windows.Forms.Padding(100, 0, 0, 0);
             this.btnSpellingList.Name = "btnSpellingList";
             this.btnSpellingList.Size = new System.Drawing.Size(160, 44);
-            this.btnSpellingList.TabIndex = 1;
+            this.btnSpellingList.TabIndex = 6;
             this.btnSpellingList.Text = "Spelling List";
             this.spellItToolTip.SetToolTip(this.btnSpellingList, "Create, edit, or delete a spelling list.");
             this.btnSpellingList.UseVisualStyleBackColor = true;
             this.btnSpellingList.Click += new System.EventHandler(this.SpellingListButton_Click);
             // 
+            // flpButtons
+            // 
+            this.flpButtons.Controls.Add(this.btnPracticeSpellingWords);
+            this.flpButtons.Controls.Add(this.btnSpellingList);
+            this.flpButtons.Location = new System.Drawing.Point(139, 251);
+            this.flpButtons.Name = "flpButtons";
+            this.flpButtons.Padding = new System.Windows.Forms.Padding(10, 3, 0, 0);
+            this.flpButtons.Size = new System.Drawing.Size(457, 58);
+            this.flpButtons.TabIndex = 6;
+            // 
             // SpellItMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(780, 557);
-            this.Controls.Add(this.pnlMain);
+            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.flpButtons);
+            this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.MainMenuMenuStrip);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MainMenuStrip = this.MainMenuMenuStrip;
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(800, 600);
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "SpellItMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Spelling  Program";
+            this.Resize += new System.EventHandler(this.SpellItMainForm_Resize);
             this.MainMenuMenuStrip.ResumeLayout(false);
             this.MainMenuMenuStrip.PerformLayout();
-            this.pnlMain.ResumeLayout(false);
+            this.flpButtons.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,12 +175,12 @@
         private System.Windows.Forms.ToolStripMenuItem spellToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
         private System.Windows.Forms.ToolStripMenuItem mnuNewSpellList;
-        private System.Windows.Forms.Panel pnlMain;
-        private System.Windows.Forms.Button btnSpellingList;
-        private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.ToolTip spellItToolTip;
-        private System.Windows.Forms.Button btnDisplaySpellingWords;
         private System.Windows.Forms.ToolStripMenuItem mnuDisplaySpellingWords;
+        private System.Windows.Forms.Button ExitButton;
+        private System.Windows.Forms.FlowLayoutPanel flpButtons;
+        private System.Windows.Forms.Button btnPracticeSpellingWords;
+        private System.Windows.Forms.Button btnSpellingList;
     }
 }
 

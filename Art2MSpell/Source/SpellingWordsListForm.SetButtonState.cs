@@ -65,7 +65,10 @@ namespace Art2MSpell.Source
             this.SetClearListButtonState(!StateVal);
             this.SetCreateNewListButtonState(!StateVal);
 
-            this.SetDeleteListButtonState_CancelOperationButtonClicked();
+            if (SpellingPropertiesClass.OpenedSpellingList)
+            {
+                this.SetDeleteListButtonState_CancelOperationButtonClicked();
+            }
 
             this.SetDeleteSelectedWordButtonState(!StateVal);
             this.SetEditItemButtonState(!StateVal);

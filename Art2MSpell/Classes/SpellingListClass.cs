@@ -1,22 +1,15 @@
-﻿// //-----------------------------------------------------------------------------------------------------------------------------------
-// <copyright file="None">
-//
-// Company copyright tag.
-//
-//  </copyright>
-//
-// Art2MSpell
-//
-// SpellingListsClass.cs
-//
+﻿// Art2MSpell
+// 
+// SpellingListClass.cs
+// 
 // art2m
-//
+// 
 // art2m@live.com
-//
-// 05  10  2019
-//
+// 
+// 05  14  2019
+// 
 // 05  05   2019
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -27,7 +20,6 @@
 // GNU General Public License for more details.
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// //-----------------------------------------------------------------------------------------------------------------------------------
 
 namespace Art2MSpell.Classes
 {
@@ -44,88 +36,10 @@ namespace Art2MSpell.Classes
     /// <summary>
     ///     Spelling list class reads and writes spelling list to file. Retrieves path to spelling lists.
     /// </summary>
-    public static class SpellingList
+    public static class SpellingListClass
     {
         /// <summary>Declare speech synthesizer object.</summary>
         private static readonly SpeechSynthesizer Ss = new SpeechSynthesizer();
-
-        /// <summary>
-        ///     Check to see if the word is already in the list box.
-        /// </summary>
-        /// <param name="duplicate">The items from the list box.</param>
-        /// /// <param name="addWord">The word to check for.</param>
-        /// <returns>True if word is all ready in the list else false.</returns>
-        /// <created>,5/10/2019</created>
-        /// <changed>,5/10/2019</changed>
-        public static bool CheckDuplicateWord(List<string> duplicate, string addWord)
-        {
-            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
-            if (declaringType != null)
-            {
-                MyMessages.NameOfClass = declaringType.Name;
-            }
-
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-
-            if (!LoopThrewWordsList(duplicate, addWord))
-            {
-                return false;
-            }
-
-            MyMessages.InformationMessage = "The word entered is all ready in the list of spelling words. ";
-                MyMessages.ShowInformationMessageBox(
-                    MyMessages.InformationMessage,
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod);
-
-                return true;
-        }
-
-        /// <summary>
-        ///  Loop threw the words from the list box. Call method to check for duplicate words.
-        /// </summary>
-        /// <param name="duplicate">The list of words contained in the list box.</param>
-        /// <param name="addWord">The word being added by user.</param>
-        /// <returns>True if duplicate word found in lest box else false.</returns>
-        /// <created>art2m,5/13/2019</created>
-        /// <changed>art2m,5/13/2019</changed>
-        private static bool LoopThrewWordsList(IReadOnlyCollection<string> duplicate, string addWord)
-        {
-            for (var index = 0; index < duplicate.Count; index++)
-            {
-                // If false not duplicate.
-                if (!CompareWordListToNewWord(duplicate.ElementAt(index), addWord))
-                {
-                    continue;
-                }
-
-                // true  duplicate word.
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Compare the words in the list with new word to add.
-        /// </summary>
-        /// /// <param name="listWord">The word from the list box to be compared with new word.</param>
-        /// <param name="addWord">The word to be evaluated.</param>
-        /// <returns>True if word to be added matches the word from the list else false.</returns>
-        /// <created>art2m,5/13/2019</created>
-        /// <changed>art2m,5/13/2019</changed>
-        private static bool CompareWordListToNewWord(string listWord, string addWord)
-        {
-            var same = string.Compare(listWord, addWord, StringComparison.CurrentCultureIgnoreCase);
-
-            if (same != 0)
-            {
-                return false;
-            }
-
-            return true;
-
-        }
 
         /// <summary>
         ///     Gets list of words from dictionary for the misspelled word.
@@ -148,6 +62,39 @@ namespace Art2MSpell.Classes
         }
 
         /// <summary>
+        ///     Check to see if the word is already in the list box.
+        /// </summary>
+        /// <param name="duplicate">The items from the list box.</param>
+        /// ///
+        /// <param name="addWord">The word to check for.</param>
+        /// <returns>True if word is all ready in the list else false.</returns>
+        /// <created>,5/10/2019</created>
+        /// <changed>,5/10/2019</changed>
+        public static bool CheckDuplicateWord(List<string> duplicate, string addWord)
+        {
+            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
+            if (declaringType != null)
+            {
+                MyMessages.NameOfClass = declaringType.Name;
+            }
+
+            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+
+            if (!LoopThrewWordsList(duplicate, addWord))
+            {
+                return false;
+            }
+
+            MyMessages.InformationMessage = "The word entered is all ready in the list of spelling words. ";
+            MyMessages.ShowInformationMessageBox(
+                MyMessages.InformationMessage,
+                MyMessages.NameOfClass,
+                MyMessages.NameOfMethod);
+
+            return true;
+        }
+
+        /// <summary>
         ///     Check spelling word for the correct spelling.
         ///     If incorrect spelling the get a list of possible correct spelling.
         /// </summary>
@@ -166,46 +113,6 @@ namespace Art2MSpell.Classes
                 }
 
                 return true;
-            }
-        }
-
-        /// <summary>
-        ///  Validate real spelling list by reading header from file should be Art2MmSpell!!
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        public static bool ReadHeader(string filePath)
-        {
-            try
-            {
-                using (var fileRead = new StreamReader(filePath))
-                {
-                    var word = fileRead.ReadLine();
-
-                    return Validation.ValidateThisIsArt2MSpellSpellingList(word);
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                MyMessages.ErrorMessage = "Invalid file path. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
-                    ex.Message);
-                return false;
-            }
-            catch (IOException ex)
-            {
-                MyMessages.ErrorMessage = "Read error has occurred. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
-                    ex.Message);
-                return false;
             }
         }
 
@@ -234,6 +141,7 @@ namespace Art2MSpell.Classes
                             cnt = 1;
                             continue;
                         }
+
                         // check for valid spell list by checking words are all letters and not empty.
                         if (!Validation.ValidateSpellingWord(word))
                         {
@@ -245,6 +153,46 @@ namespace Art2MSpell.Classes
                 }
 
                 return true;
+            }
+            catch (ArgumentException ex)
+            {
+                MyMessages.ErrorMessage = "Invalid file path. " + filePath;
+                MyMessages.BuildErrorString(
+                    MyMessages.NameOfClass,
+                    MyMessages.NameOfMethod,
+                    MyMessages.ErrorMessage,
+                    ex.Message);
+                return false;
+            }
+            catch (IOException ex)
+            {
+                MyMessages.ErrorMessage = "Read error has occurred. " + filePath;
+                MyMessages.BuildErrorString(
+                    MyMessages.NameOfClass,
+                    MyMessages.NameOfMethod,
+                    MyMessages.ErrorMessage,
+                    ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///     Validate real spelling list by reading header from file should be Art2MmSpell!!
+        /// </summary>
+        /// <param name="filePath">The path to the file.</param>
+        /// <returns>True if valid spelling list else false.</returns>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        public static bool ReadHeader(string filePath)
+        {
+            try
+            {
+                using (var fileRead = new StreamReader(filePath))
+                {
+                    var word = fileRead.ReadLine();
+
+                    return Validation.ValidateThisIsArt2MSpellSpellingList(word);
+                }
             }
             catch (ArgumentException ex)
             {
@@ -325,6 +273,47 @@ namespace Art2MSpell.Classes
                     ex.Message);
                 return false;
             }
+        }
+
+        /// <summary>
+        ///     Compare the words in the list with new word to add.
+        /// </summary>
+        /// ///
+        /// <param name="listWord">The word from the list box to be compared with new word.</param>
+        /// <param name="addWord">The word to be evaluated.</param>
+        /// <returns>True if word to be added matches the word from the list else false.</returns>
+        /// <created>art2m,5/13/2019</created>
+        /// <changed>art2m,5/13/2019</changed>
+        private static bool CompareWordListToNewWord(string listWord, string addWord)
+        {
+            var same = string.Compare(listWord, addWord, StringComparison.CurrentCultureIgnoreCase);
+
+            return same == 0;
+        }
+
+        /// <summary>
+        ///     Loop threw the words from the list box. Call method to check for duplicate words.
+        /// </summary>
+        /// <param name="duplicate">The list of words contained in the list box.</param>
+        /// <param name="addWord">The word being added by user.</param>
+        /// <returns>True if duplicate word found in lest box else false.</returns>
+        /// <created>art2m,5/13/2019</created>
+        /// <changed>art2m,5/13/2019</changed>
+        private static bool LoopThrewWordsList(IReadOnlyCollection<string> duplicate, string addWord)
+        {
+            for (var index = 0; index < duplicate.Count; index++)
+            {
+                // If false not duplicate.
+                if (!CompareWordListToNewWord(duplicate.ElementAt(index), addWord))
+                {
+                    continue;
+                }
+
+                // true  duplicate word.
+                return true;
+            }
+
+            return false;
         }
     }
 }

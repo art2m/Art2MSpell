@@ -23,6 +23,9 @@ namespace Art2MSpell.Classes
     /// </summary>
     public static class SpellingPropertiesClass
     {
+
+        private static bool _creatingNewSpellingList;
+
         /// <summary>
         ///     The get spell it header so that we know spelling list is
         ///     used by Spell-It program.
@@ -105,6 +108,11 @@ namespace Art2MSpell.Classes
         /// </summary>
         /// <value>The spelling word text box value.</value>
         public static string SpellingWordTextBoxValue { get; set; } = string.Empty;
+        
+        /// <summary>Gets or sets a value indicating whether [opened spelling list].</summary>
+        /// <value>
+        ///   <c>true</c> if [opened spelling list]; otherwise, <c>false</c>.</value>
+        public static bool OpenedSpellingList { get; set; }
 
         #endregion Public Properties
     }

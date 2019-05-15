@@ -27,8 +27,6 @@ namespace Art2MSpell.Source
     /// </summary>
     public partial class SpellItMainForm : Form
     {
-        #region Public Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SpellItMainForm"/> class.
         /// </summary>
@@ -38,16 +36,14 @@ namespace Art2MSpell.Source
             this.InitializeControls();
         }
 
-        #endregion Public Constructors
-
-        #region Private Methods
-
         /// <summary>
-        /// Handles the Click event of the DisplaySpellingWordsButton control.
+        /// Show the practice form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void DisplaySpellingWordsButton_Click(object sender, EventArgs e)
+        /// <param name="e">Instance containing the event data.</param>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
+        private void PracticeWordsButton_Click(object sender, EventArgs e)
         {
             using (var frmPractice = new PracticeSpellingWordsForm())
             {
@@ -56,11 +52,13 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Handles the Click event of the newSpellList control.
+        /// Show the practice form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void DisplaySpellingWordsMenuItem_Click(object sender, EventArgs e)
+        /// <param name="e">Instance containing the event data.</param>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
+        private void PracticeWordsMenuItem_Click(object sender, EventArgs e)
 
         {
             using (var frmSpellWords = new PracticeSpellingWordsForm())
@@ -70,20 +68,24 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Handles the Click event of the CloseButton control.
+        /// Exit the program.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">Instance containing the event data.</param>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
         private void ExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
         /// <summary>
-        /// Handles the Click event of the CloseMenu control.
+        ///  Exit the program.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">Instance containing the event data.</param>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
         private void ExitMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -91,19 +93,21 @@ namespace Art2MSpell.Source
 
         private void InitializeControls()
         {
-            this.pnlMain.BackColor = Color.Aquamarine;
+            this.BackColor = Color.Aquamarine;
 
             this.btnSpellingList.BackColor = Color.LightSeaGreen;
-            this.btnDisplaySpellingWords.BackColor = Color.Chartreuse;
+            this.btnPracticeSpellingWords.BackColor = Color.Chartreuse;
 
             this.ExitButton.BackColor = Color.RosyBrown;
         }
 
         /// <summary>
-        /// Handles the Click event of the NewSpellListButton control.
+        ///  Show the spelling list form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">Instance containing the event data.</param>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
         private void SpellingListButton_Click(object sender, EventArgs e)
         {
             using (var frmSpellList = new SpellingWordsListForm())
@@ -113,10 +117,12 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Handles the Click event of the SpellListMenuItem control.
+        ///  show the spelling list form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">Instance containing the event data.</param>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
         private void SpellListMenuItem_Click(object sender, EventArgs e)
         {
             using (var frmSpellList = new SpellingWordsListForm())
@@ -125,6 +131,17 @@ namespace Art2MSpell.Source
             }
         }
 
-        #endregion Private Methods
+        /// <summary>
+        /// Center buttons on screen.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Instance containing the data.</param>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
+        private void SpellItMainForm_Resize(object sender, EventArgs e)
+        {
+            this.flpButtons.Left = (this.ClientSize.Width - this.flpButtons.Width) / 2;
+            this.flpButtons.Top = (this.ClientSize.Height - this.flpButtons.Height) / 2;
+        }
     }
 }

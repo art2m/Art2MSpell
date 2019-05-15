@@ -99,21 +99,19 @@ namespace Art2MSpell.Source
 
             var sb = new StringBuilder();
 
-            if (SpellingList.CheckWord(word))
+            if (SpellingListClass.CheckWord(word))
             {
                 this.correct++;
 
                 sb.Append("Your spelling of the word ");
                 sb.Append(word);
-                sb.AppendLine(" is correct.");
+                sb.AppendLine(" is correct!");
             }
             else
             {
                 this.wrong++;
 
-                sb.Append("Your spelling of the word ");
-                sb.Append(word);
-                sb.AppendLine(" is wrong.");
+                sb.Append("Your spelling of the word is wrong!");
             }
 
             this.ShowWordsScore();
@@ -125,7 +123,7 @@ namespace Art2MSpell.Source
         /// <returns>True if spelling list files is read into the collection else false,</returns>
         private static bool GetSpellingWordsFromSpellingList()
         {
-            return SpellingList.ReadFile(SpellingPropertiesClass.SpellingListPath);
+            return SpellingListClass.ReadFile(SpellingPropertiesClass.SpellingListPath);
         }
 
         /// <summary>
@@ -136,7 +134,7 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/13/2019</changed>
         private bool GetWordsFromFile()
         {
-            if (!SpellingList.ReadHeader(SpellingPropertiesClass.SpellingListPath))
+            if (!SpellingListClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
@@ -144,7 +142,7 @@ namespace Art2MSpell.Source
             SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
             SpellingPropertiesClass.Art2MSpellSpellingList = true;
 
-            if (!SpellingList.ReadFile(SpellingPropertiesClass.SpellingListPath))
+            if (!SpellingListClass.ReadFile(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }

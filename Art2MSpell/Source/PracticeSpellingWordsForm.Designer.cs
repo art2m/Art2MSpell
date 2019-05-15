@@ -81,19 +81,19 @@
             // mnuOpenSpellingList
             // 
             this.mnuOpenSpellingList.Name = "mnuOpenSpellingList";
-            this.mnuOpenSpellingList.Size = new System.Drawing.Size(169, 22);
+            this.mnuOpenSpellingList.Size = new System.Drawing.Size(180, 22);
             this.mnuOpenSpellingList.Text = "Open Spelling List";
             this.mnuOpenSpellingList.Click += new System.EventHandler(this.OnOpenSpellingListMenuItemClick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(166, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // mnuClose
             // 
             this.mnuClose.Name = "mnuClose";
-            this.mnuClose.Size = new System.Drawing.Size(169, 22);
+            this.mnuClose.Size = new System.Drawing.Size(180, 22);
             this.mnuClose.Text = "Close";
             this.mnuClose.ToolTipText = "Close the display spelling word form.";
             this.mnuClose.Click += new System.EventHandler(this.OnCloseMenuItemClick);
