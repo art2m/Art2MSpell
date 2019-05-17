@@ -24,8 +24,6 @@ namespace Art2MSpell.Classes
     /// <summary>Create message boxes.</summary>
     public static class MyMessages
     {
-        #region PROPERTIES PUBLIC
-
         /// <summary>
         /// The error message to be displayed.
         /// </summary>
@@ -52,13 +50,14 @@ namespace Art2MSpell.Classes
         public static string QuestionMessage { get; set; }
 
         /// <summary>
+        /// The caption to show in the dialog form.
+        /// </summary>
+        public static string Caption { get; set; }
+
+        /// <summary>
         /// Contains the warning message to be displayed.
         /// </summary>
         public static string WarningMessage { get; set; }
-
-        #endregion PROPERTIES PUBLIC
-
-        #region Public Methods
 
         /// <summary>
         /// Builds the error string.
@@ -67,7 +66,10 @@ namespace Art2MSpell.Classes
         /// <param name="methodName">Method name.</param>
         /// <param name="errorMsg">The error message to be displayed.</param>
         /// <param name="exceptionMessage">Exception message.</param>
-        public static void BuildErrorString(string className, string methodName, string errorMsg,
+        public static void BuildErrorString(
+            string className,
+            string methodName,
+            string errorMsg,
             string exceptionMessage)
         {
             var sb = new StringBuilder(className);
@@ -103,12 +105,14 @@ namespace Art2MSpell.Classes
         }
 
         /// <summary>
-        /// Display error message box with method name and message.
+        /// Display error message box with class name, method name and message.
         /// </summary>
         public static void ShowErrorMessageBox()
         {
             const MessageBoxButtons MsgboxButtons = MessageBoxButtons.OK;
-            MessageBox.Show(ErrorMessage, NameOfMethod, MsgboxButtons, MessageBoxIcon.Warning);
+            var location = string.Concat(NameOfClass, ": ");
+            location = string.Concat(location, NameOfMethod);
+            MessageBox.Show(ErrorMessage, location, MsgboxButtons, MessageBoxIcon.Warning);
         }
 
         /// <summary>
@@ -200,7 +204,5 @@ namespace Art2MSpell.Classes
             const MessageBoxButtons MsgboxButtons = MessageBoxButtons.OK;
             MessageBox.Show(WarningMessage, NameOfMethod, MsgboxButtons, MessageBoxIcon.Warning);
         }
-
-        #endregion Public Methods
     }
 }

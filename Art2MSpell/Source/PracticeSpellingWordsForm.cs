@@ -24,6 +24,7 @@
 namespace Art2MSpell.Source
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.Speech.Synthesis;
     using System.Text;
@@ -38,6 +39,16 @@ namespace Art2MSpell.Source
         /// array of list box words.
         /// </summary>
         private string[] allWords;
+
+        /// <summary>
+        /// Holds misspelled words.
+        /// </summary>
+        private List<string> misspelled;
+
+        /// <summary>
+        /// Spelling word that is being checked for spelling.
+        /// </summary>
+        private string WordAsked;
 
         /// <summary>
         ///     The number of words spelled correctly.
@@ -70,6 +81,7 @@ namespace Art2MSpell.Source
         public PracticeSpellingWordsForm()
         {
             this.InitializeComponent();
+            this.misspelled = new List<string>();
         }
 
         /// <summary>
@@ -85,9 +97,12 @@ namespace Art2MSpell.Source
             this.SetQuitButton_BackgroundColor();
             this.SetRepeatWordButton_BackgroundColor();
             this.SetScoreGroupBox_BackgroundColor();
-            this.SetSpellingWordsGroupBox_BackgroundColor();
-            this.SetSpellingWordsGroupBox_BackgroundColor();
             this.SetStartButton_BackgroundColor();
+
+            // TODO: Add Save And Get spelling list paths!
+            // TODO: Add collection for words spelled wrong. So they can respell wrong!
+            // TODO: Add thread support.
+            // TODO: Add resize form.
         }
 
         /// <summary>
@@ -105,13 +120,17 @@ namespace Art2MSpell.Source
 
                 sb.Append("Your spelling of the word ");
                 sb.Append(word);
-                sb.AppendLine(" is correct!");
+                sb.Append(" is correct!");
             }
             else
             {
                 this.wrong++;
 
-                sb.Append("Your spelling of the word is wrong!");
+                sb.Append("Your spelling of the word ");
+                sb.Append(word);
+                sb.Append(" is wrong!");
+
+                this.misspelled.Add(word);
             }
 
             this.ShowWordsScore();
@@ -123,7 +142,7 @@ namespace Art2MSpell.Source
         /// <returns>True if spelling list files is read into the collection else false,</returns>
         private static bool GetSpellingWordsFromSpellingList()
         {
-            return SpellingListClass.ReadFile(SpellingPropertiesClass.SpellingListPath);
+            return SpellingReadWriteClass.ReadFile(SpellingPropertiesClass.SpellingListPath);
         }
 
         /// <summary>
@@ -134,7 +153,7 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/13/2019</changed>
         private bool GetWordsFromFile()
         {
-            if (!SpellingListClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
+            if (!SpellingReadWriteClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
@@ -142,7 +161,7 @@ namespace Art2MSpell.Source
             SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
             SpellingPropertiesClass.Art2MSpellSpellingList = true;
 
-            if (!SpellingListClass.ReadFile(SpellingPropertiesClass.SpellingListPath))
+            if (!SpellingReadWriteClass.ReadFile(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
@@ -199,6 +218,7 @@ namespace Art2MSpell.Source
 
             this.index++;
 
+            // Reached end of spelling list words.
             if (this.index == this.allWords.Length)
             {
                 this.SetButtonsEnabledState_NextWordButtonClicked();
@@ -206,6 +226,7 @@ namespace Art2MSpell.Source
                 this.SetPauseButton_BackgroundColor();
                 this.SetRepeatWordButton_BackgroundColor();
                 this.SetQuitButton_BackgroundColor();
+
                 return;
             }
 
@@ -285,7 +306,7 @@ namespace Art2MSpell.Source
         {
             SpellingWordsCollection.ClearCollection();
             this.index = 0;
-            SpellingPropertiesClass.OpeningSpellingList = false;
+            SpellingPropertiesClass.OpenedSpellingList = false;
             SpellingPropertiesClass.SpellingListPath = string.Empty;
             this.SetButtonsEnabledState_QuitButtonClicked();
             this.ChangeControls_BackgroundColors();
@@ -348,7 +369,6 @@ namespace Art2MSpell.Source
             const bool StateVal = true;
 
             this.SetCloseButtonState(StateVal);
-            this.SetSpellingWordGroupBoxState(!StateVal);
             this.SetOpenSpellingListButtonState(StateVal);
             this.SetNextWordButtonState(!StateVal);
             this.SetRepeatWordButtonState(!StateVal);
@@ -380,10 +400,9 @@ namespace Art2MSpell.Source
 
             this.formWidth = this.Width;
             this.grpbxScoreLeft = this.grpbxScore.Left;
-            this.grpbxSpellLeft = this.grpbxSpellingWords.Left;
 
             SpellingPropertiesClass.SpellingListPath = string.Empty;
-            SpellingPropertiesClass.OpeningSpellingList = false;
+            SpellingPropertiesClass.OpenedSpellingList = false;
 
             this.BackColor = Color.Blue;
 
@@ -396,7 +415,7 @@ namespace Art2MSpell.Source
 
         private void PracticeSpellingWordsForm_Resize(object sender, EventArgs e)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

@@ -23,16 +23,19 @@ namespace Art2MSpell.Classes
     /// </summary>
     public static class SpellingPropertiesClass
     {
-
-        private static bool _creatingNewSpellingList;
+        /// <summary>
+        /// The name of directory to hold all files dealing with Art2mSpell.
+        /// Except for Spelling list files.
+        /// </summary>
+        private const string Art2MSpellDirectoryName = "Art2MSpell";
 
         /// <summary>
         ///     The get spell it header so that we know spelling list is
         ///     used by Spell-It program.
         /// </summary>
-        private const string art2MSpellHeader = "Art2MSpell!!";
+        private const string Art2MSpellHeader = "Art2MSpell!!";
 
-        #region Public Properties
+        private const string Art2MSpellUserListFileName = "Ar2mSpellUserList";
 
         /// <summary>
         ///     Gets or sets a value indicating whether [Spelling list is a spell it spelling list].
@@ -66,18 +69,27 @@ namespace Art2MSpell.Classes
         public static bool FirstWordIsArt2MSpellHeader { get; set; }
 
         /// <summary>
+        /// Get the name of the top level directory Art2MSpell;
+        /// </summary>
+        public static string GetArt2MSpellDirectoryName => Art2MSpellDirectoryName;
+
+        /// <summary>
         ///     returns the header for all spelling list used in Spell-It program.
         /// </summary>
         /// <value>
         ///     The get spell it header.
         /// </value>
-        public static string GetArt2MSpellHeader => art2MSpellHeader;
+        public static string GetArt2MSpellHeader => Art2MSpellHeader;
 
         /// <summary>
-        /// Gets or sets a value indicating whether [opening spelling list].
+        /// Get The name of the user name list file.
         /// </summary>
-        /// <value><c>true</c> if [opening spelling list]; otherwise, <c>false</c>.</value>
-        public static bool OpeningSpellingList { get; set; }
+        public static string GetArt2MSpellUserListFileName => Art2MSpellUserListFileName;
+
+        /// <summary>Gets or sets a value indicating whether [opened spelling list].</summary>
+        /// <value>
+        ///   <c>true</c> if [opened spelling list]; otherwise, <c>false</c>.</value>
+        public static bool OpenedSpellingList { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [saving spelling list].
@@ -108,12 +120,10 @@ namespace Art2MSpell.Classes
         /// </summary>
         /// <value>The spelling word text box value.</value>
         public static string SpellingWordTextBoxValue { get; set; } = string.Empty;
-        
-        /// <summary>Gets or sets a value indicating whether [opened spelling list].</summary>
-        /// <value>
-        ///   <c>true</c> if [opened spelling list]; otherwise, <c>false</c>.</value>
-        public static bool OpenedSpellingList { get; set; }
 
-        #endregion Public Properties
+        /// <summary>
+        /// Holds the name of the current user.
+        /// </summary>
+        public static string UserName { get; set; }
     }
 }

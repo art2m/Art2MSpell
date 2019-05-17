@@ -36,7 +36,7 @@ namespace Art2MSpell.Classes
     /// <summary>
     ///     Spelling list class reads and writes spelling list to file. Retrieves path to spelling lists.
     /// </summary>
-    public static class SpellingListClass
+    internal static class SpellingListClass
     {
         /// <summary>Declare speech synthesizer object.</summary>
         private static readonly SpeechSynthesizer Ss = new SpeechSynthesizer();
@@ -117,106 +117,6 @@ namespace Art2MSpell.Classes
         }
 
         /// <summary>
-        ///     Reads the spelling list from the file the user has opened.
-        /// </summary>
-        /// <param name="filePath">The file path to the spelling list user wishes to open.</param>
-        /// <returns>True if the spelling list words are added to collection else false.</returns>
-        /// <created>art2m,5/10/2019</created>
-        /// <changed>art2m,5/10/2019</changed>
-        public static bool ReadFile(string filePath)
-        {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-            SpellingWordsCollection.ClearCollection();
-            try
-            {
-                var cnt = 0;
-                StreamReader fileRead;
-                using (fileRead = new StreamReader(filePath))
-                {
-                    string word;
-                    while ((word = fileRead.ReadLine()) != null)
-                    {
-                        if (SpellingPropertiesClass.Art2MSpellSpellingList && cnt == 0)
-                        {
-                            cnt = 1;
-                            continue;
-                        }
-
-                        // check for valid spell list by checking words are all letters and not empty.
-                        if (!Validation.ValidateSpellingWord(word))
-                        {
-                            return false;
-                        }
-
-                        SpellingWordsCollection.AddItem(word);
-                    }
-                }
-
-                return true;
-            }
-            catch (ArgumentException ex)
-            {
-                MyMessages.ErrorMessage = "Invalid file path. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
-                    ex.Message);
-                return false;
-            }
-            catch (IOException ex)
-            {
-                MyMessages.ErrorMessage = "Read error has occurred. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
-                    ex.Message);
-                return false;
-            }
-        }
-
-        /// <summary>
-        ///     Validate real spelling list by reading header from file should be Art2MmSpell!!
-        /// </summary>
-        /// <param name="filePath">The path to the file.</param>
-        /// <returns>True if valid spelling list else false.</returns>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        public static bool ReadHeader(string filePath)
-        {
-            try
-            {
-                using (var fileRead = new StreamReader(filePath))
-                {
-                    var word = fileRead.ReadLine();
-
-                    return Validation.ValidateThisIsArt2MSpellSpellingList(word);
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                MyMessages.ErrorMessage = "Invalid file path. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
-                    ex.Message);
-                return false;
-            }
-            catch (IOException ex)
-            {
-                MyMessages.ErrorMessage = "Read error has occurred. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
-                    ex.Message);
-                return false;
-            }
-        }
-
-        /// <summary>
         ///     Say the string passed into it.
         /// </summary>
         /// <param name="word">The word or can be string.</param>
@@ -225,54 +125,6 @@ namespace Art2MSpell.Classes
         public static void SpeakString(string word)
         {
             Ss.Speak(word);
-        }
-
-        /// <summary>
-        ///     Writes spelling words to file.
-        /// </summary>
-        /// <param name="filePath">The file path to write the spelling words to.</param>
-        /// <returns>True if spelling words written to file else false.</returns>
-        /// <created>art2m,5/10/2019</created>
-        /// <changed>art2m,5/10/2019</changed>
-        public static bool WriteToFile(string filePath)
-        {
-            try
-            {
-                StreamWriter fileWrite;
-                using (fileWrite = new StreamWriter(filePath, false))
-                {
-                    var cnt = SpellingWordsCollection.ItemsCount();
-                    fileWrite.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
-                    Debug.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
-                    for (var i = 0; i < cnt; i++)
-                    {
-                        var word = SpellingWordsCollection.GetItemAt(i);
-                        fileWrite.WriteLine(word);
-                    }
-                }
-
-                return true;
-            }
-            catch (ArgumentException ex)
-            {
-                MyMessages.ErrorMessage = "Invalid file path. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
-                    ex.Message);
-                return false;
-            }
-            catch (IOException ex)
-            {
-                MyMessages.ErrorMessage = "Write error has occurred. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
-                    ex.Message);
-                return false;
-            }
         }
 
         /// <summary>
@@ -315,5 +167,59 @@ namespace Art2MSpell.Classes
 
             return false;
         }
+
+        public static string CombineDirectoryPathWithDirectoryName(string dirPath, string dirName)
+        {
+            return Path.Combine(dirPath, dirName);
+        }
+
+        public static string CombineDirectoryPathWithFileName(string dirPath, string fileName)
+        {
+            return Path.Combine(dirPath, fileName);
+        }
+
+        /// <summary>
+        ///  Save the path to where user saved spelling list to.
+        /// Used to give user a selection of spelling lists to open.
+        /// </summary>
+        /// <created>art2m,5/16/2019</created>
+        /// <changed>art2m,5/16/2019</changed>
+        public static void SaveSpellingListPath()
+        {
+            // TODO: Save the path to spelling list user just saved.
+
+        }
+
+        /// <summary>
+        /// Show the user a list of saved spelling lists they can use to choose
+        /// what spelling list to open.
+        /// </summary>
+        /// <created>art2m,5/16/2019</created>
+        /// <changed>art2m,5/16/2019</changed>
+        public static void GetListOfSpellingListFiles()
+        {
+            // TODO: Get list of spelling files the user has.
+        }
+
+        /// <summary>
+        ///  Create a list of misspelled words by user.
+        /// </summary>
+        /// <created>art2m,5/16/2019</created>
+        /// <changed>art2m,5/16/2019</changed>
+        public static void MisspelledWordsList()
+        {
+           // TODO: Place each word user misspells into a collection. 
+        }
+
+        /// <summary>
+        ///  Loop threw the misspelled words so user can respell those they got wrong.
+        /// </summary>
+        /// <created>art2m,5/16/2019</created>
+        /// <changed>art2m,5/16/2019</changed>
+        public static void SpellMisspelledWords()
+        {
+           // TODO: Spell each word in the misspelled words. 
+        }
+
     }
 }

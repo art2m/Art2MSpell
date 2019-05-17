@@ -237,5 +237,27 @@ namespace Art2MSpell.Source
 
             this.cboWord.BackColor = Color.SlateGray;
         }
+
+        /// <summary>
+        ///     Sets button background color.
+        /// </summary>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private void ChangeControlsBackgroundColors()
+        {
+            this.SetAddNewItemButton_BackgroundColor();
+            this.SetAddToListButton_BackgroundColor();
+            this.SetCancelOperationButton_BackgroundColor();
+            this.SetClearListButton_BackgroundColor();
+            this.SetCloseButton_BackgroundColor();
+            this.SetCreateNewListButton_BackgroundColor();
+            this.SetDeleteListButton_BackgroundColor();
+            this.SetDeleteSelectedWord_BackgroundColor();
+            this.SetEditItemButton_BackgroundColor();
+            this.SetSaveListButton_BackgroundColor();
+            this.SetSelectSpellingListButton_BackgroundColor();
+            this.SetWordsListBox_BackgroundColor();
+            this.SetWordTextBox_BackgroundColor();
+        }
     }
 }

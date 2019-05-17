@@ -17,20 +17,22 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>L:\Art2MSpell-Release-Published\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <UpdateUrl>https://github.com/art2m/Art2MSpell/</UpdateUrl>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -51,6 +53,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>203E18247E76EBD0C1DF2E9D466E08538DD84B3F</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Art2MSpell_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="JetBrains.Annotations, Version=2019.1.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
@@ -76,11 +90,18 @@
     <Compile Include="Classes\MyMessages.cs" />
     <Compile Include="Classes\SpellingListClass.cs" />
     <Compile Include="Classes\SpellingPropertiesClass.cs" />
+    <Compile Include="Classes\SpellingReadWriteClass.cs" />
     <Compile Include="Classes\Validation.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Collections\SpellingWordsCollection.cs" />
     <Compile Include="Collections\DictionaryWordscollection.cs" />
+    <Compile Include="Source\InputBoxDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\InputBoxDialog.Designer.cs">
+      <DependentUpon>InputBoxDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\PracticeSpellingWordsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,10 +114,22 @@
     <Compile Include="Source\PracticeSpellingWordsForm.SetButtonState.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Source\SpellingWordsListForm.AddWordsToListBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\SpellingWordsListForm.ButtonClickEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\SpellingWordsListForm.SetBackgroundColor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Source\SpellingWordsListForm.SetButtonActiondProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\SpellingWordsListForm.SetButtonState.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\SpellingWordsListForm.SetTabOrder.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\SpellItMainForm.cs">
@@ -114,6 +147,15 @@
     <Compile Include="Source\SpellingWordsListForm.Designer.cs">
       <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\UserSelectDialogBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\UserSelectDialogBox.Designer.cs">
+      <DependentUpon>UserSelectDialogBox.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Source\InputBoxDialog.resx">
+      <DependentUpon>InputBoxDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\PracticeSpellingWordsForm.resx">
       <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,6 +174,10 @@
     <EmbeddedResource Include="Source\SpellingWordsListForm.resx">
       <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\UserSelectDialogBox.resx">
+      <DependentUpon>UserSelectDialogBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Art2MSpell_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

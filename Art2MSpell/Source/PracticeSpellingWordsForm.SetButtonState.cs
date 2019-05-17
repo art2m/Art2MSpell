@@ -97,16 +97,7 @@ namespace Art2MSpell.Source
         {
             this.grpbxScore.Enabled = stateVal;
         }
-
-        /// <summary>
-        ///     Sets the state of the spelling word group box.
-        /// </summary>
-        /// <param name="stateVal">if set to <c>true</c> [state value].</param>
-        private void SetSpellingWordGroupBoxState(bool stateVal)
-        {
-            this.grpbxSpellingWords.Enabled = stateVal;
-        }
-
+        
         /// <summary>
         ///     Sets the start state of the button.
         /// </summary>
@@ -129,7 +120,6 @@ namespace Art2MSpell.Source
             this.SetPauseButtonState(!StateVal);
             this.SetQuitButtonState(!StateVal);
             this.SetRepeatWordButtonState(!StateVal);
-            this.SetSpellingWordGroupBoxState(StateVal);
             this.SetScoreGroupBoxState(StateVal);
             this.SetStartButtonState(StateVal);
         }
@@ -148,7 +138,6 @@ namespace Art2MSpell.Source
             this.SetQuitButtonState(StateVal);
             this.SetRepeatWordButtonState(StateVal);
             this.SetScoreGroupBoxState(StateVal);
-            this.SetSpellingWordGroupBoxState(StateVal);
             this.SetStartButtonState(!StateVal);
         }
 
@@ -165,7 +154,6 @@ namespace Art2MSpell.Source
             this.SetPauseButtonState(!StateVal);
             this.SetQuitButtonState(!StateVal);
             this.SetRepeatWordButtonState(!StateVal);
-            this.SetSpellingWordGroupBoxState(StateVal);
             this.SetStartButtonState(StateVal);
 
             this.SetScoreGroupBoxState(StateVal);
@@ -199,7 +187,6 @@ namespace Art2MSpell.Source
 
             this.SetQuitButtonState(!StateVal);
             this.SetScoreGroupBoxState(!StateVal);
-            this.SetSpellingWordGroupBoxState(StateVal);
             this.SetStartButtonState(!StateVal);
         }
 
@@ -217,7 +204,6 @@ namespace Art2MSpell.Source
             this.SetQuitButtonState(!StateVal);
             this.SetRepeatWordButtonState(!StateVal);
             this.SetScoreGroupBoxState(!StateVal);
-            this.SetSpellingWordGroupBoxState(!StateVal);
             this.SetStartButtonState(!StateVal);
         }
 

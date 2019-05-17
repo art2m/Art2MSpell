@@ -26,7 +26,6 @@ namespace Art2MSpell.Source
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using System.IO;
     using System.Reflection;
     using System.Windows.Forms;
     using Classes;
@@ -38,11 +37,11 @@ namespace Art2MSpell.Source
     /// <seealso cref="System.Windows.Forms.Form" />
     public partial class SpellingWordsListForm : Form
     {
+        /// <summary>Holds the initial with of the form.</summary>
+        private readonly int formWidth;
+
         /// <summary>Holds items from list box so they can be checked against word to be added for duplicate.</summary>
         private List<string> duplicate;
-
-        /// <summary>Holds the initial with of the form.</summary>
-        private int formWidth;
 
         /// <summary>Initializes a new instance of the <see cref="SpellingWordsListForm" /> class.</summary>
         public SpellingWordsListForm()
@@ -52,8 +51,53 @@ namespace Art2MSpell.Source
             this.SetButtonsEnabledState_FormLoadEvent();
             this.ChangeControlsBackgroundColors();
             SpellingPropertiesClass.SpellingListPath = string.Empty;
-
+            this.SetTabOrderFormLoad();
             this.formWidth = this.Width;
+
+            // TODO: Add Save And Get spelling list paths!
+            // TODO: Add collection for words spelled wrong. So they can respell wrong!
+            // TODO: Add menu items for opening, creating new spelling list., user saved spelling lists.
+        }
+
+        /// <summary>
+        ///     Read header from file validate is real spelling file.
+        /// </summary>
+        /// <returns>True if valid spelling file else false.</returns>
+        /// <returns>True if valid spelling file else false.</returns>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
+        private static bool ReadHeader()
+        {
+            if (!SpellingReadWriteClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
+            {
+                SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = false;
+                SpellingPropertiesClass.Art2MSpellSpellingList = false;
+                return false;
+            }
+
+            SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
+            SpellingPropertiesClass.Art2MSpellSpellingList = true;
+            return true;
+        }
+
+        /// <summary>
+        ///     write spelling words from collection to file.
+        /// </summary>
+        /// <param name="filePath">The path to the spelling list file.</param>
+        /// <returns>true if spelling list is written to file else false.</returns>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/12/2019</changed>
+        private static bool WriteWordsToFile(string filePath)
+        {
+            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            if (!SpellingReadWriteClass.WriteToFile(filePath))
+            {
+                return false;
+            }
+
+            const string MsgSuccess = "Your spelling list has been created successfully.";
+            MyMessages.ShowInformationMessage(MsgSuccess, MyMessages.NameOfMethod);
+            return true;
         }
 
         /// <summary>
@@ -64,14 +108,12 @@ namespace Art2MSpell.Source
         private void AddSuggestions()
         {
             this.cboWord.Items.Clear();
-
             for (var index = 0; index < DictionaryWordscollection.ItemsCount(); index++)
             {
                 this.cboWord.Items.Add(DictionaryWordscollection.GetItemAt(index));
             }
 
             DictionaryWordscollection.ClearCollection();
-
             this.cboWord.DroppedDown = true;
         }
 
@@ -89,94 +131,6 @@ namespace Art2MSpell.Source
             }
 
             return this.lstWords.Items.Count >= 1;
-        }
-
-        /// <summary>
-        ///     Add spelling words list from file to the list box.
-        /// </summary>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        private void AddWordsToListBox()
-        {
-            for (var index = 0; index < SpellingWordsCollection.ItemsCount(); index++)
-            {
-                this.lstWords.Items.Add(SpellingWordsCollection.GetItemAt(index));
-            }
-        }
-
-        /// <summary>
-        ///     add the word to spelling list box
-        /// </summary>
-        /// <param name="word">The word to be added.</param>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        private bool AddWordToListBox(string word)
-        {
-            if (this.CheckListBoxForWord(word))
-            {
-                 this.SetAddingWordProperties();
-                return false;
-            }
-
-            // If true found duplicate word.
-            if (!this.CheckWordSpelling(word))
-            {
-                return false;
-            }
-
-            this.lstWords.Items.Add(word);
-
-            SpellingListClass.SpeakString(word);
-            this.SetAddingWordProperties();
-
-            return true;
-        }
-
-        /// <summary>
-        ///     Sets button background color.
-        /// </summary>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        private void ChangeControlsBackgroundColors()
-        {
-            this.SetAddNewItemButton_BackgroundColor();
-            this.SetAddToListButton_BackgroundColor();
-            this.SetCancelOperationButton_BackgroundColor();
-            this.SetClearListButton_BackgroundColor();
-            this.SetCloseButton_BackgroundColor();
-            this.SetCreateNewListButton_BackgroundColor();
-            this.SetDeleteListButton_BackgroundColor();
-            this.SetDeleteSelectedWord_BackgroundColor();
-            this.SetEditItemButton_BackgroundColor();
-            this.SetSaveListButton_BackgroundColor();
-            this.SetSelectSpellingListButton_BackgroundColor();
-            this.SetWordsListBox_BackgroundColor();
-            this.SetWordTextBox_BackgroundColor();
-        }
-
-        /// <summary>
-        ///     Check to see if the word is all ready contained in the list box.
-        /// </summary>
-        /// <param name="word">The word to be added to the list box.</param>
-        /// <returns>True if no duplicate word found in the list box else false.</returns>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        private bool CheckListBoxForWord(string word)
-        {
-            this.duplicate = new List<string>();
-            foreach (var item in this.lstWords.Items)
-            {
-                this.duplicate.Add(item.ToString());
-            }
-
-            if (!SpellingListClass.CheckDuplicateWord(this.duplicate, word))
-            {
-                return false;
-            }
-
-            this.cboWord.Text = string.Empty;
-            this.cboWord.Focus();
-            return true;
         }
 
         /// <summary>
@@ -201,16 +155,25 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///     Fills the ListBox with words list.
+        /// Create new spelling list for entering a new list of spelling words.
         /// </summary>
-        private void FillListBoxWithWordsList()
+        /// <created>art2m,5/17/2019</created>
+        /// <changed>art2m,5/17/2019</changed>
+        private void CreateNewSpellingList()
         {
-            if (SpellingWordsCollection.ItemsCount() < 1)
-            {
-                return;
-            }
+            SpellingPropertiesClass.CreatingNewSpellingList = true;
+            SpellingPropertiesClass.OpenedSpellingList = false;
+            this.lstWords.Items.Clear();
+            this.SetButtonsEnabledState_CreateNewListButtonClicked();
+            this.ChangeControlsBackgroundColors();
+            this.SetTabOrderAddNewWordButton();
+        }
 
-            this.AddWordsToListBox();
+        private void GetUserName()
+        {
+            // TODO: Get the user name so it can preface users saved spelling list.
+            // TODO:  Make user sign in screen so I know who's  spelling list to show.
+            // TODO: Save list of users name so user can select name on sign in or add new user.
         }
 
         /// <summary>
@@ -221,12 +184,12 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private bool GetWordsFromFile()
         {
-            if (!this.ReadHeader())
+            if (!ReadHeader())
             {
                 return false;
             }
 
-            if (!SpellingListClass.ReadFile(SpellingPropertiesClass.SpellingListPath))
+            if (!SpellingReadWriteClass.ReadFile(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
@@ -235,200 +198,81 @@ namespace Art2MSpell.Source
             return true;
         }
 
-        /// <summary>Handles the Click event of the AddNewWordButton control.</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonAddNewWord_Click(object sender, EventArgs e)
-        {
-            this.SetButtonsEnabledState_AddNewButtonClicked();
-            this.ChangeControlsBackgroundColors();
-            this.SetTabOrderAddWordToList();
-            this.cboWord.Focus();
-        }
-
         /// <summary>
-        ///     Handles the Click event of the AddToListButton control. Adds a new spelling word to the new spelling list.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonAddWordToList_Click(object sender, EventArgs e)
-        {
-            var addWord = this.cboWord.Text.Trim();
-
-            if (!Validation.ValidateSpellingWord(addWord))
-            {
-                this.SetButtonsEnabledState_AddToListButtonClicked();
-                this.ChangeControlsBackgroundColors();
-
-                return;
-            }
-
-            if (!this.AddWordToListBox(addWord))
-            {
-                return;
-            }
-
-            this.SetButtonsEnabledState_AddToListButtonClicked();
-            this.ChangeControlsBackgroundColors();
-            this.SetTabOrderAddWordToList();
-            this.SetTabOrderAddNewWordButton();
-        }
-
-        /// <summary>
-        ///     Handles the Click event of the ClearButton control. Clears the word text box.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonCancelOperation_Click(object sender, EventArgs e)
-        {
-            if (SpellingPropertiesClass.EditingSpellingList)
-            {
-                this.lstWords.Items.Add(SpellingPropertiesClass.SpellingWordTextBoxValue);
-            }
-
-            this.cboWord.Text = string.Empty;
-
-            SpellingPropertiesClass.EditingSpellingList = false;
-
-            SpellingPropertiesClass.SpellingWordTextBoxValue = string.Empty;
-
-            this.SetButtonsEnabledState_CancelOperationButtonClicked();
-
-            this.ChangeControlsBackgroundColors();
-
-            this.SetTabOrderCancelOperationButton();
-        }
-
-        /// <summary>
-        ///     Handles the Click event of the ClearListButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonClearList_Click(object sender, EventArgs e)
-        {
-            this.lstWords.Items.Clear();
-            this.cboWord.Text = string.Empty;
-            SpellingPropertiesClass.SpellingListIsDirty = true;
-            this.SetButtonsEnabledState_ClearListButtonClicked();
-            this.ChangeControlsBackgroundColors();
-        }
-
-        /// <summary>Handles the Click event of the CloseButton control.</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonClose_Click(object sender, EventArgs e)
-        {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-            if (SpellingPropertiesClass.SpellingListIsDirty)
-            {
-                const string Msg =
-                    "You have an unsaved spelling words list! Do you wish to save the list before exiting. ";
-                var dlgResult = MyMessages.ShowQuestionMessage(Msg, MyMessages.NameOfMethod);
-                if (dlgResult == DialogResult.Yes)
-                {
-                    return;
-                }
-            }
-
-            this.Close();
-        }
-
-        /// <summary>
-        ///     Create new spelling list.
+        /// Call method create new spelling list.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
-        /// <created>art2m,5/14/2019</created>
-        /// <changed>art2m,5/14/2019</changed>
-        private void OnButtonCreateNewList_Click(object sender, EventArgs e)
+        /// <created>art2m,5/17/2019</created>
+        /// <changed>art2m,5/17/2019</changed>
+        private void MenuSpellNewSpellingList_Click(object sender, EventArgs e)
         {
-            SpellingPropertiesClass.CreatingNewSpellingList = true;
-            SpellingPropertiesClass.OpenedSpellingList = false;
-            this.lstWords.Items.Clear();
-            this.SetButtonsEnabledState_CreateNewListButtonClicked();
-            this.ChangeControlsBackgroundColors();
-            this.SetTabOrderAddNewWordButton();
+            this.CreateNewSpellingList();
         }
 
         /// <summary>
-        ///     Handles the Click event of the button DeleteList control.
+        /// Call method to create new spelling list.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonDeleteList_Click(object sender, EventArgs e)
+        /// <param name="e">Instance containing the event data.</param>
+        /// <created>art2m,5/17/2019</created>
+        /// <changed>art2m,5/17/2019</changed>
+        private void OnButtonCreateNewSpellingList_Click(object sender, EventArgs e)
         {
-            var className = this.GetType().Name;
-            var methodName = MethodBase.GetCurrentMethod().Name;
+            this.CreateNewSpellingList();
+        }
 
-            try
+        /// <summary>
+        ///     Opens user selected spelling list.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Instance containing event data.</param>
+        /// <created>art2m,5/17/2019</created>
+        /// <changed>art2m,5/17/2019</changed>
+        private void OnMenuSpellOpenSpellingList_Click(object sender, EventArgs e)
+        {
+            using (var openDlg = new OpenFileDialog())
             {
-                File.Delete(SpellingPropertiesClass.SpellingListPath);
-                this.SetDeletePropertyStates();
-            }
-            catch (DirectoryNotFoundException ex)
-            {
-                var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
-            }
-            catch (NotSupportedException ex)
-            {
-                var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
-            }
-            catch (PathTooLongException ex)
-            {
-                var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
-            }
-            catch (ArgumentException ex)
-            {
-                var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
-            }
-            catch (IOException ex)
-            {
-                var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
+                openDlg.ShowDialog();
+                SpellingPropertiesClass.SpellingListPath = openDlg.FileName;
+                SpellingPropertiesClass.OpenedSpellingList = true;
+                SpellingPropertiesClass.CreatingNewSpellingList = false;
+                this.lstWords.Items.Clear();
+                if (!this.GetWordsFromFile())
+                {
+                    return;
+                }
+
+                this.SetButtonsEnabledState_OpenSpellingListButtonStateClicked();
+                this.ChangeControlsBackgroundColors();
             }
         }
 
         /// <summary>
-        ///     Handles the Click event of the DeleteSelectedWordButton control.
+        ///     Handles the SelectedIndexChanged event of the WordsList control. Gets the item selected and places it in the
+        ///     words text box for editing. Gets the item index so edit changes can be made in the words list box.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonDeleteWord_Click(object sender, EventArgs e)
+        private void OnWordsListSelectedIndexChanged(object sender, EventArgs e)
         {
-            this.lstWords.Items.RemoveAt(SpellingPropertiesClass.SelectedWordIndex);
-            this.cboWord.Text = string.Empty;
-            this.SetButtonsEnabledState_DeleteSelectedWordButtonClicked();
+            if (this.lstWords.SelectedItem == null)
+            {
+                return;
+            }
+
+            this.cboWord.Text = this.lstWords.SelectedItem.ToString();
+            SpellingPropertiesClass.SelectedWordIndex = this.lstWords.SelectedIndex;
+            this.SetButtonsEnabledState_WordsListSelectedIndexChanges();
             this.ChangeControlsBackgroundColors();
         }
 
         /// <summary>
-        ///     Handles the Click event of the EditItemButton control.
+        /// Open spelling list so user can edit the list or delete the list.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonEditWord_Click(object sender, EventArgs e)
-        {
-            this.cboWord.Focus();
-            SpellingPropertiesClass.EditingSpellingList = true;
-            SpellingPropertiesClass.SpellingWordTextBoxValue = this.cboWord.Text.Trim();
-            this.lstWords.Items.RemoveAt(SpellingPropertiesClass.SelectedWordIndex);
-            this.SetButtonsEnabledState_EditItemButtonClicked();
-            this.ChangeControlsBackgroundColors();
-        }
-
-        /// <summary>Handles the Click event of the SelectSpellingListButton control.</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonOpenList_Click(object sender, EventArgs e)
+        /// <created>art2m,5/17/2019</created>
+        /// <changed>art2m,5/17/2019</changed>
+        private void OpenSpellingList()
         {
             using (var openDlg = new OpenFileDialog())
             {
@@ -451,68 +295,6 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///     Handles the Click event of the SaveListButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnButtonSaveList_Click(object sender, EventArgs e)
-        {
-            if (this.lstWords.Items.Count < 1)
-            {
-                return;
-            }
-
-            using (var saveDlg = new SaveFileDialog())
-            {
-                saveDlg.ShowDialog();
-                SpellingPropertiesClass.SpellingListPath = saveDlg.FileName;
-            }
-
-            this.SaveSpellingWordsToSpellingList();
-        }
-
-
-        /// <summary>
-        ///     Handles the SelectedIndexChanged event of the WordsList control. Gets the item selected and places it in the
-        ///     words text box for editing. Gets the item index so edit changes can be made in the words list box.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnWordsListSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.lstWords.SelectedItem == null)
-            {
-                return;
-            }
-
-            this.cboWord.Text = this.lstWords.SelectedItem.ToString();
-            SpellingPropertiesClass.SelectedWordIndex = this.lstWords.SelectedIndex;
-            this.SetButtonsEnabledState_WordsListSelectedIndexChanges();
-            this.ChangeControlsBackgroundColors();
-        }
-
-        /// <summary>
-        ///     Read header from file validate is real spelling file.
-        /// </summary>
-        /// <returns>True if valid spelling file else false.</returns>
-        /// <created>art2m,5/14/2019</created>
-        /// <changed>art2m,5/14/2019</changed>
-        private bool ReadHeader()
-        {
-            if (!SpellingListClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
-            {
-                SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = false;
-                SpellingPropertiesClass.Art2MSpellSpellingList = false;
-                return false;
-            }
-
-            SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
-            SpellingPropertiesClass.Art2MSpellSpellingList = true;
-
-            return true;
-        }
-
-        /// <summary>
         ///     Saves the spelling words to spelling list.
         /// </summary>
         private void SaveSpellingWordsToSpellingList()
@@ -532,103 +314,6 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///     Sets the adding word properties.
-        /// </summary>
-        private void SetAddingWordProperties()
-        {
-            this.cboWord.Text = string.Empty;
-            SpellingPropertiesClass.EditingSpellingList = false;
-            SpellingPropertiesClass.SpellingWordTextBoxValue = string.Empty;
-            SpellingPropertiesClass.SpellingListIsDirty = true;
-            this.SetButtonsEnabledState_AddToListButtonClicked();
-            this.ChangeControlsBackgroundColors();
-            this.cboWord.Focus();
-        }
-
-        /// <summary>
-        ///     Sets the delete property states.
-        /// </summary>
-        private void SetDeletePropertyStates()
-        {
-            SpellingPropertiesClass.EditingSpellingList = false;
-            SpellingPropertiesClass.CreatingNewSpellingList = false;
-            SpellingPropertiesClass.DeleteSpellingList = false;
-            SpellingPropertiesClass.OpeningSpellingList = false;
-            SpellingPropertiesClass.SavingSpellingList = false;
-            SpellingPropertiesClass.SpellingListIsDirty = false;
-            SpellingPropertiesClass.SpellingListPath = string.Empty;
-            SpellingPropertiesClass.SpellingWordTextBoxValue = string.Empty;
-            SpellingPropertiesClass.SpellingListPath = string.Empty;
-            this.cboWord.Text = string.Empty;
-            this.lstWords.Items.Clear();
-            this.SetButtonsEnabledState_DeleteSpellingListButtonClicked();
-            this.ChangeControlsBackgroundColors();
-        }
-
-        /// <summary>
-        ///     Sets the save operation properties.
-        /// </summary>
-        private void SetSaveOperationProperties()
-        {
-            SpellingPropertiesClass.SpellingListIsDirty = false;
-            SpellingPropertiesClass.EditingSpellingList = false;
-            SpellingPropertiesClass.OpeningSpellingList = false;
-            SpellingPropertiesClass.CreatingNewSpellingList = false;
-            SpellingPropertiesClass.DeleteSpellingList = false;
-            SpellingPropertiesClass.SavingSpellingList = false;
-            SpellingPropertiesClass.SpellingListPath = string.Empty;
-            SpellingPropertiesClass.SpellingWordTextBoxValue = string.Empty;
-            this.lstWords.Items.Clear();
-            this.cboWord.Text = string.Empty;
-            this.lstWords.Enabled = true;
-            this.SetButtonsEnabledState_SaveSpellingListButtonStateClicked();
-            this.ChangeControlsBackgroundColors();
-        }
-
-        /// <summary>
-        ///     Set tab order when user selects Add New Word Button.
-        /// </summary>
-        private void SetTabOrderAddNewWordButton()
-        {
-            this.flpBottomPanel.Focus();
-            this.btnAddWordToList.TabIndex = 0;
-            this.btnCancelOperation.TabIndex = 1;
-            this.btnSaveList.TabIndex = 2;
-            this.btnClose.TabIndex = 3;
-        }
-
-        private void SetTabOrderAddWordToList()
-        {
-            this.flpBottomPanel.Focus();
-            this.btnAddNewWord.TabIndex = 0;
-            this.btnCancelOperation.TabIndex = 1;
-            this.btnSaveList.TabIndex = 2;
-            this.btnClose.TabIndex = 3;
-
-            
-        }
-
-
-        /// <summary>Sets the tab order cancel operation button.</summary>
-        private void SetTabOrderCancelOperationButton()
-        {
-            this.flpBottomPanel.Focus();
-            this.btnAddNewWord.TabIndex = 0;
-            this.btnSaveList.TabIndex = 1;
-            this.btnClose.TabIndex = 2;
-           
-        }
-
-        private void SetTabOrderFormLoad()
-        {
-            this.flpLeftPanel.Focus();
-            this.btnCreateNewList.TabIndex = 0;
-            this.btnOpenist.TabIndex = 1;
-            this.btnClose.TabIndex = 2;
-            
-        }
-
-        /// <summary>
         ///     Resize controls for form size change.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -638,41 +323,13 @@ namespace Art2MSpell.Source
         private void SpellingWordsListForm_Resize(object sender, EventArgs e)
         {
             this.lstWords.Left = (this.ClientSize.Width - this.lstWords.Width) / 2;
-
             this.flpBottomPanel.Top = this.cboWord.Top + 32;
-
             var pos = this.flpLeftPanel.Height + this.cboWord.Height + this.flpBottomPanel.Height;
-
             this.flpLeftPanel.Top = (this.ClientSize.Height - pos) / 2;
-
             this.flpBottomPanel.Left = (this.ClientSize.Width - this.flpBottomPanel.Width) / 2;
-
             pos = this.lstWords.Left - this.flpLeftPanel.Width;
-
             this.flpLeftPanel.Left = pos - 10;
-
             this.cboWord.Left = this.lstWords.Left;
-        }
-
-        /// <summary>
-        ///     write spelling words from collection to file.
-        /// </summary>
-        /// <param name="filePath">The path to the spelling list file.</param>
-        /// <returns>true if spelling list is written to file else false.</returns>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        private static bool WriteWordsToFile(string filePath)
-        {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-            if (!SpellingListClass.WriteToFile(filePath))
-            {
-                return false;
-            }
-
-            const string MsgSuccess = "Your spelling list has been created successfully.";
-
-            MyMessages.ShowInformationMessage(MsgSuccess, MyMessages.NameOfMethod);
-            return true;
         }
     }
 }

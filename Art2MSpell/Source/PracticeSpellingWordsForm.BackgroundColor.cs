@@ -83,15 +83,7 @@ namespace Art2MSpell.Source
         {
             this.grpbxScore.BackColor = this.grpbxScore.Enabled ? Color.SteelBlue : Color.SlateGray;
         }
-
-        /// <summary>
-        ///     Sets the color of the spelling words group box.
-        /// </summary>
-        private void SetSpellingWordsGroupBox_BackgroundColor()
-        {
-            this.grpbxSpellingWords.BackColor = this.grpbxSpellingWords.Enabled ? Color.Gold : Color.SlateGray;
-        }
-
+        
         /// <summary>
         ///     Sets the start color of the button background.
         /// </summary>

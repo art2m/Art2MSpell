@@ -42,11 +42,6 @@ namespace Art2MSpell.Classes
     public static class Validation
     {
         /// <summary>
-        ///     The first string in the Spelling list. Means if exists that the Spelling list is a Spell-It list.
-        /// </summary>
-        private const string Spelling = "Art2mSpell!!";
-
-        /// <summary>
         ///     Check spelling word has no white space which could indicate two words only one word is allowed.
         ///     Only letters allowed in the spelling word.
         /// </summary>
@@ -62,7 +57,8 @@ namespace Art2MSpell.Classes
             {
                 return false;
             }
-            else if (!ValidateStringOneWord(value))
+
+            if (!ValidateStringOneWord(value))
             {
                 return false;
             }

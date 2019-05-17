@@ -30,12 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             this.MnuNewSpellListMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuOpenSpellingList = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileTopMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.SpellTopMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSpellNewSpellingList = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSpellOpenSpellingList = new System.Windows.Forms.ToolStripMenuItem();
+            this.UserTopMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spelListToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.btnCreateNewList = new System.Windows.Forms.Button();
             this.btnOpenist = new System.Windows.Forms.Button();
             this.btnClearist = new System.Windows.Forms.Button();
             this.btnSaveList = new System.Windows.Forms.Button();
@@ -45,6 +47,7 @@
             this.btnDeleteWord = new System.Windows.Forms.Button();
             this.btnCancelOperation = new System.Windows.Forms.Button();
             this.btnAddWordToList = new System.Windows.Forms.Button();
+            this.btnCreateNewList = new System.Windows.Forms.Button();
             this.SpellingListOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SpellingListSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.btnClose = new System.Windows.Forms.Button();
@@ -60,57 +63,67 @@
             // MnuNewSpellListMenuStrip
             // 
             this.MnuNewSpellListMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileToolStripMenuItem});
+            this.FileTopMenuItem,
+            this.SpellTopMenuItem,
+            this.UserTopMenuItem});
             this.MnuNewSpellListMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MnuNewSpellListMenuStrip.Name = "MnuNewSpellListMenuStrip";
             this.MnuNewSpellListMenuStrip.Size = new System.Drawing.Size(784, 24);
             this.MnuNewSpellListMenuStrip.TabIndex = 0;
             this.MnuNewSpellListMenuStrip.Text = "mnuNewSpellList";
             // 
-            // FileToolStripMenuItem
+            // FileTopMenuItem
             // 
-            this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuOpenSpellingList,
+            this.FileTopMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator1,
             this.mnuClose});
-            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.FileToolStripMenuItem.Text = "File";
-            // 
-            // mnuOpenSpellingList
-            // 
-            this.mnuOpenSpellingList.Name = "mnuOpenSpellingList";
-            this.mnuOpenSpellingList.Size = new System.Drawing.Size(169, 22);
-            this.mnuOpenSpellingList.Text = "Open Spelling List";
+            this.FileTopMenuItem.Name = "FileTopMenuItem";
+            this.FileTopMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.FileTopMenuItem.Text = "File";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(166, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(100, 6);
             // 
             // mnuClose
             // 
             this.mnuClose.Name = "mnuClose";
-            this.mnuClose.Size = new System.Drawing.Size(169, 22);
+            this.mnuClose.Size = new System.Drawing.Size(103, 22);
             this.mnuClose.Text = "Close";
             // 
-            // btnCreateNewList
+            // SpellTopMenuItem
             // 
-            this.btnCreateNewList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateNewList.Location = new System.Drawing.Point(4, 30);
-            this.btnCreateNewList.Margin = new System.Windows.Forms.Padding(4, 30, 3, 3);
-            this.btnCreateNewList.Name = "btnCreateNewList";
-            this.btnCreateNewList.Size = new System.Drawing.Size(172, 32);
-            this.btnCreateNewList.TabIndex = 0;
-            this.btnCreateNewList.Text = "Create New Spelling List";
-            this.spelListToolTip.SetToolTip(this.btnCreateNewList, "Select to create a new spelling list.");
-            this.btnCreateNewList.UseVisualStyleBackColor = true;
-            this.btnCreateNewList.Click += new System.EventHandler(this.OnButtonCreateNewList_Click);
+            this.SpellTopMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuSpellNewSpellingList,
+            this.mnuSpellOpenSpellingList});
+            this.SpellTopMenuItem.Name = "SpellTopMenuItem";
+            this.SpellTopMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.SpellTopMenuItem.Text = "Spell";
+            // 
+            // mnuSpellNewSpellingList
+            // 
+            this.mnuSpellNewSpellingList.Name = "mnuSpellNewSpellingList";
+            this.mnuSpellNewSpellingList.Size = new System.Drawing.Size(169, 22);
+            // 
+            // mnuSpellOpenSpellingList
+            // 
+            this.mnuSpellOpenSpellingList.Name = "mnuSpellOpenSpellingList";
+            this.mnuSpellOpenSpellingList.Size = new System.Drawing.Size(169, 22);
+            this.mnuSpellOpenSpellingList.Text = "Open Spelling List";
+            this.mnuSpellOpenSpellingList.Click += new System.EventHandler(this.OnMenuSpellOpenSpellingList_Click);
+            // 
+            // UserTopMenuItem
+            // 
+            this.UserTopMenuItem.Name = "UserTopMenuItem";
+            this.UserTopMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.UserTopMenuItem.Text = "User";
             // 
             // btnOpenist
             // 
+            this.btnOpenist.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnOpenist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenist.Location = new System.Drawing.Point(4, 105);
+            this.btnOpenist.Location = new System.Drawing.Point(4, 115);
             this.btnOpenist.Margin = new System.Windows.Forms.Padding(4, 40, 3, 3);
             this.btnOpenist.Name = "btnOpenist";
             this.btnOpenist.Size = new System.Drawing.Size(172, 32);
@@ -122,8 +135,9 @@
             // 
             // btnClearist
             // 
+            this.btnClearist.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnClearist.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearist.Location = new System.Drawing.Point(4, 180);
+            this.btnClearist.Location = new System.Drawing.Point(4, 190);
             this.btnClearist.Margin = new System.Windows.Forms.Padding(4, 40, 3, 3);
             this.btnClearist.Name = "btnClearist";
             this.btnClearist.Size = new System.Drawing.Size(172, 32);
@@ -135,8 +149,9 @@
             // 
             // btnSaveList
             // 
+            this.btnSaveList.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSaveList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveList.Location = new System.Drawing.Point(4, 330);
+            this.btnSaveList.Location = new System.Drawing.Point(4, 340);
             this.btnSaveList.Margin = new System.Windows.Forms.Padding(4, 40, 0, 0);
             this.btnSaveList.Name = "btnSaveList";
             this.btnSaveList.Size = new System.Drawing.Size(172, 32);
@@ -153,14 +168,15 @@
             this.lstWords.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstWords.FormattingEnabled = true;
             this.lstWords.ItemHeight = 16;
-            this.lstWords.Location = new System.Drawing.Point(219, 13);
+            this.lstWords.Location = new System.Drawing.Point(219, 31);
             this.lstWords.Name = "lstWords";
-            this.lstWords.Size = new System.Drawing.Size(388, 516);
+            this.lstWords.Size = new System.Drawing.Size(388, 500);
             this.lstWords.TabIndex = 2;
             this.spelListToolTip.SetToolTip(this.lstWords, "Spelling words list. Select word to edit or delete the spelling list.");
             // 
             // btnAddNewWord
             // 
+            this.btnAddNewWord.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnAddNewWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddNewWord.Location = new System.Drawing.Point(20, 6);
             this.btnAddNewWord.Margin = new System.Windows.Forms.Padding(15, 6, 3, 3);
@@ -174,6 +190,7 @@
             // 
             // btnEditWord
             // 
+            this.btnEditWord.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnEditWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditWord.Location = new System.Drawing.Point(158, 6);
             this.btnEditWord.Margin = new System.Windows.Forms.Padding(15, 6, 3, 3);
@@ -187,6 +204,7 @@
             // 
             // btnDeleteWord
             // 
+            this.btnDeleteWord.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnDeleteWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteWord.Location = new System.Drawing.Point(296, 6);
             this.btnDeleteWord.Margin = new System.Windows.Forms.Padding(15, 6, 3, 3);
@@ -200,6 +218,7 @@
             // 
             // btnCancelOperation
             // 
+            this.btnCancelOperation.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCancelOperation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelOperation.Location = new System.Drawing.Point(434, 6);
             this.btnCancelOperation.Margin = new System.Windows.Forms.Padding(15, 6, 3, 3);
@@ -213,6 +232,7 @@
             // 
             // btnAddWordToList
             // 
+            this.btnAddWordToList.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnAddWordToList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddWordToList.Location = new System.Drawing.Point(572, 6);
             this.btnAddWordToList.Margin = new System.Windows.Forms.Padding(15, 6, 3, 3);
@@ -223,6 +243,17 @@
             this.spelListToolTip.SetToolTip(this.btnAddWordToList, "Select to add currently displayed word to the spelling list.");
             this.btnAddWordToList.UseVisualStyleBackColor = true;
             this.btnAddWordToList.Click += new System.EventHandler(this.OnButtonAddWordToList_Click);
+            // 
+            // btnCreateNewList
+            // 
+            this.btnCreateNewList.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCreateNewList.Location = new System.Drawing.Point(4, 40);
+            this.btnCreateNewList.Margin = new System.Windows.Forms.Padding(4, 40, 3, 3);
+            this.btnCreateNewList.Name = "btnCreateNewList";
+            this.btnCreateNewList.Size = new System.Drawing.Size(172, 32);
+            this.btnCreateNewList.TabIndex = 0;
+            this.btnCreateNewList.Text = "Create New LIst";
+            this.btnCreateNewList.Click += new System.EventHandler(this.OnButtonCreateNewSpellingList_Click);
             // 
             // SpellingListOpenFileDialog
             // 
@@ -242,6 +273,7 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.Location = new System.Drawing.Point(682, 640);
             this.btnClose.Name = "btnClose";
@@ -267,8 +299,9 @@
             // 
             // btnDeleteList
             // 
+            this.btnDeleteList.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnDeleteList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteList.Location = new System.Drawing.Point(4, 255);
+            this.btnDeleteList.Location = new System.Drawing.Point(4, 265);
             this.btnDeleteList.Margin = new System.Windows.Forms.Padding(4, 40, 3, 3);
             this.btnDeleteList.Name = "btnDeleteList";
             this.btnDeleteList.Size = new System.Drawing.Size(172, 32);
@@ -333,11 +366,10 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip MnuNewSpellListMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FileTopMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuClose;
         private System.Windows.Forms.ToolTip spelListToolTip;
         private System.Windows.Forms.OpenFileDialog SpellingListOpenFileDialog;
-        private System.Windows.Forms.ToolStripMenuItem mnuOpenSpellingList;
         private System.Windows.Forms.SaveFileDialog SpellingListSaveFileDialog;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnClose;
@@ -355,5 +387,9 @@
         private System.Windows.Forms.Button btnCancelOperation;
         private System.Windows.Forms.Button btnAddWordToList;
         private System.Windows.Forms.ComboBox cboWord;
+        private System.Windows.Forms.ToolStripMenuItem SpellTopMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuSpellOpenSpellingList;
+        private System.Windows.Forms.ToolStripMenuItem mnuSpellNewSpellingList;
+        private System.Windows.Forms.ToolStripMenuItem UserTopMenuItem;
     }
 }
