@@ -191,20 +191,13 @@ namespace Art2MSpell.Classes
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
-            var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var op = new DirectoryFileOperations();
 
-            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
-
-            folderPath = Path.Combine(folderPath, dirName);
-
-            if (!Directory.Exists(folderPath))
+            /*if (!string.IsNullOrEmpty(op.CheckDirectoryPathExistsCreate()))
             {
-                Directory.CreateDirectory(folderPath);
-            }
+               
+            };
 
-            var fileName = SpellingPropertiesClass.GetArt2MSpellUserListFileName;
-
-            var filePath = Path.Combine(folderPath, fileName);
 
             if (!File.Exists(filePath))
             {
@@ -221,10 +214,12 @@ namespace Art2MSpell.Classes
                 {
                     tw.WriteLine(SpellingPropertiesClass.UserName);
                 }
-            }
+            }*/
 
             return true;
         }
+
+       
 
         public static bool ReadUserNameFile()
         {

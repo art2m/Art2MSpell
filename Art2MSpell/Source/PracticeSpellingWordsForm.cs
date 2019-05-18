@@ -114,7 +114,7 @@ namespace Art2MSpell.Source
 
             var sb = new StringBuilder();
 
-            if (SpellingListClass.CheckWord(word))
+            if (SpellingListClass.CheckWordSpelling(word))
             {
                 this.correct++;
 

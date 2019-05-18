@@ -36,7 +36,7 @@ namespace Art2MSpell.Classes
     /// <summary>
     ///     Spelling list class reads and writes spelling list to file. Retrieves path to spelling lists.
     /// </summary>
-    internal static class SpellingListClass
+    public static class SpellingListClass
     {
         /// <summary>Declare speech synthesizer object.</summary>
         private static readonly SpeechSynthesizer Ss = new SpeechSynthesizer();
@@ -102,17 +102,18 @@ namespace Art2MSpell.Classes
         /// <returns>True if word is spelled correctly else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static bool CheckWord(string word)
+        public static bool CheckWordSpelling(string word)
         {
             using (var hunspell = new Hunspell("en_us.aff", "en_us.dic"))
             {
-                if (!hunspell.Spell(word))
+                if (hunspell.Spell(word))
                 {
-                    CheckDictionary(word);
-                    return false;
+                    return true;
                 }
 
-                return true;
+                CheckDictionary(word);
+                return false;
+
             }
         }
 
@@ -166,16 +167,6 @@ namespace Art2MSpell.Classes
             }
 
             return false;
-        }
-
-        public static string CombineDirectoryPathWithDirectoryName(string dirPath, string dirName)
-        {
-            return Path.Combine(dirPath, dirName);
-        }
-
-        public static string CombineDirectoryPathWithFileName(string dirPath, string fileName)
-        {
-            return Path.Combine(dirPath, fileName);
         }
 
         /// <summary>

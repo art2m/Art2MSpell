@@ -142,7 +142,7 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private bool CheckWordSpelling(string word)
         {
-            if (SpellingListClass.CheckWord(word))
+            if (SpellingListClass.CheckWordSpelling(word))
             {
                 return true;
             }
