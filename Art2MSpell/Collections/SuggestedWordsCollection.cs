@@ -1,14 +1,14 @@
 ﻿//---------------------------------------------------------------------------------------------------------------
 // Art2MSpell
-// 
-// SpellingWordsCollection.cs
+//
+// SuggestedWordsCollection.cs
 //
 // File:     Art2MSpell.sln
 //
 // Author:   art2m_000]
-// Email     art2m@live.com   
-// Company:  
-// Date:     5/9/2019
+// Email     art2m@live.com
+// Company:
+// Date:     5/8/2019
 //
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -24,20 +24,14 @@ using System.Collections.Generic;
 namespace Art2MSpell.Collections
 {
     /// <summary>
-    /// Spelling Words Collection Holds words from current spelling list.
+    /// Holds suggested words for a misspelled word.
     /// </summary>
-    public class SpellingWordsCollection : ISpellingWordsCollection
+    public class SuggestedWordsCollection : ISpellingWordsCollection
     {
-        #region Fields
-
         /// <summary>
-        /// Contains collection of words from a spelling list.
+        /// Contains collection of words to possibly become a spelling list.
         /// </summary>
         private static readonly List<string> WordsList = new List<string>();
-
-        #endregion Fields
-
-        #region Public Methods
 
         /// <summary>
         ///  Adds the specified word to the collection.
@@ -54,6 +48,7 @@ namespace Art2MSpell.Collections
 
             WordsList.Add(word);
         }
+
         /// <summary>
         /// clear the collection of all items.
         /// </summary>
@@ -72,6 +67,7 @@ namespace Art2MSpell.Collections
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
         public bool ContainsItem(string word) => WordsList.Contains(word);
+
 
         /// <summary>
         /// Get all items contained in the collection.
@@ -128,7 +124,7 @@ namespace Art2MSpell.Collections
         /// Remove the specified word.
         /// </summary>
         /// <param name="word"></param>
-        /// <returns>True if word removed else false.</returns>
+        /// <returns>true if removed else false.</returns>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
         public bool RemoveItem(string word) => WordsList.Remove(word);
@@ -148,9 +144,13 @@ namespace Art2MSpell.Collections
             WordsList.RemoveAt(index);
 
             // Check to see if item is no longer in collection
-            return !ContainsItem(item);
+            if (!ContainsItem(item))
+            {
+                return true;
+            }
 
             // Item still in collection remove failed.
+            return false;
         }
 
         /// <summary>
@@ -162,7 +162,5 @@ namespace Art2MSpell.Collections
         {
             WordsList.Sort();
         }
-
-        #endregion Public Methods
     }
 }

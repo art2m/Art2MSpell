@@ -38,9 +38,11 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private void AddWordsToListBox()
         {
-            for (var index = 0; index < SpellingWordsCollection.ItemsCount(); index++)
+            var swc = new SpellingWordsCollection();
+
+            for (var index = 0; index < swc.ItemsCount(); index++)
             {
-                this.lstWords.Items.Add(SpellingWordsCollection.GetItemAt(index));
+                this.lstWords.Items.Add(swc.GetItemAt(index));
             }
         }
 
@@ -52,6 +54,8 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private bool AddWordToListBox(string word)
         {
+            var slc = new SpellingListClass();
+
             if (this.CheckListBoxForWord(word))
             {
                 this.SetAddingWordProperties();
@@ -66,7 +70,7 @@ namespace Art2MSpell.Source
 
             this.lstWords.Items.Add(word);
 
-            SpellingListClass.SpeakString(word);
+            slc.SpeakString(word);
             this.SetAddingWordProperties();
 
             return true;
@@ -81,13 +85,16 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private bool CheckListBoxForWord(string word)
         {
+            var slc = new SpellingListClass();
+
             this.duplicate = new List<string>();
+
             foreach (var item in this.lstWords.Items)
             {
                 this.duplicate.Add(item.ToString());
             }
 
-            if (!SpellingListClass.CheckDuplicateWord(this.duplicate, word))
+            if (!slc.CheckDuplicateWord(this.duplicate, word))
             {
                 return false;
             }
@@ -102,7 +109,9 @@ namespace Art2MSpell.Source
         /// </summary>
         private void FillListBoxWithWordsList()
         {
-            if (SpellingWordsCollection.ItemsCount() < 1)
+            var swc = new SpellingWordsCollection();
+
+            if (swc.ItemsCount() < 1)
             {
                 return;
             }

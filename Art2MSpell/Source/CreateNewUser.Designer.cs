@@ -1,6 +1,6 @@
 ﻿namespace Art2MSpell.Source
 {
-    partial class InputBoxDialog
+    partial class CreateNewUser
     {
         /// <summary>
         /// Required designer variable.
@@ -82,7 +82,7 @@
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.OnButtonOk_Click);
             // 
-            // InputBoxDialog
+            // CreateNewUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -96,7 +96,7 @@
             this.MaximumSize = new System.Drawing.Size(197, 160);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(197, 160);
-            this.Name = "InputBoxDialog";
+            this.Name = "CreateNewUser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Input Box";
             this.ResumeLayout(false);

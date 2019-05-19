@@ -39,7 +39,7 @@ namespace Art2MSpell.Classes
     /// <summary>
     ///     Validates data.
     /// </summary>
-    public static class Validation
+    public  class Validation
     {
         /// <summary>
         ///     Check spelling word has no white space which could indicate two words only one word is allowed.
@@ -49,7 +49,7 @@ namespace Art2MSpell.Classes
         /// <returns>true if no empty space and has letters only.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static bool ValidateSpellingWord([NotNull] string value)
+        public  bool ValidateSpellingWord([NotNull] string value)
         {
             Contract.Requires(value != null);
 
@@ -73,7 +73,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if only letters in the spelling word else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static bool ValidateSpellingWordHasLettersOnly([NotNull] string value)
+        public  bool ValidateSpellingWordHasLettersOnly([NotNull] string value)
         {
             Contract.Requires(!string.IsNullOrEmpty(value));
 
@@ -112,7 +112,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if no space is found else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static bool ValidateStringOneWord(string value)
+        public  bool ValidateStringOneWord(string value)
         {
             MyMessages.NameOfClass = typeof(Validation).FullName;
 
@@ -146,7 +146,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if not empty else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static bool ValidateStringValueNotEmptyNotWhiteSpace([NotNull] string value)
+        public  bool ValidateStringValueNotEmptyNotWhiteSpace([NotNull] string value)
         {
             MyMessages.NameOfClass = typeof(Validation).FullName;
 
@@ -185,7 +185,7 @@ namespace Art2MSpell.Classes
         /// <returns>true if valid spelling list file else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static bool ValidateThisIsArt2MSpellSpellingList([NotNull] string word)
+        public  bool ValidateThisIsArt2MSpellSpellingList([NotNull] string word)
         {
             Contract.Requires(!string.IsNullOrEmpty(word));
 

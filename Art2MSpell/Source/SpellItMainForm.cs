@@ -44,7 +44,7 @@ namespace Art2MSpell.Source
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/17/2019</changed>
-        private static void ShowPracticeWordsForm()
+        private  void ShowPracticeWordsForm()
         {
             using (var frmSpellWords = new PracticeSpellingWordsForm())
             {
@@ -57,7 +57,7 @@ namespace Art2MSpell.Source
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/17/2019</changed>
-        private static void ShowSpellingListForm()
+        private  void ShowSpellingListForm()
         {
             using (var frmSpellList = new SpellingWordsListForm())
             {
@@ -184,8 +184,11 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/17/2019</changed>
         private void UserAddNewMenuItem_Click(object sender, EventArgs e)
         {
+            var slc = new SpellingListClass();
+
             SpellingPropertiesClass.UserName = string.Empty;
-            using (var dlgInput = new InputBoxDialog())
+
+            using (var dlgInput = new CreateNewUser())
             {
                 var dlgResult = dlgInput.ShowDialog();
                 if (DialogResult.OK != dlgResult)
@@ -193,7 +196,7 @@ namespace Art2MSpell.Source
                     return;
                 }
 
-                SpellingListClass.SpeakString("Hello " + SpellingPropertiesClass.UserName + "!");
+                slc.SpeakString("Hello " + SpellingPropertiesClass.UserName + "!");
 
                 this.SetControlsState(true);
             }
@@ -206,14 +209,16 @@ namespace Art2MSpell.Source
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/17/2019</changed>
-        private static void AddNewUserToUserNameFile()
+        private  void AddNewUserToUserNameFile()
         {
+            var srw = new SpellingReadWriteClass();
+
             if (string.IsNullOrEmpty(SpellingPropertiesClass.UserName))
             {
                 return;
             }
 
-            SpellingReadWriteClass.WriteUserNameFile();
+            srw.WriteUserNameFile();
         }
 
         /// <summary>
@@ -225,7 +230,10 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/17/2019</changed>
         private void UserSelectMenuItem_Click(object sender, EventArgs e)
         {
+            var slc = new SpellingListClass();
+
             SpellingPropertiesClass.UserName = string.Empty;
+
             using (var dlgUser = new UserSelectDialogBox())
             {
                 var dlgResult = dlgUser.ShowDialog();
@@ -235,7 +243,7 @@ namespace Art2MSpell.Source
                     return;
                 }
 
-                SpellingListClass.SpeakString("Hello " + SpellingPropertiesClass.UserName + "!");
+                slc.SpeakString("Hello " + SpellingPropertiesClass.UserName + "!");
 
                 this.SetControlsState(true);
             }

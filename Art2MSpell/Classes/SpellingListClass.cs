@@ -36,7 +36,7 @@ namespace Art2MSpell.Classes
     /// <summary>
     ///     Spelling list class reads and writes spelling list to file. Retrieves path to spelling lists.
     /// </summary>
-    public static class SpellingListClass
+    public  class SpellingListClass
     {
         /// <summary>Declare speech synthesizer object.</summary>
         private static readonly SpeechSynthesizer Ss = new SpeechSynthesizer();
@@ -47,9 +47,12 @@ namespace Art2MSpell.Classes
         /// <param name="word">Misspelled word.</param>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static void CheckDictionary(string word)
+        public  void CheckDictionary(string word)
         {
+            var sugWords = new SuggestedWordsCollection();
+
             List<string> suggestions;
+
             using (var hunspell = new Hunspell("en_us.aff", "en_us.dic"))
             {
                 suggestions = hunspell.Suggest(word);
@@ -57,7 +60,7 @@ namespace Art2MSpell.Classes
 
             foreach (var item in suggestions)
             {
-                DictionaryWordscollection.AddItem(item);
+                sugWords.AddItem(item);
             }
         }
 
@@ -70,7 +73,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if word is all ready in the list else false.</returns>
         /// <created>,5/10/2019</created>
         /// <changed>,5/10/2019</changed>
-        public static bool CheckDuplicateWord(List<string> duplicate, string addWord)
+        public  bool CheckDuplicateWord(List<string> duplicate, string addWord)
         {
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
             if (declaringType != null)
@@ -102,7 +105,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if word is spelled correctly else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static bool CheckWordSpelling(string word)
+        public  bool CheckWordSpelling(string word)
         {
             using (var hunspell = new Hunspell("en_us.aff", "en_us.dic"))
             {
@@ -123,7 +126,7 @@ namespace Art2MSpell.Classes
         /// <param name="word">The word or can be string.</param>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static void SpeakString(string word)
+        public  void SpeakString(string word)
         {
             Ss.Speak(word);
         }
@@ -137,7 +140,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if word to be added matches the word from the list else false.</returns>
         /// <created>art2m,5/13/2019</created>
         /// <changed>art2m,5/13/2019</changed>
-        private static bool CompareWordListToNewWord(string listWord, string addWord)
+        private  bool CompareWordListToNewWord(string listWord, string addWord)
         {
             var same = string.Compare(listWord, addWord, StringComparison.CurrentCultureIgnoreCase);
 
@@ -152,7 +155,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if duplicate word found in lest box else false.</returns>
         /// <created>art2m,5/13/2019</created>
         /// <changed>art2m,5/13/2019</changed>
-        private static bool LoopThrewWordsList(IReadOnlyCollection<string> duplicate, string addWord)
+        private  bool LoopThrewWordsList(IReadOnlyCollection<string> duplicate, string addWord)
         {
             for (var index = 0; index < duplicate.Count; index++)
             {
@@ -170,46 +173,36 @@ namespace Art2MSpell.Classes
         }
 
         /// <summary>
-        ///  Save the path to where user saved spelling list to.
-        /// Used to give user a selection of spelling lists to open.
-        /// </summary>
-        /// <created>art2m,5/16/2019</created>
-        /// <changed>art2m,5/16/2019</changed>
-        public static void SaveSpellingListPath()
-        {
-            // TODO: Save the path to spelling list user just saved.
-
-        }
-
-        /// <summary>
         /// Show the user a list of saved spelling lists they can use to choose
         /// what spelling list to open.
         /// </summary>
         /// <created>art2m,5/16/2019</created>
         /// <changed>art2m,5/16/2019</changed>
-        public static void GetListOfSpellingListFiles()
+        public  void GetListOfSpellingListFiles()
         {
             // TODO: Get list of spelling files the user has.
         }
 
         /// <summary>
-        ///  Create a list of misspelled words by user.
+        ///     Read header from file validate is real spelling file.
         /// </summary>
-        /// <created>art2m,5/16/2019</created>
-        /// <changed>art2m,5/16/2019</changed>
-        public static void MisspelledWordsList()
+        /// <returns>True if valid spelling file else false.</returns>
+        /// <returns>True if valid spelling file else false.</returns>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
+        public  bool ReadHeader()
         {
-           // TODO: Place each word user misspells into a collection. 
-        }
+            var srw = new SpellingReadWriteClass();
+            if (!srw.ReadHeader(SpellingPropertiesClass.SpellingListPath))
+            {
+                SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = false;
+                SpellingPropertiesClass.Art2MSpellSpellingList = false;
+                return false;
+            }
 
-        /// <summary>
-        ///  Loop threw the misspelled words so user can respell those they got wrong.
-        /// </summary>
-        /// <created>art2m,5/16/2019</created>
-        /// <changed>art2m,5/16/2019</changed>
-        public static void SpellMisspelledWords()
-        {
-           // TODO: Spell each word in the misspelled words. 
+            SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
+            SpellingPropertiesClass.Art2MSpellSpellingList = true;
+            return true;
         }
 
     }

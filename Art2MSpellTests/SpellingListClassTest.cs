@@ -4,6 +4,7 @@ using Art2MSpell;
 
 namespace Art2MSpellTests
 {
+    using System.CodeDom;
     using System.Collections.Generic;
     using global::Art2MSpell.Classes;
     using global::Art2MSpell.Collections;
@@ -20,11 +21,13 @@ namespace Art2MSpellTests
         [TestMethod]
         public void CheckWordSpelling_ValidWordSpelling()
         {
+            var slc = new SpellingListClass();
+
             // Arrange
             const string Word = "find";
 
             // Act 
-            var retVal = SpellingListClass.CheckWordSpelling(Word);
+            var retVal = slc.CheckWordSpelling(Word);
 
             // Assert
             Assert.IsTrue(retVal, "Word is spelled correctly.");
@@ -38,14 +41,31 @@ namespace Art2MSpellTests
         [TestMethod]
         public void CheckWordSpelling_InValidWordSpelling()
         {
+            var slc = new SpellingListClass();
+
             // Arrange
             const string Word = "finnd";
 
             // Act
-            var retVal = SpellingListClass.CheckWordSpelling(Word);
+            var retVal = slc.CheckWordSpelling(Word);
 
             // Assert
             Assert.IsFalse(retVal, "Should pass the words are not equal Misspelled.");
+        }
+
+        [TestMethod]
+        public void CheckWordSpelling_TryAddingTwoWords()
+        {
+            var slc = new SpellingListClass();
+
+            // Arrange
+            const string Word = "from me";
+
+            // Act
+            var retVal = slc.CheckWordSpelling(Word);
+
+            // Assert
+            Assert.IsFalse(retVal, "Should pass the words are not legit word for list.");
         }
 
         /// <summary>
@@ -57,12 +77,15 @@ namespace Art2MSpellTests
         [TestMethod]
         public void CheckDictionary_ValidateSuggestionsFound()
         {
+            var collSugWords = new SuggestedWordsCollection();
+            var slc = new SpellingListClass();
+
             // Arrange
             const string Word = "finnd";
 
             // Act
-            SpellingListClass.CheckDictionary(Word);
-            var retVal = DictionaryWordscollection.ItemsCount();
+            slc.CheckDictionary(Word);
+            var retVal = collSugWords.ItemsCount();
 
             // Assert
             Assert.AreNotEqual(retVal, 0, "retVal should be larger as it should have a list of words.");
@@ -76,12 +99,14 @@ namespace Art2MSpellTests
         [TestMethod]
         public void CheckDuplicateWord_ValidateWordAddedIsDuplicate()
         {
+            var slc = new SpellingListClass();
+
             // Arrange
             var duplicate = new List<string> {"find", "does", "friend", "mouse", "time", "Done", "Fan"};
 
             const string Word = "does";
             // Act
-            var retVal = SpellingListClass.CheckDuplicateWord(duplicate, Word);
+            var retVal = slc.CheckDuplicateWord(duplicate, Word);
 
             // Assert
             Assert.IsTrue(retVal);
@@ -95,13 +120,15 @@ namespace Art2MSpellTests
         [TestMethod]
         public void CheckDuplicateWord_ValidateWordAddedIsNotDuplicate()
         {
+            var slc = new SpellingListClass();
+
             // Arrange
             var duplicate = new List<string> {"find", "does", "friend", "mouse", "time", "Done", "Fan"};
 
             const string Word = "most";
 
             // Act
-            var retVal = SpellingListClass.CheckDuplicateWord(duplicate, Word);
+            var retVal = slc.CheckDuplicateWord(duplicate, Word);
 
             // Assert
              Assert.IsFalse(retVal);
@@ -116,13 +143,15 @@ namespace Art2MSpellTests
         [TestMethod]
         public void CheckDuplicateWord_ValidateWordIsDuplicate_IgnoreCase()
         {
+            var slc = new SpellingListClass();
+
             // Arrange
             var duplicate = new List<string> { "find", "does", "friend", "mouse", "time", "Done", "Fan" };
 
             const string Word = "Does";
 
             // Act
-            var retVal = SpellingListClass.CheckDuplicateWord(duplicate, Word);
+            var retVal = slc.CheckDuplicateWord(duplicate, Word);
 
             // Assert
             Assert.IsTrue(retVal);

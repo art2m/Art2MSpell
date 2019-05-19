@@ -97,17 +97,20 @@
     <Compile Include="Classes\SpellingListClass.cs" />
     <Compile Include="Classes\SpellingPropertiesClass.cs" />
     <Compile Include="Classes\SpellingReadWriteClass.cs" />
+    <Compile Include="Classes\SpellingWordsListClass.cs" />
     <Compile Include="Classes\Validation.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Classes\ValidateReadWriteOperations.cs" />
+    <Compile Include="Collections\ISpellingWordsCollection.cs" />
+    <Compile Include="Collections\MisspelledWordsCollection.cs" />
     <Compile Include="Collections\SpellingWordsCollection.cs" />
-    <Compile Include="Collections\DictionaryWordscollection.cs" />
-    <Compile Include="Source\InputBoxDialog.cs">
+    <Compile Include="Collections\SuggestedWordsCollection.cs" />
+    <Compile Include="Source\CreateNewUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\InputBoxDialog.Designer.cs">
-      <DependentUpon>InputBoxDialog.cs</DependentUpon>
+    <Compile Include="Source\CreateNewUser.Designer.cs">
+      <DependentUpon>CreateNewUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\PracticeSpellingWordsForm.cs">
       <SubType>Form</SubType>
@@ -121,6 +124,7 @@
     <Compile Include="Source\PracticeSpellingWordsForm.SetButtonState.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Source\SpellingWordsListClass.cs" />
     <Compile Include="Source\SpellingWordsListForm.AddWordsToListBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,8 +164,8 @@
     <Compile Include="Source\UserSelectDialogBox.Designer.cs">
       <DependentUpon>UserSelectDialogBox.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Source\InputBoxDialog.resx">
-      <DependentUpon>InputBoxDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Source\CreateNewUser.resx">
+      <DependentUpon>CreateNewUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\PracticeSpellingWordsForm.resx">
       <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>

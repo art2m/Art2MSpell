@@ -110,11 +110,13 @@ namespace Art2MSpell.Source
         /// </summary>
         private void CheckWordSpelling()
         {
+            var slc = new SpellingListClass();
+
             var word = this.txtSpellWord.Text.Trim();
 
             var sb = new StringBuilder();
 
-            if (SpellingListClass.CheckWordSpelling(word))
+            if (slc.CheckWordSpelling(word))
             {
                 this.correct++;
 
@@ -140,9 +142,11 @@ namespace Art2MSpell.Source
 
         /// <summary>Gets the spelling words from spelling list.</summary>
         /// <returns>True if spelling list files is read into the collection else false,</returns>
-        private static bool GetSpellingWordsFromSpellingList()
+        private  bool GetSpellingWordsFromSpellingList()
         {
-            return SpellingReadWriteClass.ReadFile(SpellingPropertiesClass.SpellingListPath);
+            var srw = new SpellingReadWriteClass();
+
+            return srw.ReadFile(SpellingPropertiesClass.SpellingListPath);
         }
 
         /// <summary>
@@ -153,7 +157,10 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/13/2019</changed>
         private bool GetWordsFromFile()
         {
-            if (!SpellingReadWriteClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
+            var srw = new SpellingReadWriteClass();
+            var swc = new SpellingWordsCollection();
+
+            if (!srw.ReadHeader(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
@@ -161,16 +168,16 @@ namespace Art2MSpell.Source
             SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
             SpellingPropertiesClass.Art2MSpellSpellingList = true;
 
-            if (!SpellingReadWriteClass.ReadFile(SpellingPropertiesClass.SpellingListPath))
+            if (!srw.ReadFile(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
 
-            this.allWords = new string[SpellingWordsCollection.ItemsCount() - 1];
+            this.allWords = new string[swc.ItemsCount() - 1];
 
-            this.allWords = SpellingWordsCollection.GetAllItems();
+            this.allWords = swc.GetAllItems();
 
-            this.txtTotalWords.Text = FormattableString.Invariant($"{SpellingWordsCollection.ItemsCount()}");
+            this.txtTotalWords.Text = FormattableString.Invariant($"{swc.ItemsCount()}");
 
             return true;
         }
@@ -304,7 +311,9 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnQuitButtonClick(object sender, EventArgs e)
         {
-            SpellingWordsCollection.ClearCollection();
+            var swc = new SpellingWordsCollection();
+
+            swc.ClearCollection();
             this.index = 0;
             SpellingPropertiesClass.OpenedSpellingList = false;
             SpellingPropertiesClass.SpellingListPath = string.Empty;
@@ -319,9 +328,12 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnRepeatWordButtonClick(object sender, EventArgs e)
         {
+            var swc = new SpellingWordsCollection();
+
             this.txtSpellWord.Focus();
 
-            var word = SpellingWordsCollection.GetItemAt(this.index);
+            var word = swc.GetItemAt(this.index);
+
             SaySpellingWord(word);
 
             this.txtSpellWord.Focus();
@@ -353,7 +365,7 @@ namespace Art2MSpell.Source
         ///     Says the spelling word.
         /// </summary>
         /// <param name="word">The word to be asked for spelling.</param>
-        private static void SaySpellingWord(string word)
+        private  void SaySpellingWord(string word)
         {
             using (var synth = new SpeechSynthesizer())
             {

@@ -34,9 +34,12 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuClose = new System.Windows.Forms.ToolStripMenuItem();
             this.SpellTopMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSpellNewSpellingList = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSpellCreateNew = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSpellOpenSpellingList = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSpellNewSpellingList = new System.Windows.Forms.ToolStripMenuItem();
             this.UserTopMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuNewUser = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuUserLogIn = new System.Windows.Forms.ToolStripMenuItem();
             this.spelListToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnOpenist = new System.Windows.Forms.Button();
             this.btnClearist = new System.Windows.Forms.Button();
@@ -95,29 +98,54 @@
             // SpellTopMenuItem
             // 
             this.SpellTopMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuSpellNewSpellingList,
-            this.mnuSpellOpenSpellingList});
+            this.mnuSpellCreateNew,
+            this.mnuSpellOpenSpellingList,
+            this.mnuSpellNewSpellingList});
             this.SpellTopMenuItem.Name = "SpellTopMenuItem";
             this.SpellTopMenuItem.Size = new System.Drawing.Size(44, 20);
             this.SpellTopMenuItem.Text = "Spell";
             // 
-            // mnuSpellNewSpellingList
+            // mnuSpellCreateNew
             // 
-            this.mnuSpellNewSpellingList.Name = "mnuSpellNewSpellingList";
-            this.mnuSpellNewSpellingList.Size = new System.Drawing.Size(169, 22);
+            this.mnuSpellCreateNew.Name = "mnuSpellCreateNew";
+            this.mnuSpellCreateNew.Size = new System.Drawing.Size(204, 22);
+            this.mnuSpellCreateNew.Text = "Create New Spelling List.";
+            this.mnuSpellCreateNew.Click += new System.EventHandler(this.OnMenuSpellNewSpellingList_Click);
             // 
             // mnuSpellOpenSpellingList
             // 
             this.mnuSpellOpenSpellingList.Name = "mnuSpellOpenSpellingList";
-            this.mnuSpellOpenSpellingList.Size = new System.Drawing.Size(169, 22);
+            this.mnuSpellOpenSpellingList.Size = new System.Drawing.Size(204, 22);
             this.mnuSpellOpenSpellingList.Text = "Open Spelling List";
             this.mnuSpellOpenSpellingList.Click += new System.EventHandler(this.OnMenuSpellOpenSpellingList_Click);
             // 
+            // mnuSpellNewSpellingList
+            // 
+            this.mnuSpellNewSpellingList.Name = "mnuSpellNewSpellingList";
+            this.mnuSpellNewSpellingList.Size = new System.Drawing.Size(204, 22);
+            // 
             // UserTopMenuItem
             // 
+            this.UserTopMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuNewUser,
+            this.mnuUserLogIn});
             this.UserTopMenuItem.Name = "UserTopMenuItem";
             this.UserTopMenuItem.Size = new System.Drawing.Size(42, 20);
             this.UserTopMenuItem.Text = "User";
+            this.UserTopMenuItem.Click += new System.EventHandler(this.OnMenuUserCreateNewUser_Click);
+            // 
+            // mnuNewUser
+            // 
+            this.mnuNewUser.Name = "mnuNewUser";
+            this.mnuNewUser.Size = new System.Drawing.Size(180, 22);
+            this.mnuNewUser.Text = "Create New User";
+            // 
+            // mnuUserLogIn
+            // 
+            this.mnuUserLogIn.Name = "mnuUserLogIn";
+            this.mnuUserLogIn.Size = new System.Drawing.Size(180, 22);
+            this.mnuUserLogIn.Text = "User Log In";
+            this.mnuUserLogIn.Click += new System.EventHandler(this.OnMenuUserUserLogIn_Click);
             // 
             // btnOpenist
             // 
@@ -391,5 +419,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuSpellOpenSpellingList;
         private System.Windows.Forms.ToolStripMenuItem mnuSpellNewSpellingList;
         private System.Windows.Forms.ToolStripMenuItem UserTopMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuSpellCreateNew;
+        private System.Windows.Forms.ToolStripMenuItem mnuNewUser;
+        private System.Windows.Forms.ToolStripMenuItem mnuUserLogIn;
     }
 }

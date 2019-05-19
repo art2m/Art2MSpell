@@ -12,9 +12,9 @@ namespace Art2MSpell.Source
     using System.Windows.Forms;
     using Classes;
 
-    public partial class InputBoxDialog : Form
+    public partial class CreateNewUser : Form
     {
-        public InputBoxDialog()
+        public CreateNewUser()
         {
             this.InitializeComponent();
 

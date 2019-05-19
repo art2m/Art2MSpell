@@ -1,43 +1,34 @@
-﻿//---------------------------------------------------------------------------------------------------------------
-// Art2MSpell
+﻿// Art2MSpell
 // 
-// SpellingWordsCollection.cs
-//
-// File:     Art2MSpell.sln
-//
-// Author:   art2m_000]
-// Email     art2m@live.com   
-// Company:  
-// Date:     5/9/2019
-//
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//----------------------------------------------------------------------------------------------------------------
-
-using System.Collections.Generic;
+// MisspelledWordsCollection.cs
+// 
+// Art2M
+// 
+// art2m@live.com
+// 
+// 05  19  2019
+// 
+// 05  19   2019
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Art2MSpell.Collections
 {
-    /// <summary>
-    /// Spelling Words Collection Holds words from current spelling list.
-    /// </summary>
-    public class SpellingWordsCollection : ISpellingWordsCollection
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+
+    public class MisspelledWordsCollection : ISpellingWordsCollection
     {
-        #region Fields
-
-        /// <summary>
-        /// Contains collection of words from a spelling list.
-        /// </summary>
         private static readonly List<string> WordsList = new List<string>();
-
-        #endregion Fields
-
-        #region Public Methods
 
         /// <summary>
         ///  Adds the specified word to the collection.
@@ -51,9 +42,10 @@ namespace Art2MSpell.Collections
             {
                 return;
             }
-
             WordsList.Add(word);
         }
+
+       
         /// <summary>
         /// clear the collection of all items.
         /// </summary>
@@ -100,6 +92,8 @@ namespace Art2MSpell.Collections
             return origPath;
         }
 
+
+
         /// <summary>
         /// Get item at the specified index.
         /// </summary>
@@ -107,15 +101,16 @@ namespace Art2MSpell.Collections
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
         public string GetItemAt(int index) => WordsList[index];
+        
 
-        /// <summary>
-        ///  Get the index of this  item.
-        /// </summary>
-        /// <param name="word">The item to get the index of.</param>
-        /// <returns>the index or else -1.</returns>
-        /// <created>art2m,5/19/2019</created>
-        /// <changed>art2m,5/19/2019</changed>
-        public int GetItemIndex(string word) => WordsList.IndexOf(word);
+     /// <summary>
+     ///  Get the index of this  item.
+     /// </summary>
+     /// <param name="word">The item to get the index of.</param>
+     /// <returns>the index or else -1.</returns>
+     /// <created>art2m,5/19/2019</created>
+     /// <changed>art2m,5/19/2019</changed>
+     public  int GetItemIndex(string word) => WordsList.IndexOf(word);
 
         /// <summary>
         ///Get the count of items contained in the collection.
@@ -124,14 +119,16 @@ namespace Art2MSpell.Collections
         /// <changed>art2m,5/19/2019</changed>
         public int ItemsCount() => WordsList.Count;
 
+        
         /// <summary>
         /// Remove the specified word.
         /// </summary>
         /// <param name="word"></param>
-        /// <returns>True if word removed else false.</returns>
+        /// <returns>true if removed else false.</returns>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
         public bool RemoveItem(string word) => WordsList.Remove(word);
+
 
         /// <summary>
         /// Remove the item at selected index.
@@ -162,7 +159,5 @@ namespace Art2MSpell.Collections
         {
             WordsList.Sort();
         }
-
-        #endregion Public Methods
     }
 }

@@ -30,8 +30,7 @@ namespace Art2MSpell.Classes
     using System.Text;
     using Classes;
     using Collections;
-
-    internal static class SpellingReadWriteClass
+    public class SpellingReadWriteClass
     {
         /// <summary>
         ///     Reads the spelling list from the file the user has opened.
@@ -40,12 +39,16 @@ namespace Art2MSpell.Classes
         /// <returns>True if the spelling list words are added to collection else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static bool ReadFile(string filePath)
+        public  bool ReadFile(string filePath)
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-            SpellingWordsCollection.ClearCollection();
+            var swc = new SpellingWordsCollection();
+            var clsValid = new Validation();
+
             try
             {
+                swc.ClearCollection();
+
                 var cnt = 0;
                 StreamReader fileRead;
                 using (fileRead = new StreamReader(filePath))
@@ -60,12 +63,12 @@ namespace Art2MSpell.Classes
                         }
 
                         // check for valid spell list by checking words are all letters and not empty.
-                        if (!Validation.ValidateSpellingWord(word))
+                        if (!clsValid.ValidateSpellingWord(word))
                         {
                             return false;
                         }
 
-                        SpellingWordsCollection.AddItem(word);
+                        swc.AddItem(word);
                     }
                 }
 
@@ -74,20 +77,14 @@ namespace Art2MSpell.Classes
             catch (ArgumentException ex)
             {
                 MyMessages.ErrorMessage = "Invalid file path. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
+                MyMessages.BuildErrorString(MyMessages.NameOfClass, MyMessages.NameOfMethod, MyMessages.ErrorMessage,
                     ex.Message);
                 return false;
             }
             catch (IOException ex)
             {
                 MyMessages.ErrorMessage = "Read error has occurred. " + filePath;
-                MyMessages.BuildErrorString(
-                    MyMessages.NameOfClass,
-                    MyMessages.NameOfMethod,
-                    MyMessages.ErrorMessage,
+                MyMessages.BuildErrorString(MyMessages.NameOfClass, MyMessages.NameOfMethod, MyMessages.ErrorMessage,
                     ex.Message);
                 return false;
             }
@@ -100,15 +97,17 @@ namespace Art2MSpell.Classes
         /// <returns>True if valid spelling list else false.</returns>
         /// <created>art2m,5/12/2019</created>
         /// <changed>art2m,5/12/2019</changed>
-        public static bool ReadHeader(string filePath)
+        public  bool ReadHeader(string filePath)
         {
+            var clsValid = new Validation();
+
             try
             {
                 using (var fileRead = new StreamReader(filePath))
                 {
                     var word = fileRead.ReadLine();
 
-                    return Validation.ValidateThisIsArt2MSpellSpellingList(word);
+                    return clsValid.ValidateThisIsArt2MSpellSpellingList(word);
                 }
             }
             catch (ArgumentException ex)
@@ -140,19 +139,21 @@ namespace Art2MSpell.Classes
         /// <returns>True if spelling words written to file else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public static bool WriteToFile(string filePath)
+        public  bool WriteToFile(string filePath)
         {
+            var swc = new SpellingWordsCollection();
+
             try
             {
                 StreamWriter fileWrite;
                 using (fileWrite = new StreamWriter(filePath, false))
                 {
-                    var cnt = SpellingWordsCollection.ItemsCount();
+                    var cnt = swc.ItemsCount();
                     fileWrite.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
                     Debug.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
                     for (var i = 0; i < cnt; i++)
                     {
-                        var word = SpellingWordsCollection.GetItemAt(i);
+                        var word = swc.GetItemAt(i);
                         fileWrite.WriteLine(word);
                     }
                 }
@@ -187,7 +188,7 @@ namespace Art2MSpell.Classes
         /// <returns></returns>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/17/2019</changed>
-        public static bool WriteUserNameFile()
+        public  bool WriteUserNameFile()
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
@@ -221,7 +222,7 @@ namespace Art2MSpell.Classes
 
        
 
-        public static bool ReadUserNameFile()
+        public  bool ReadUserNameFile()
         {
 
             return true;
