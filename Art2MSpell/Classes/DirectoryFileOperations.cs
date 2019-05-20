@@ -27,17 +27,8 @@ namespace Art2MSpell.Classes
     using System.IO;
     using System.Reflection;
 
-   public class DirectoryFileOperations
+   public static class DirectoryFileOperations
     {
-        public DirectoryFileOperations()
-        {
-            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
-            if (declaringType != null)
-            {
-                MyMessages.NameOfClass = declaringType.Name;
-            }
-        }
-
         /// <summary>
         ///     Check if directory path to Art2m spell directory exits. If not then create it
         ///     and verify its existence. used to hold all files related to Art2MSpell.
@@ -45,8 +36,14 @@ namespace Art2MSpell.Classes
         /// <returns>Directory path if successful else returns empty string.</returns>
         /// <created>art2m,5/18/2019</created>
         /// <changed>art2m,5/18/2019</changed>
-        public string CheckDirectoryPathExistsCreate()
+        public static string CheckDirectoryPathExistsCreate()
         {
+            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
+            if (declaringType != null)
+            {
+                MyMessages.NameOfClass = declaringType.Name;
+            }
+
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             try
@@ -128,6 +125,12 @@ namespace Art2MSpell.Classes
         /// <changed>art2m,5/18/2019</changed>
         public static string CreatePathToUserFile(string dirPath)
         {
+            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
+            if (declaringType != null)
+            {
+                MyMessages.NameOfClass = declaringType.Name;
+            }
+
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             try

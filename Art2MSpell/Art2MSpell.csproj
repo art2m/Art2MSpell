@@ -101,16 +101,20 @@
     <Compile Include="Classes\Validation.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Classes\ValidateReadWriteOperations.cs" />
     <Compile Include="Collections\ISpellingWordsCollection.cs" />
     <Compile Include="Collections\MisspelledWordsCollection.cs" />
     <Compile Include="Collections\SpellingWordsCollection.cs" />
     <Compile Include="Collections\SuggestedWordsCollection.cs" />
+    <Compile Include="Collections\UsersNameCollection.cs" />
     <Compile Include="Source\CreateNewUser.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\CreateNewUser.Designer.cs">
       <DependentUpon>CreateNewUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\PracticeSpellingWordsForm.BackgroundColor.cs">
+      <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\PracticeSpellingWordsForm.cs">
       <SubType>Form</SubType>
@@ -118,36 +122,39 @@
     <Compile Include="Source\PracticeSpellingWordsForm.Designer.cs">
       <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\PracticeSpellingWordsForm.BackgroundColor.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Source\PracticeSpellingWordsForm.SetButtonState.cs">
       <SubType>Form</SubType>
+      <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\SpellingWordsListClass.cs" />
     <Compile Include="Source\SpellingWordsListForm.AddWordsToListBox.cs">
       <SubType>Form</SubType>
+      <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\SpellingWordsListForm.ButtonClickEvents.cs">
       <SubType>Form</SubType>
+      <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\SpellingWordsListForm.SetBackgroundColor.cs">
       <SubType>Form</SubType>
+      <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\SpellingWordsListForm.SetButtonActiondProperties.cs">
       <SubType>Form</SubType>
+      <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\SpellingWordsListForm.SetButtonState.cs">
       <SubType>Form</SubType>
+      <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\SpellingWordsListForm.SetTabOrder.cs">
       <SubType>Form</SubType>
+      <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\SpellItMainForm.cs">
+    <Compile Include="Source\Art2MSpellMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\SpellItMainForm.Designer.cs">
-      <DependentUpon>SpellItMainForm.cs</DependentUpon>
+    <Compile Include="Source\Art2MSpellMainForm.Designer.cs">
+      <DependentUpon>Art2MSpellMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -170,8 +177,8 @@
     <EmbeddedResource Include="Source\PracticeSpellingWordsForm.resx">
       <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\SpellItMainForm.resx">
-      <DependentUpon>SpellItMainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Source\Art2MSpellMainForm.resx">
+      <DependentUpon>Art2MSpellMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

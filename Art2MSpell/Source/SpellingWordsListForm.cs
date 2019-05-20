@@ -53,6 +53,7 @@ namespace Art2MSpell.Source
             // TODO: Add Save And Get spelling list paths!
             // TODO: Add collection for words spelled wrong. So they can respell wrong!
             // TODO: Add menu items for opening, creating new spelling list., user saved spelling lists.
+            // TODO: Make a delete for deleting user from users list.
         }
 
         /// <summary>
@@ -86,9 +87,7 @@ namespace Art2MSpell.Source
         {
             var msw = new MisspelledWordsCollection();
 
-            var slc = new SpellingListClass();
-
-            if (slc.CheckWordSpelling(word))
+            if (SpellingListClass.CheckWordSpelling(word))
             {
                 return true;
             }
@@ -127,16 +126,12 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private bool GetWordsFromFile()
         {
-            var slc = new SpellingListClass();
-
-            if (!slc.ReadHeader())
+            if (!SpellingListClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
 
-            var srw = new SpellingReadWriteClass();
-
-            if (!srw.ReadFile(SpellingPropertiesClass.SpellingListPath))
+            if (!SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
@@ -255,11 +250,9 @@ namespace Art2MSpell.Source
         /// </summary>
         private void SaveSpellingWordsToSpellingList()
         {
-            var swl = new SpellingWordsListClass();
-
             this.FillListFromListBox();
 
-            swl.SaveSpellingListPath();
+            SpellingWordsListClass.SaveSpellingListPath();
 
             this.SetSaveOperationProperties();
         }
@@ -296,37 +289,6 @@ namespace Art2MSpell.Source
             pos = this.lstWords.Left - this.flpLeftPanel.Width;
             this.flpLeftPanel.Left = pos - 10;
             this.cboWord.Left = this.lstWords.Left;
-        }
-
-        /// <summary>
-        /// Display create new user so the user can add name to associate with there spelling lists.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">Instance containing the event data.</param>
-        /// <created>art2m,5/19/2019</created>
-        /// <changed>art2m,5/19/2019</changed>
-        private void OnMenuUserCreateNewUser_Click(object sender, EventArgs e)
-        {
-            using (var cnu = new CreateNewUser())
-            {
-                cnu.ShowDialog();
-            }
-
-        }
-
-        /// <summary>
-        /// show the user select dialog box. so user can log in.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">Instance containing the event data.</param>
-        /// <created>art2m,5/19/2019</created>
-        /// <changed>art2m,5/19/2019</changed>
-        private void OnMenuUserUserLogIn_Click(object sender, EventArgs e)
-        {
-            using (var usd = new UserSelectDialogBox())
-            {
-                usd.ShowDialog();
-            }
         }
     }
 }

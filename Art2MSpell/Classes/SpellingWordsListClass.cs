@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  19  2019
+// 05  20  2019
 // 
 // 05  19   2019
 // 
@@ -26,7 +26,7 @@ namespace Art2MSpell.Classes
     using System.IO;
     using System.Reflection;
 
-    public class SpellingWordsListClass
+    public static class SpellingWordsListClass
     {
         /// <summary>
         ///     Save spelling list file in the users name directory.
@@ -34,7 +34,7 @@ namespace Art2MSpell.Classes
         /// <returns>Path where the users spelling list is to be saved.</returns>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        private string CreateUserSpellingListFileName()
+        private static string CreateUserSpellingListFileName()
         {
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
             if (declaringType != null)
@@ -55,11 +55,11 @@ namespace Art2MSpell.Classes
         /// </summary>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public void SaveSpellingListPath()
+        public static void SaveSpellingListPath()
         {
-            var filePath = this.CreateUserSpellingListFileName();
+            var filePath = CreateUserSpellingListFileName();
 
-            this.WriteWordsToFile(filePath);
+            WriteWordsToFile(filePath);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Art2MSpell.Classes
         /// </summary>
         /// <created>art2m,5/16/2019</created>
         /// <changed>art2m,5/16/2019</changed>
-        public void SpellMisspelledWords()
+        public static void SpellMisspelledWords()
         {
             // TODO: Spell each word in the misspelled words. 
         }
@@ -79,13 +79,11 @@ namespace Art2MSpell.Classes
         /// <returns>true if spelling list is written to file else false.</returns>
         /// <created>art2m,5/12/2019</created>
         /// <changed>art2m,5/12/2019</changed>
-        public bool WriteWordsToFile(string filePath)
+        public static bool WriteWordsToFile(string filePath)
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
-            var srw = new SpellingReadWriteClass();
-
-            if (!srw.WriteToFile(filePath))
+            if (!SpellingReadWriteClass.WriteSpellingWordsToFile(filePath))
             {
                 return false;
             }

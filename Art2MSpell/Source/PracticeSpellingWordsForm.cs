@@ -110,13 +110,11 @@ namespace Art2MSpell.Source
         /// </summary>
         private void CheckWordSpelling()
         {
-            var slc = new SpellingListClass();
-
             var word = this.txtSpellWord.Text.Trim();
 
             var sb = new StringBuilder();
 
-            if (slc.CheckWordSpelling(word))
+            if (SpellingListClass.CheckWordSpelling(word))
             {
                 this.correct++;
 
@@ -142,11 +140,10 @@ namespace Art2MSpell.Source
 
         /// <summary>Gets the spelling words from spelling list.</summary>
         /// <returns>True if spelling list files is read into the collection else false,</returns>
-        private  bool GetSpellingWordsFromSpellingList()
+        private static bool GetSpellingWordsFromSpellingList()
         {
-            var srw = new SpellingReadWriteClass();
 
-            return srw.ReadFile(SpellingPropertiesClass.SpellingListPath);
+            return SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath);
         }
 
         /// <summary>
@@ -157,10 +154,10 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/13/2019</changed>
         private bool GetWordsFromFile()
         {
-            var srw = new SpellingReadWriteClass();
+           
             var swc = new SpellingWordsCollection();
 
-            if (!srw.ReadHeader(SpellingPropertiesClass.SpellingListPath))
+            if (!SpellingReadWriteClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
@@ -168,7 +165,7 @@ namespace Art2MSpell.Source
             SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
             SpellingPropertiesClass.Art2MSpellSpellingList = true;
 
-            if (!srw.ReadFile(SpellingPropertiesClass.SpellingListPath))
+            if (!SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
             }
@@ -365,7 +362,7 @@ namespace Art2MSpell.Source
         ///     Says the spelling word.
         /// </summary>
         /// <param name="word">The word to be asked for spelling.</param>
-        private  void SaySpellingWord(string word)
+        private static void SaySpellingWord(string word)
         {
             using (var synth = new SpeechSynthesizer())
             {

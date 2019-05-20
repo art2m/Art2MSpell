@@ -16,7 +16,7 @@ namespace Art2MSpell
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SpellItMainForm());
+            Application.Run(new Art2MSpellMainForm());
         }
 
         #endregion Private Methods

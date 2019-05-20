@@ -54,8 +54,6 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private bool AddWordToListBox(string word)
         {
-            var slc = new SpellingListClass();
-
             if (this.CheckListBoxForWord(word))
             {
                 this.SetAddingWordProperties();
@@ -70,7 +68,7 @@ namespace Art2MSpell.Source
 
             this.lstWords.Items.Add(word);
 
-            slc.SpeakString(word);
+            SpellingListClass.SpeakString(word);
             this.SetAddingWordProperties();
 
             return true;
@@ -85,8 +83,6 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private bool CheckListBoxForWord(string word)
         {
-            var slc = new SpellingListClass();
-
             this.duplicate = new List<string>();
 
             foreach (var item in this.lstWords.Items)
@@ -94,7 +90,7 @@ namespace Art2MSpell.Source
                 this.duplicate.Add(item.ToString());
             }
 
-            if (!slc.CheckDuplicateWord(this.duplicate, word))
+            if (!SpellingListClass.CheckDuplicateWord(this.duplicate, word))
             {
                 return false;
             }

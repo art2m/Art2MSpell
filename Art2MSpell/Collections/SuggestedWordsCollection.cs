@@ -139,18 +139,14 @@ namespace Art2MSpell.Collections
         public bool RemoveItemAt(int index)
         {
             // Get item to be removed for check that it is gone.
-            var item = GetItemAt(index);
+            var item = this.GetItemAt(index);
 
             WordsList.RemoveAt(index);
 
             // Check to see if item is no longer in collection
-            if (!ContainsItem(item))
-            {
-                return true;
-            }
+            return !this.ContainsItem(item);
 
             // Item still in collection remove failed.
-            return false;
         }
 
         /// <summary>

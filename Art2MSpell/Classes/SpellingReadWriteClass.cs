@@ -30,7 +30,11 @@ namespace Art2MSpell.Classes
     using System.Text;
     using Classes;
     using Collections;
-    public class SpellingReadWriteClass
+
+    /// <summary>
+    /// used to read write spelling list user list and read header from spelling list files.
+    /// </summary>
+    public static class SpellingReadWriteClass
     {
         /// <summary>
         ///     Reads the spelling list from the file the user has opened.
@@ -39,11 +43,10 @@ namespace Art2MSpell.Classes
         /// <returns>True if the spelling list words are added to collection else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public  bool ReadFile(string filePath)
+        public static bool ReadSpellingListFile(string filePath)
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
             var swc = new SpellingWordsCollection();
-            var clsValid = new Validation();
 
             try
             {
@@ -63,7 +66,7 @@ namespace Art2MSpell.Classes
                         }
 
                         // check for valid spell list by checking words are all letters and not empty.
-                        if (!clsValid.ValidateSpellingWord(word))
+                        if (!Validation.ValidateSpellingWord(word))
                         {
                             return false;
                         }
@@ -97,17 +100,15 @@ namespace Art2MSpell.Classes
         /// <returns>True if valid spelling list else false.</returns>
         /// <created>art2m,5/12/2019</created>
         /// <changed>art2m,5/12/2019</changed>
-        public  bool ReadHeader(string filePath)
+        public static bool ReadHeader(string filePath)
         {
-            var clsValid = new Validation();
-
             try
             {
                 using (var fileRead = new StreamReader(filePath))
                 {
                     var word = fileRead.ReadLine();
 
-                    return clsValid.ValidateThisIsArt2MSpellSpellingList(word);
+                    return Validation.ValidateThisIsArt2MSpellSpellingList(word);
                 }
             }
             catch (ArgumentException ex)
@@ -132,14 +133,15 @@ namespace Art2MSpell.Classes
             }
         }
 
+        
         /// <summary>
-        ///     Writes spelling words to file.
+        /// Write spelling words list to file.
         /// </summary>
-        /// <param name="filePath">The file path to write the spelling words to.</param>
-        /// <returns>True if spelling words written to file else false.</returns>
-        /// <created>art2m,5/10/2019</created>
-        /// <changed>art2m,5/10/2019</changed>
-        public  bool WriteToFile(string filePath)
+        /// <param name="filePath">Path to write file to.</param>
+        /// <returns>True if file is written else false.</returns>
+        /// <created>art2m,5/20/2019</created>
+        /// <changed>art2m,5/20/2019</changed>
+        public static bool WriteSpellingWordsToFile(string filePath)
         {
             var swc = new SpellingWordsCollection();
 
@@ -149,8 +151,11 @@ namespace Art2MSpell.Classes
                 using (fileWrite = new StreamWriter(filePath, false))
                 {
                     var cnt = swc.ItemsCount();
+
                     fileWrite.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
+
                     Debug.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
+
                     for (var i = 0; i < cnt; i++)
                     {
                         var word = swc.GetItemAt(i);
@@ -185,45 +190,58 @@ namespace Art2MSpell.Classes
         /// <summary>
         /// If adding new user  then write there name to the Art2MSpell user names file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if write successful else false.</returns>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/17/2019</changed>
-        public  bool WriteUserNameFile()
+        public static bool WriteUserNameFile()
         {
+            // TODO: Add error handling to this message.
+
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
-            var op = new DirectoryFileOperations();
+            var dirPath = DirectoryFileOperations.CheckDirectoryPathExistsCreate();
 
-            /*if (!string.IsNullOrEmpty(op.CheckDirectoryPathExistsCreate()))
+            var filePath = DirectoryFileOperations.CreatePathToUserFile(dirPath);
+
+            // Append line to the file.
+            using (var writer = new StreamWriter(filePath, true))
             {
-               
-            };
-
-
-            if (!File.Exists(filePath))
-            {
-                File.Create(filePath).Dispose();
-
-                using (TextWriter tw = new StreamWriter(filePath))
-                {
-                    tw.WriteLine(SpellingPropertiesClass.UserName);
-                }
+                writer.WriteLine(SpellingPropertiesClass.UserName);
             }
-            else if (File.Exists(filePath))
-            {
-                using (TextWriter tw = new StreamWriter(filePath))
-                {
-                    tw.WriteLine(SpellingPropertiesClass.UserName);
-                }
-            }*/
 
             return true;
         }
 
        
 
-        public  bool ReadUserNameFile()
+        /// <summary>
+        /// Read user name file into collection.
+        /// so user can log in with there name. This
+        /// is used to keep each users spelling list together so they can choose
+        /// an all ready saved spelling list to practice.
+        /// </summary>
+        /// <returns></returns>
+        /// <created>art2m,5/20/2019</created>
+        /// <changed>art2m,5/20/2019</changed>
+        public static bool ReadUserNameFile()
         {
+            // TODO: Add error handling to this method.
+
+            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+
+            var dirPath = DirectoryFileOperations.CheckDirectoryPathExistsCreate();
+            var filePath = DirectoryFileOperations.CreatePathToUserFile(dirPath);
+
+            var userColl = new UsersNameCollection();
+
+            using (var reader = new StreamReader(filePath))
+            {
+                string user;
+                while ((user = reader.ReadLine()) != null)
+                {
+                    userColl.AddItem(user.Trim());
+                }
+            }
 
             return true;
         }

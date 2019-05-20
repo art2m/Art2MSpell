@@ -12,6 +12,9 @@ namespace Art2MSpell.Source
     using System.Windows.Forms;
     using Classes;
 
+    /// <summary>
+    /// Dialog for adding a new user to the user file.
+    /// </summary>
     public partial class CreateNewUser : Form
     {
         public CreateNewUser()
@@ -23,13 +26,17 @@ namespace Art2MSpell.Source
             this.txtUserName.Focus();
         }
 
+        /// <summary>
+        /// Set the control colors
+        /// </summary>
+        /// <created>art2m,5/20/2019</created>
+        /// <changed>art2m,5/20/2019</changed>
         private void SetInitialBackgroundColors()
         {
             this.BackColor = Color.SaddleBrown;
             this.btnCancel.BackColor = Color.Red;
             this.btnOk.BackColor = Color.LawnGreen;
             this.lblUserName.BackColor = Color.Goldenrod;
-
 
         }
 

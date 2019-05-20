@@ -36,7 +36,7 @@ namespace Art2MSpell.Classes
     /// <summary>
     ///     Spelling list class reads and writes spelling list to file. Retrieves path to spelling lists.
     /// </summary>
-    public  class SpellingListClass
+    public static class SpellingListClass
     {
         /// <summary>Declare speech synthesizer object.</summary>
         private static readonly SpeechSynthesizer Ss = new SpeechSynthesizer();
@@ -47,7 +47,7 @@ namespace Art2MSpell.Classes
         /// <param name="word">Misspelled word.</param>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public  void CheckDictionary(string word)
+        public static void CheckDictionary(string word)
         {
             var sugWords = new SuggestedWordsCollection();
 
@@ -73,7 +73,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if word is all ready in the list else false.</returns>
         /// <created>,5/10/2019</created>
         /// <changed>,5/10/2019</changed>
-        public  bool CheckDuplicateWord(List<string> duplicate, string addWord)
+        public static bool CheckDuplicateWord(List<string> duplicate, string addWord)
         {
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
             if (declaringType != null)
@@ -105,7 +105,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if word is spelled correctly else false.</returns>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public  bool CheckWordSpelling(string word)
+        public static bool CheckWordSpelling(string word)
         {
             using (var hunspell = new Hunspell("en_us.aff", "en_us.dic"))
             {
@@ -121,16 +121,50 @@ namespace Art2MSpell.Classes
         }
 
         /// <summary>
+        /// Show the user a list of saved spelling lists they can use to choose
+        /// what spelling list to open.
+        /// </summary>
+        /// <created>art2m,5/16/2019</created>
+        /// <changed>art2m,5/16/2019</changed>
+        public static void GetListOfSpellingListFiles()
+        {
+            // TODO: Get list of spelling files the user has.
+        }
+
+        /// <summary>
+        ///     Read header from file validate is real spelling file.
+        /// </summary>
+        /// <returns>True if valid spelling file else false.</returns>
+        /// <returns>True if valid spelling file else false.</returns>
+        /// <created>art2m,5/14/2019</created>
+        /// <changed>art2m,5/14/2019</changed>
+        public static bool ReadHeader(string filePath)
+        {
+            
+            if (!SpellingReadWriteClass.ReadHeader(filePath))
+            {
+                SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = false;
+                SpellingPropertiesClass.Art2MSpellSpellingList = false;
+                return false;
+            }
+
+            SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
+            SpellingPropertiesClass.Art2MSpellSpellingList = true;
+            return true;
+        }
+
+        /// <summary>
         ///     Say the string passed into it.
         /// </summary>
         /// <param name="word">The word or can be string.</param>
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/10/2019</changed>
-        public  void SpeakString(string word)
+        public static void SpeakString(string word)
         {
             Ss.Speak(word);
         }
 
+        
         /// <summary>
         ///     Compare the words in the list with new word to add.
         /// </summary>
@@ -140,7 +174,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if word to be added matches the word from the list else false.</returns>
         /// <created>art2m,5/13/2019</created>
         /// <changed>art2m,5/13/2019</changed>
-        private  bool CompareWordListToNewWord(string listWord, string addWord)
+        private static bool CompareWordListToNewWord(string listWord, string addWord)
         {
             var same = string.Compare(listWord, addWord, StringComparison.CurrentCultureIgnoreCase);
 
@@ -155,7 +189,7 @@ namespace Art2MSpell.Classes
         /// <returns>True if duplicate word found in lest box else false.</returns>
         /// <created>art2m,5/13/2019</created>
         /// <changed>art2m,5/13/2019</changed>
-        private  bool LoopThrewWordsList(IReadOnlyCollection<string> duplicate, string addWord)
+        private static bool LoopThrewWordsList(IReadOnlyCollection<string> duplicate, string addWord)
         {
             for (var index = 0; index < duplicate.Count; index++)
             {
@@ -171,39 +205,5 @@ namespace Art2MSpell.Classes
 
             return false;
         }
-
-        /// <summary>
-        /// Show the user a list of saved spelling lists they can use to choose
-        /// what spelling list to open.
-        /// </summary>
-        /// <created>art2m,5/16/2019</created>
-        /// <changed>art2m,5/16/2019</changed>
-        public  void GetListOfSpellingListFiles()
-        {
-            // TODO: Get list of spelling files the user has.
-        }
-
-        /// <summary>
-        ///     Read header from file validate is real spelling file.
-        /// </summary>
-        /// <returns>True if valid spelling file else false.</returns>
-        /// <returns>True if valid spelling file else false.</returns>
-        /// <created>art2m,5/14/2019</created>
-        /// <changed>art2m,5/14/2019</changed>
-        public  bool ReadHeader()
-        {
-            var srw = new SpellingReadWriteClass();
-            if (!srw.ReadHeader(SpellingPropertiesClass.SpellingListPath))
-            {
-                SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = false;
-                SpellingPropertiesClass.Art2MSpellSpellingList = false;
-                return false;
-            }
-
-            SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
-            SpellingPropertiesClass.Art2MSpellSpellingList = true;
-            return true;
-        }
-
     }
 }

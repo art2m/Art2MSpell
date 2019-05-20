@@ -1,72 +1,61 @@
-﻿//---------------------------------------------------------------------------------------------------------------
-// Spell-It
-//
-// SpellItForm.cs
-//
-// File:     Spell-It.sln
-// Author:   art2m_000]
-// Company:
-// Date:     8/25/2018
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//----------------------------------------------------------------------------------------------------------------
-
-using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿// Art2MSpell
+// 
+// Art2MSpellMainForm.cs
+// 
+// Art2M
+// 
+// art2m@live.com
+// 
+// 05  20  2019
+// 
+// 05  05   2019
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Art2MSpell.Source
 {
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
     using Classes;
 
     /// <summary>
-    /// The main win class.
+    ///     The main win class.
     /// </summary>
-    public partial class SpellItMainForm : Form
+    public partial class Art2MSpellMainForm : Form
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SpellItMainForm"/> class.
+        ///     Initializes a new instance of the <see cref="Art2MSpellMainForm" /> class.
         /// </summary>
-        public SpellItMainForm()
+        public Art2MSpellMainForm()
         {
             this.InitializeComponent();
-            this.SetInitialBackgroundColors();
+
             this.SetControlsState(false);
+            this.SetInitialBackgroundColors();
         }
 
         /// <summary>
-        /// Show the practice spelling words form.
+        ///     Add new users name to theAr2mSpell User List file.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/17/2019</changed>
-        private  void ShowPracticeWordsForm()
+        private static void AddNewUserToUserNameFile()
         {
-            using (var frmSpellWords = new PracticeSpellingWordsForm())
-            {
-                frmSpellWords.ShowDialog();
-            }
+            SpellingReadWriteClass.WriteUserNameFile();
         }
 
         /// <summary>
-        /// Show the spelling list form.
-        /// </summary>
-        /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
-        private  void ShowSpellingListForm()
-        {
-            using (var frmSpellList = new SpellingWordsListForm())
-            {
-                frmSpellList.ShowDialog();
-            }
-        }
-
-        /// <summary>
-        /// Exit the program.
+        ///     Exit the program.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -78,7 +67,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///  Exit the program.
+        ///     Exit the program.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -90,7 +79,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Call method show spelling list form.
+        ///     Call method show spelling list form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -102,7 +91,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Call method show practice words form.
+        ///     Call method show practice words form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -114,7 +103,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Call method to show practice words form.
+        ///     Call method to show practice words form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -126,7 +115,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        ///  Set the affected controls to enabled or disabled.
+        ///     Set the affected controls to enabled or disabled.
         /// </summary>
         /// <param name="val"></param>
         /// <created>art2m,5/17/2019</created>
@@ -138,7 +127,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Set the controls initial colors.
+        ///     Set the controls initial colors.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/17/2019</changed>
@@ -151,7 +140,33 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Call method to show spelling list form.
+        ///     Show the practice spelling words form.
+        /// </summary>
+        /// <created>art2m,5/17/2019</created>
+        /// <changed>art2m,5/17/2019</changed>
+        private static void ShowPracticeWordsForm()
+        {
+            using (var frmSpellWords = new PracticeSpellingWordsForm())
+            {
+                frmSpellWords.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        ///     Show the spelling list form.
+        /// </summary>
+        /// <created>art2m,5/17/2019</created>
+        /// <changed>art2m,5/17/2019</changed>
+        private static void ShowSpellingListForm()
+        {
+            using (var frmSpellList = new SpellingWordsListForm())
+            {
+                frmSpellList.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        ///     Call method to show spelling list form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -163,7 +178,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Center buttons on screen.
+        ///     Center buttons on screen.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the data.</param>
@@ -176,7 +191,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Display input box for user to enter new user name. 
+        ///     Display input box for user to enter new user name.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -184,45 +199,27 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/17/2019</changed>
         private void UserAddNewMenuItem_Click(object sender, EventArgs e)
         {
-            var slc = new SpellingListClass();
-
             SpellingPropertiesClass.UserName = string.Empty;
 
             using (var dlgInput = new CreateNewUser())
             {
                 var dlgResult = dlgInput.ShowDialog();
+
                 if (DialogResult.OK != dlgResult)
                 {
                     return;
                 }
 
-                slc.SpeakString("Hello " + SpellingPropertiesClass.UserName + "!");
-
-                this.SetControlsState(true);
+                SpellingListClass.SpeakString("Hello " + SpellingPropertiesClass.UserName + "!");
             }
 
             AddNewUserToUserNameFile();
+
+            this.SetControlsState(true);
         }
 
         /// <summary>
-        /// Add new users name to theAr2mSpell User List file.
-        /// </summary>
-        /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
-        private  void AddNewUserToUserNameFile()
-        {
-            var srw = new SpellingReadWriteClass();
-
-            if (string.IsNullOrEmpty(SpellingPropertiesClass.UserName))
-            {
-                return;
-            }
-
-            srw.WriteUserNameFile();
-        }
-
-        /// <summary>
-        /// Display user select dialog box for user to select name.
+        ///     Display user select dialog box for user to select name.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -230,8 +227,6 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/17/2019</changed>
         private void UserSelectMenuItem_Click(object sender, EventArgs e)
         {
-            var slc = new SpellingListClass();
-
             SpellingPropertiesClass.UserName = string.Empty;
 
             using (var dlgUser = new UserSelectDialogBox())
@@ -243,7 +238,7 @@ namespace Art2MSpell.Source
                     return;
                 }
 
-                slc.SpeakString("Hello " + SpellingPropertiesClass.UserName + "!");
+                SpellingListClass.SpeakString("Hello " + SpellingPropertiesClass.UserName + "!");
 
                 this.SetControlsState(true);
             }

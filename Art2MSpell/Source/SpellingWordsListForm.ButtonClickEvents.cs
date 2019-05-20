@@ -51,11 +51,9 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnButtonAddWordToList_Click(object sender, EventArgs e)
         {
-            var valid = new Validation();
-
             var addWord = this.cboWord.Text.Trim();
 
-            if (!valid.ValidateSpellingWord(addWord))
+            if (!Validation.ValidateSpellingWord(addWord))
             {
                 this.SetButtonsEnabledState_AddToListButtonClicked();
                 this.ChangeControlsBackgroundColors();
