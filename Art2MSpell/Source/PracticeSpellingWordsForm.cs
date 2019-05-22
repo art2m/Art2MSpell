@@ -43,12 +43,7 @@ namespace Art2MSpell.Source
         /// <summary>
         /// Holds misspelled words.
         /// </summary>
-        private List<string> misspelled;
-
-        /// <summary>
-        /// Spelling word that is being checked for spelling.
-        /// </summary>
-        private string WordAsked;
+        private List<string> misspelled = new List<string>();
 
         /// <summary>
         ///     The number of words spelled correctly.
@@ -75,13 +70,11 @@ namespace Art2MSpell.Source
 
         private int grpbxScoreLeft;
 
-        private int grpbxSpellLeft;
-
         /// <summary>Initializes a new instance of the <see cref="PracticeSpellingWordsForm" /> class.</summary>
         public PracticeSpellingWordsForm()
         {
             this.InitializeComponent();
-            this.misspelled = new List<string>();
+            
         }
 
         /// <summary>
@@ -142,7 +135,6 @@ namespace Art2MSpell.Source
         /// <returns>True if spelling list files is read into the collection else false,</returns>
         private static bool GetSpellingWordsFromSpellingList()
         {
-
             return SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath);
         }
 
@@ -154,7 +146,6 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/13/2019</changed>
         private bool GetWordsFromFile()
         {
-           
             var swc = new SpellingWordsCollection();
 
             if (!SpellingReadWriteClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))

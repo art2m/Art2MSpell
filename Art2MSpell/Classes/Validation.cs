@@ -32,6 +32,7 @@
 namespace Art2MSpell.Classes
 {
     using System;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Reflection;
     using JetBrains.Annotations;
@@ -41,6 +42,21 @@ namespace Art2MSpell.Classes
     /// </summary>
     public static class Validation
     {
+        /// <summary>
+        /// Set class name for use with messages.
+        /// </summary>
+        /// <returns></returns>
+        /// <created>art2m,5/22/2019</created>
+        /// <changed>art2m,5/22/2019</changed>
+        static Validation()
+        {
+            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
+            if (declaringType != null)
+            {
+                MyMessages.NameOfClass = declaringType.Name;
+            }
+        }
+
         /// <summary>
         ///     Check spelling word has no white space which could indicate two words only one word is allowed.
         ///     Only letters allowed in the spelling word.
@@ -77,12 +93,6 @@ namespace Art2MSpell.Classes
         {
             Contract.Requires(!string.IsNullOrEmpty(value));
 
-            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
-            if (declaringType != null)
-            {
-                MyMessages.NameOfClass = declaringType.Name;
-            }
-
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             try
@@ -102,8 +112,10 @@ namespace Art2MSpell.Classes
             }
             catch (NotSupportedException e)
             {
-                var msg = string.Concat(MyMessages.ErrorMessage, e);
-                MyMessages.ShowErrorMessageBox(msg, MyMessages.NameOfClass, MyMessages.NameOfMethod);
+                Debug.WriteLine(e.ToString());
+
+                MyMessages.ShowErrorMessageBox();
+
                 return false;
             }
         }
@@ -118,12 +130,11 @@ namespace Art2MSpell.Classes
         /// <changed>art2m,5/10/2019</changed>
         public static bool ValidateStringOneWord(string value)
         {
-            MyMessages.NameOfClass = typeof(Validation).FullName;
-
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             MyMessages.ErrorMessage =
-                "Check to see if space in word or if two words are entered. Spaces and double words are not allowed. correct this then add the word again. ";
+                "Check to see if space in word or if two words are entered. Spaces and double words are not " +
+                "allowed. correct this then add the word again. ";
             try
             {
                 var index = value.IndexOf(' ');
@@ -137,8 +148,10 @@ namespace Art2MSpell.Classes
             }
             catch (NotSupportedException e)
             {
-                var msg = string.Concat(MyMessages.ErrorMessage, e);
-                MyMessages.ShowErrorMessageBox(msg, MyMessages.NameOfClass, MyMessages.NameOfMethod);
+                Debug.WriteLine(e.ToString());
+                
+                MyMessages.ShowErrorMessageBox();
+
                 return false;
             }
         }
@@ -152,8 +165,6 @@ namespace Art2MSpell.Classes
         /// <changed>art2m,5/10/2019</changed>
         public static bool ValidateStringValueNotEmptyNotWhiteSpace([NotNull] string value)
         {
-            MyMessages.NameOfClass = typeof(Validation).FullName;
-
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             value = value.Trim();
@@ -175,9 +186,10 @@ namespace Art2MSpell.Classes
             }
             catch (NotSupportedException e)
             {
-                var msg = string.Concat(MyMessages.ErrorMessage, e);
+                Debug.WriteLine(e.ToString());
 
-                MyMessages.ShowErrorMessageBox(msg, MyMessages.NameOfClass, MyMessages.NameOfMethod);
+                MyMessages.ShowErrorMessageBox();
+
                 return false;
             }
         }
@@ -202,12 +214,7 @@ namespace Art2MSpell.Classes
                 SpellingPropertiesClass.GetArt2MSpellHeader,
                 word,
                 StringComparison.CurrentCultureIgnoreCase);
-            if (valid == 0)
-            {
-                return true;
-            }
-
-            return false;
+            return valid == 0;
         }
     }
 }

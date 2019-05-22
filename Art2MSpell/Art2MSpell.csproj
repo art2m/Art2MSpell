@@ -98,6 +98,7 @@
     <Compile Include="Classes\SpellingPropertiesClass.cs" />
     <Compile Include="Classes\SpellingReadWriteClass.cs" />
     <Compile Include="Classes\SpellingWordsListClass.cs" />
+    <Compile Include="Classes\UsersSpellingList.cs" />
     <Compile Include="Classes\Validation.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -106,11 +107,12 @@
     <Compile Include="Collections\SpellingWordsCollection.cs" />
     <Compile Include="Collections\SuggestedWordsCollection.cs" />
     <Compile Include="Collections\UsersNameCollection.cs" />
-    <Compile Include="Source\CreateNewUser.cs">
+    <Compile Include="Collections\UserSpellingFilePathsCollection.cs" />
+    <Compile Include="Source\UserCreateNew.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\CreateNewUser.Designer.cs">
-      <DependentUpon>CreateNewUser.cs</DependentUpon>
+    <Compile Include="Source\UserCreateNew.Designer.cs">
+      <DependentUpon>UserCreateNew.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\PracticeSpellingWordsForm.BackgroundColor.cs">
       <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>
@@ -165,14 +167,20 @@
     <Compile Include="Source\SpellingWordsListForm.Designer.cs">
       <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\UserNameEditDeleteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\UserNameEditDeleteForm.Designer.cs">
+      <DependentUpon>UserNameEditDeleteForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\UserSelectDialogBox.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\UserSelectDialogBox.Designer.cs">
       <DependentUpon>UserSelectDialogBox.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Source\CreateNewUser.resx">
-      <DependentUpon>CreateNewUser.cs</DependentUpon>
+    <EmbeddedResource Include="Source\UserCreateNew.resx">
+      <DependentUpon>UserCreateNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\PracticeSpellingWordsForm.resx">
       <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>
@@ -191,6 +199,9 @@
     </Compile>
     <EmbeddedResource Include="Source\SpellingWordsListForm.resx">
       <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\UserNameEditDeleteForm.resx">
+      <DependentUpon>UserNameEditDeleteForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\UserSelectDialogBox.resx">
       <DependentUpon>UserSelectDialogBox.cs</DependentUpon>

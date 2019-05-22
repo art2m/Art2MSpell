@@ -54,6 +54,7 @@ namespace Art2MSpell.Collections
 
             WordsList.Add(word);
         }
+
         /// <summary>
         /// clear the collection of all items.
         /// </summary>

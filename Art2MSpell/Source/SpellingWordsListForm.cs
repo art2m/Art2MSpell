@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  15  2019
+// 05  22  2019
 // 
 // 05  05   2019
 // 
@@ -23,13 +23,16 @@
 
 namespace Art2MSpell.Source
 {
+    #region
+
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using System.Reflection;
     using System.Windows.Forms;
     using Classes;
     using Collections;
+
+    #endregion
 
     /// <summary>
     ///     Show spelling list form
@@ -44,7 +47,6 @@ namespace Art2MSpell.Source
         public SpellingWordsListForm()
         {
             this.InitializeComponent();
-            this.BackColor = Color.PaleGoldenrod;
             this.SetButtonsEnabledState_FormLoadEvent();
             this.ChangeControlsBackgroundColors();
             SpellingPropertiesClass.SpellingListPath = string.Empty;
@@ -119,6 +121,21 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
+        /// Save the contents of lstWords list box to list.
+        /// </summary>
+        /// <created>art2m,5/19/2019</created>
+        /// <changed>art2m,5/19/2019</changed>
+        private void FillListFromListBox()
+        {
+            var swc = new SpellingWordsCollection();
+
+            foreach (var item in this.lstWords.Items)
+            {
+                swc.AddItem(item.ToString());
+            }
+        }
+
+        /// <summary>
         ///     Get spelling words from file and place into collection for editing.
         /// </summary>
         /// <returns>true if words added to the collection else false.</returns>
@@ -141,21 +158,6 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Call method create new spelling list.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">Instance containing the event data.</param>
-        /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
-        private void OnMenuSpellNewSpellingList_Click(object sender, EventArgs e)
-        {
-            var mwc = new MisspelledWordsCollection();
-            mwc.ClearCollection();
-
-            this.CreateNewSpellingList();
-        }
-
-        /// <summary>
         /// Call method to create new spelling list.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -168,6 +170,21 @@ namespace Art2MSpell.Source
 
             var mwc = new MisspelledWordsCollection();
             mwc.ClearCollection();
+        }
+
+        /// <summary>
+        /// Call method create new spelling list.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Instance containing the event data.</param>
+        /// <created>art2m,5/17/2019</created>
+        /// <changed>art2m,5/17/2019</changed>
+        private void OnMenuSpellNewSpellingList_Click(object sender, EventArgs e)
+        {
+            var mwc = new MisspelledWordsCollection();
+            mwc.ClearCollection();
+
+            this.CreateNewSpellingList();
         }
 
         /// <summary>
@@ -255,21 +272,6 @@ namespace Art2MSpell.Source
             SpellingWordsListClass.SaveSpellingListPath();
 
             this.SetSaveOperationProperties();
-        }
-
-        /// <summary>
-        /// Save the contents of lstWords list box to list.
-        /// </summary>
-        /// <created>art2m,5/19/2019</created>
-        /// <changed>art2m,5/19/2019</changed>
-        private void FillListFromListBox()
-        {
-            var swc = new SpellingWordsCollection();
-
-            foreach (var item in this.lstWords.Items)
-            {
-                swc.AddItem(item.ToString());
-            }
         }
 
         /// <summary>

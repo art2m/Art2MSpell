@@ -29,6 +29,21 @@ namespace Art2MSpell.Classes
     public static class SpellingWordsListClass
     {
         /// <summary>
+        /// Get class name for use with message boxes.
+        /// </summary>
+        /// <returns></returns>
+        /// <created>art2m,5/22/2019</created>
+        /// <changed>art2m,5/22/2019</changed>
+        static SpellingWordsListClass()
+        {
+            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
+            if (declaringType != null)
+            {
+                MyMessages.NameOfClass = declaringType.Name;
+            }
+        }
+
+        /// <summary>
         ///     Save spelling list file in the users name directory.
         /// </summary>
         /// <returns>Path where the users spelling list is to be saved.</returns>
@@ -36,12 +51,6 @@ namespace Art2MSpell.Classes
         /// <changed>art2m,5/19/2019</changed>
         private static string CreateUserSpellingListFileName()
         {
-            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
-            if (declaringType != null)
-            {
-                MyMessages.NameOfClass = declaringType.Name;
-            }
-
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             var user = SpellingPropertiesClass.UserName;

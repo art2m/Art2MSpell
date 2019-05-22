@@ -25,8 +25,6 @@ namespace Art2MSpell.Classes
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Speech.Synthesis;
@@ -38,6 +36,15 @@ namespace Art2MSpell.Classes
     /// </summary>
     public static class SpellingListClass
     {
+        static SpellingListClass()
+        {
+            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
+            if (declaringType != null)
+            {
+                MyMessages.NameOfClass = declaringType.Name;
+            }
+        }
+
         /// <summary>Declare speech synthesizer object.</summary>
         private static readonly SpeechSynthesizer Ss = new SpeechSynthesizer();
 
@@ -75,12 +82,6 @@ namespace Art2MSpell.Classes
         /// <changed>,5/10/2019</changed>
         public static bool CheckDuplicateWord(List<string> duplicate, string addWord)
         {
-            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
-            if (declaringType != null)
-            {
-                MyMessages.NameOfClass = declaringType.Name;
-            }
-
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             if (!LoopThrewWordsList(duplicate, addWord))
@@ -89,10 +90,7 @@ namespace Art2MSpell.Classes
             }
 
             MyMessages.InformationMessage = "The word entered is all ready in the list of spelling words. ";
-            MyMessages.ShowInformationMessageBox(
-                MyMessages.InformationMessage,
-                MyMessages.NameOfClass,
-                MyMessages.NameOfMethod);
+            MyMessages.ShowInformationMessageBox();
 
             return true;
         }
@@ -116,7 +114,6 @@ namespace Art2MSpell.Classes
 
                 CheckDictionary(word);
                 return false;
-
             }
         }
 
@@ -140,7 +137,6 @@ namespace Art2MSpell.Classes
         /// <changed>art2m,5/14/2019</changed>
         public static bool ReadHeader(string filePath)
         {
-            
             if (!SpellingReadWriteClass.ReadHeader(filePath))
             {
                 SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = false;
@@ -164,7 +160,7 @@ namespace Art2MSpell.Classes
             Ss.Speak(word);
         }
 
-        
+
         /// <summary>
         ///     Compare the words in the list with new word to add.
         /// </summary>

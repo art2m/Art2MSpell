@@ -18,7 +18,6 @@
 
 namespace Art2MSpell.Classes
 {
-    using System.Text;
     using System.Windows.Forms;
 
     /// <summary>Create message boxes.</summary>
@@ -50,39 +49,14 @@ namespace Art2MSpell.Classes
         public static string QuestionMessage { get; set; }
 
         /// <summary>
-        /// The caption to show in the dialog form.
-        /// </summary>
-        public static string Caption { get; set; }
-
-        /// <summary>
         /// Contains the warning message to be displayed.
         /// </summary>
         public static string WarningMessage { get; set; }
 
         /// <summary>
-        /// Builds the error string.
-        /// </summary>
-        /// <param name="className">Class name.</param>
-        /// <param name="methodName">Method name.</param>
-        /// <param name="errorMsg">The error message to be displayed.</param>
-        /// <param name="exceptionMessage">Exception message.</param>
-        public static void BuildErrorString(
-            string className,
-            string methodName,
-            string errorMsg,
-            string exceptionMessage)
-        {
-            var sb = new StringBuilder(className);
-            sb.AppendLine(methodName);
-            sb.AppendLine(errorMsg);
-            sb.AppendLine(exceptionMessage);
-            ShowErrorMessage(sb.ToString(), NameOfClass);
-        }
-
-        /// <summary>
         /// Shows the error message.
         /// </summary>
-        /// <param name="msg">The errpr message to be displayed.</param>
+        /// <param name="msg">The error message to be displayed.</param>
         /// <param name="methodName">Name of the method.</param>
         public static void ShowErrorMessage(string msg, string methodName)
         {
@@ -145,8 +119,11 @@ namespace Art2MSpell.Classes
         /// </summary>
         public static void ShowInformationMessageBox()
         {
+            var location = string.Concat(NameOfClass, ":  ");
+            location = string.Concat(location, NameOfMethod);
+
             const MessageBoxButtons MsgboxButtons = MessageBoxButtons.OK;
-            MessageBox.Show(InformationMessage, NameOfMethod, MsgboxButtons, MessageBoxIcon.Warning);
+            MessageBox.Show(InformationMessage, location, MsgboxButtons, MessageBoxIcon.Warning);
         }
 
         /// <summary>
@@ -175,11 +152,11 @@ namespace Art2MSpell.Classes
         /// Shows the warning message.
         /// </summary>
         /// <param name="msg">The warning message to be displayed.</param>
-        /// <param name="methodname">The name of the method.</param>
-        public static void ShowWarningMessage(string msg, string methodname)
+        /// <param name="methodName">The name of the method.</param>
+        public static void ShowWarningMessage(string msg, string methodName)
         {
             const MessageBoxButtons MsgboxButtons = MessageBoxButtons.OK;
-            MessageBox.Show(msg, methodname, MsgboxButtons, MessageBoxIcon.Warning);
+            MessageBox.Show(msg, methodName, MsgboxButtons, MessageBoxIcon.Warning);
         }
 
         /// <summary>

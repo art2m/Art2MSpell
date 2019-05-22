@@ -258,6 +258,8 @@ namespace Art2MSpell.Source
             this.SetSelectSpellingListButton_BackgroundColor();
             this.SetWordsListBox_BackgroundColor();
             this.SetWordTextBox_BackgroundColor();
+
+            this.BackColor = Color.PaleGoldenrod;
         }
     }
 }
