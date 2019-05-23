@@ -29,17 +29,21 @@ namespace Art2MSpell.Source
     using Classes;
     using Collections;
 
+    /// ********************************************************************************
     /// <summary>
-    ///  select user name so then can connect current user to spelling lists.
+    /// select user name so then can connect current user to spelling lists.
     /// </summary>
+    /// ********************************************************************************
     public partial class UserSelectDialogBox : Form
     {
+        /// ********************************************************************************
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/20/2019</created>
-        /// <changed>art2m,5/20/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         public UserSelectDialogBox()
         {
             this.InitializeComponent();
@@ -48,12 +52,14 @@ namespace Art2MSpell.Source
             this.ReadUserFileFillListBox();
         }
 
+        /// ********************************************************************************
         /// <summary>
         /// Place all the user names from the collection into the list box.
         /// User can then select there name and get all of there spelling list.
         /// </summary>
         /// <created>art2m,5/20/2019</created>
-        /// <changed>art2m,5/20/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void FillListBoxWithUserNames()
         {
             var userNames = new UsersNameCollection();
@@ -63,25 +69,29 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
         /// cancel.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/20/2019</created>
-        /// <changed>art2m,5/20/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnButtonCancel_Click(object sender, EventArgs e)
         {
             SpellingPropertiesClass.UserName = string.Empty;
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///  File user name property with selected user name.
+        /// File user name property with selected user name.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/20/2019</created>
-        /// <changed>art2m,5/20/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnButtonOk_Click(object sender, EventArgs e)
         {
             SpellingPropertiesClass.UserName = this.txtName.Text;
@@ -99,14 +109,35 @@ namespace Art2MSpell.Source
             this.txtName.Text = this.lstUsers.Text;
         }
 
+        /// ********************************************************************************
         /// <summary>
         /// Read users names list from file.
         /// </summary>
         /// <created>art2m,5/20/2019</created>
-        /// <changed>art2m,5/20/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void ReadUserFileFillListBox()
         {
-            if (!SpellingReadWriteClass.ReadUserNameFile())
+            var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
+
+            dirPath = DirectoryFileOperations.CombineStringsMakeDirectoryPath(dirPath, dirName);
+
+            if (string.IsNullOrEmpty(dirPath))
+            {
+                return;
+            }
+
+            var fileName = SpellingPropertiesClass.GetArt2MSpellUserListFileName;
+
+            var filePath = DirectoryFileOperations.CombineDirectoryPathFileNameCheckCreateFile(dirPath, fileName);
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return;
+            }
+
+            if (!SpellingReadWriteClass.ReadUsersSpellingListPathsFile(filePath))
             {
                 return;
             }
@@ -115,11 +146,13 @@ namespace Art2MSpell.Source
         }
 
 
+        /// ********************************************************************************
         /// <summary>
         /// Set the control colors
         /// </summary>
         /// <created>art2m,5/20/2019</created>
-        /// <changed>art2m,5/20/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void SetInitialBackgroundColors()
         {
             this.BackColor = Color.SaddleBrown;

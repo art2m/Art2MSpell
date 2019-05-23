@@ -37,36 +37,35 @@ namespace Art2MSpell.Classes
 
         private const string Art2MSpellUserListFileName = "Ar2mSpellUserList";
 
-        /// <summary>
-        ///     Gets or sets a value indicating whether [Spelling list is a spell it spelling list].
+        /// <summary>Gets or sets a value indicating whether
+        /// [Spelling list is a spell it spelling list].
         /// </summary>
-        /// <value>
-        ///     <c>true</c> if [spell it spelling list]; otherwise, <c>false</c>.
-        /// </value>
-        public static bool Art2MSpellSpellingList { get; set; }
+        /// <value><c>true</c> if [spell it spelling list];
+        /// otherwise, <c>false</c>.</value>
+        public static bool Art2MSpellSpellingList { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether [creating new spelling list].
         /// </summary>
         /// <value><c>true</c> if [creating new spelling list]; otherwise, <c>false</c>.</value>
-        public static bool CreatingNewSpellingList { get; set; }
+        public static bool CreatingNewSpellingList { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether [delete spelling list].
         /// </summary>
         /// <value><c>true</c> if [delete spelling list]; otherwise, <c>false</c>.</value>
-        public static bool DeleteSpellingList { get; set; }
+        public static bool DeleteSpellingList { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether [editing spelling list].
         /// </summary>
         /// <value><c>true</c> if [editing spelling list]; otherwise, <c>false</c>.</value>
-        public static bool EditingSpellingList { get; set; }
+        public static bool EditingSpellingList { get; set; } = false;
 
         /// <summary>
         ///  Gets or sets a value indicating whether [first word is Art2MSpell header].
         /// </summary>
-        public static bool FirstWordIsArt2MSpellHeader { get; set; }
+        public static bool FirstWordIsArt2MSpellHeader { get; set; } = false;
 
         /// <summary>
         /// Get the name of the top level directory Art2MSpell;
@@ -89,13 +88,13 @@ namespace Art2MSpell.Classes
         /// <summary>Gets or sets a value indicating whether [opened spelling list].</summary>
         /// <value>
         ///   <c>true</c> if [opened spelling list]; otherwise, <c>false</c>.</value>
-        public static bool OpenedSpellingList { get; set; }
+        public static bool OpenedSpellingList { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether [saving spelling list].
         /// </summary>
         /// <value><c>true</c> if [saving spelling list]; otherwise, <c>false</c>.</value>
-        public static bool SavingSpellingList { get; set; }
+        public static bool SavingSpellingList { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the index of the selected word.
@@ -125,5 +124,10 @@ namespace Art2MSpell.Classes
         /// Holds the name of the current user.
         /// </summary>
         public static string UserName { get; set; }
+
+        /// <summary>
+        /// Holds the name of the file that holds paths to all of the users spelling lists.
+        /// </summary>
+        public static string SpellingListPathsFileName { get; set; } = string.Empty;
     }
 }

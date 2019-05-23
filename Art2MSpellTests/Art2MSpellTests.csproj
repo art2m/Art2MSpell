@@ -49,7 +49,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SpellingListClassTest.cs" />
+    <Compile Include="Classes\DirectoryFilesOperationTest.cs" />
+    <Compile Include="Classes\SpellingReadWriteClassTest.cs" />
+    <Compile Include="Classes\SpellingWordsListClassTest.cs" />
+    <Compile Include="Classes\ValidationTest.cs" />
+    <Compile Include="Classes\SpellingListClassTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

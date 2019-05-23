@@ -74,7 +74,6 @@ namespace Art2MSpell.Source
         public PracticeSpellingWordsForm()
         {
             this.InitializeComponent();
-            
         }
 
         /// <summary>

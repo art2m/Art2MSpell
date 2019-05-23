@@ -98,7 +98,7 @@
     <Compile Include="Classes\SpellingPropertiesClass.cs" />
     <Compile Include="Classes\SpellingReadWriteClass.cs" />
     <Compile Include="Classes\SpellingWordsListClass.cs" />
-    <Compile Include="Classes\UsersSpellingList.cs" />
+    <Compile Include="Collections\UsersSpellingListCollection.cs" />
     <Compile Include="Classes\Validation.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>

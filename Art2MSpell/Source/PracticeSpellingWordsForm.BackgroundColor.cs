@@ -83,7 +83,7 @@ namespace Art2MSpell.Source
         {
             this.grpbxScore.BackColor = this.grpbxScore.Enabled ? Color.SteelBlue : Color.SlateGray;
         }
-        
+
         /// <summary>
         ///     Sets the start color of the button background.
         /// </summary>

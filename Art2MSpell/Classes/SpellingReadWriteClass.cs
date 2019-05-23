@@ -30,33 +30,51 @@ namespace Art2MSpell.Classes
     using System.Security;
     using Collections;
 
+    /// ********************************************************************************
     /// <summary>
-    ///     used to read write spelling list user list and read header from spelling list files.
+    /// used to read write spelling list user list and read header from spelling list files.
     /// </summary>
+    /// ********************************************************************************
     public static class SpellingReadWriteClass
     {
+        /// ********************************************************************************
         /// <summary>
-        ///     Declare object to Spelling Words Collection.
+        /// Declare object to Spelling Words Collection.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/21/2019</created>
-        /// <changed>art2m,5/21/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private static readonly SpellingWordsCollection Swc = new SpellingWordsCollection();
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Collection containing the user names.
+        /// Collection containing the user names.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/21/2019</created>
-        /// <changed>art2m,5/21/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private static readonly UsersNameCollection Unc = new UsersNameCollection();
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Used to get class name. For user with error messages.
+        /// Collection containing all of the paths to this users spelling list files.
+        /// </summary>
+        /// <returns></returns>
+        /// <created>art2m,5/23/2019</created>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
+        private static readonly UserSpellingFilePathsCollection usp = new UserSpellingFilePathsCollection();
+
+        /// ********************************************************************************
+        /// <summary>
+        /// Used to get class name. For user with error messages.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/21/2019</created>
-        /// <changed>art2m,5/21/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         static SpellingReadWriteClass()
         {
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
@@ -66,13 +84,15 @@ namespace Art2MSpell.Classes
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Validate real spelling list by reading header from file should be Art2MmSpell!!
+        /// Validate real spelling list by reading header from file should be Art2MmSpell!!
         /// </summary>
         /// <param name="filePath">The path to the file.</param>
         /// <returns>True if valid spelling list else false.</returns>
         /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         public static bool ReadHeader(string filePath)
         {
             try
@@ -132,13 +152,15 @@ namespace Art2MSpell.Classes
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Reads the spelling list from the file the user has opened.
+        /// Reads the spelling list from the file the user has opened.
         /// </summary>
         /// <param name="filePath">The file path to the spelling list user wishes to open.</param>
         /// <returns>True if the spelling list words are added to collection else false.</returns>
         /// <created>art2m,5/10/2019</created>
-        /// <changed>art2m,5/10/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         public static bool ReadSpellingListFile(string filePath)
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
@@ -205,21 +227,20 @@ namespace Art2MSpell.Classes
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Read user name file into collection.
-        ///     so user can log in with there name. This
-        ///     is used to keep each users spelling list together so they can choose
-        ///     an all ready saved spelling list to practice.
+        /// Read user name file into collection.
+        /// so user can log in with there name. This
+        /// is used to keep each users spelling list together so they can choose
+        /// an all ready saved spelling list to practice.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/20/2019</created>
-        /// <changed>art2m,5/20/2019</changed>
-        public static bool ReadUserNameFile()
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
+        public static bool ReadUserNameFile(string filePath)
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-
-            var dirPath = DirectoryFileOperations.CheckDirectoryPathExistsCreate();
-            var filePath = DirectoryFileOperations.CreatePathToUserFile(dirPath);
 
             try
             {
@@ -279,13 +300,102 @@ namespace Art2MSpell.Classes
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Write spelling words list to file.
+        /// Reads file that contains all of the paths To users spelling List file.
+        /// </summary>
+        /// <returns>True if file read is successful.</returns>
+        /// <created>art2m,5/23/2019</created>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
+        public static bool ReadUsersSpellingListPathsFile(string filePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    return false;
+                }
+
+                using (var reader = new StreamReader(filePath))
+                {
+                    string user;
+                    while ((user = reader.ReadLine()) != null) usp.AddItem(user.Trim());
+                }
+
+                return true;
+            }
+            catch (ArgumentNullException ex)
+            {
+                MyMessages.ErrorMessage = "The file path value is a null string. " + filePath;
+
+                Debug.WriteLine(ex.ToString());
+
+                MyMessages.ShowErrorMessageBox();
+                return false;
+            }
+            catch (ArgumentException ex)
+            {
+                MyMessages.ErrorMessage = "The file path value is an empty string.";
+
+                Debug.WriteLine(ex.ToString());
+                MyMessages.ShowErrorMessageBox();
+
+                return false;
+            }
+            catch (FileNotFoundException ex)
+            {
+                MyMessages.ErrorMessage = "Unable to locate this file. " + filePath;
+
+                Debug.WriteLine(ex.ToString());
+
+                MyMessages.ShowErrorMessageBox();
+                return false;
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                MyMessages.ErrorMessage = "Unable to locate the directory.";
+
+                Debug.WriteLine(ex.ToString());
+                MyMessages.ShowErrorMessageBox();
+
+                return false;
+            }
+            catch (IOException ex)
+            {
+                MyMessages.ErrorMessage = "File path has invalid characters in it.";
+
+                Debug.WriteLine(ex.ToString());
+
+                MyMessages.ShowErrorMessageBox();
+
+                return false;
+            }
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        /// Writes file that contains all of the paths to users spelling list file.
+        /// </summary>
+        /// <returns></returns>
+        /// <created>art2m,5/23/2019</created>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
+        public static bool WriteUsersSpellingListPathsFile()
+        {
+            return true;
+        }
+
+
+        /// ********************************************************************************
+        /// <summary>
+        /// Write spelling words list to file.
         /// </summary>
         /// <param name="filePath">Path to write file to.</param>
         /// <returns>True if file is written else false.</returns>
         /// <created>art2m,5/20/2019</created>
-        /// <changed>art2m,5/20/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         public static bool WriteSpellingWordsToFile(string filePath)
         {
             var swc = new SpellingWordsCollection();
@@ -380,19 +490,17 @@ namespace Art2MSpell.Classes
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     If adding new user  then write there name to the Art2MSpell user names file.
+        /// If adding new user  then write there name to the Art2MSpell user names file.
         /// </summary>
         /// <returns>True if write successful else false.</returns>
         /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
-        public static bool WriteUserNameFile()
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
+        public static bool WriteUserNameFile(string filePath)
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-
-            var dirPath = DirectoryFileOperations.CheckDirectoryPathExistsCreate();
-
-            var filePath = DirectoryFileOperations.CreatePathToUserFile(dirPath);
 
             try
             {
@@ -474,12 +582,14 @@ namespace Art2MSpell.Classes
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Validate word then if valid place into the collection.
+        /// Validate word then if valid place into the collection.
         /// </summary>
         /// <param name="word"></param>
         /// <created>art2m,5/21/2019</created>
-        /// <changed>art2m,5/21/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private static void ValidateWordFromSpellingListAddToCollection(string word)
         {
             // check for valid spell list by checking words are all letters and not empty.

@@ -97,7 +97,7 @@ namespace Art2MSpell.Source
         {
             this.grpbxScore.Enabled = stateVal;
         }
-        
+
         /// <summary>
         ///     Sets the start state of the button.
         /// </summary>

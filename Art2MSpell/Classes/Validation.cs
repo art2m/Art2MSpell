@@ -149,7 +149,7 @@ namespace Art2MSpell.Classes
             catch (NotSupportedException e)
             {
                 Debug.WriteLine(e.ToString());
-                
+
                 MyMessages.ShowErrorMessageBox();
 
                 return false;

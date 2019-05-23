@@ -27,7 +27,6 @@ namespace Art2MSpell.Source
     using System.Drawing;
     using System.Reflection;
     using System.Windows.Forms;
-
     using Classes;
 
     /// <summary>

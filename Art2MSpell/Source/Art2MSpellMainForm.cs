@@ -30,9 +30,11 @@ namespace Art2MSpell.Source
     using Classes;
     using Collections;
 
+    /// ********************************************************************************
     /// <summary>
-    ///     The main win class.
+    /// The main win class.
     /// </summary>
+    /// ********************************************************************************
     public partial class Art2MSpellMainForm : Form
     {
         /// <summary>
@@ -40,9 +42,14 @@ namespace Art2MSpell.Source
         /// </summary>
         private int space;
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Art2MSpellMainForm" /> class.
+        /// Initializes a new instance of the <see cref="Art2MSpellMainForm" /> class.
         /// </summary>
+        /// <returns></returns>
+        /// <created>art2m,5/23/2019</created>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         public Art2MSpellMainForm()
         {
             this.InitializeComponent();
@@ -52,11 +59,13 @@ namespace Art2MSpell.Source
             this.GetInitialPositioningSpace();
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Add new users name to theAr2mSpell User List file.
+        /// Add new users name to theAr2mSpell User List file.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private static void AddNewUserToUserNameFile()
         {
             MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
@@ -71,39 +80,50 @@ namespace Art2MSpell.Source
 
             unc.AddItem(SpellingPropertiesClass.UserName);
 
-            SpellingReadWriteClass.WriteUserNameFile();
+            var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
 
-            var dirPath = DirectoryFileOperations.CheckDirectoryPathExistsCreate();
+            dirPath = DirectoryFileOperations.CombineStringsMakeDirectoryPath(dirPath, dirName);
 
-            var retVal = DirectoryFileOperations.CreateUserSpellingListDirectory(dirPath);
-
-            if (retVal)
+            if (string.IsNullOrEmpty(dirPath))
             {
                 return;
             }
 
-            MyMessages.ErrorMessage = "Unable to create user directory.";
-            MyMessages.ShowErrorMessageBox();
+            var fileName = SpellingPropertiesClass.GetArt2MSpellUserListFileName;
+
+            var filePath = DirectoryFileOperations.CombineDirectoryPathFileNameCheckCreateFile(dirPath, fileName);
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return;
+            }
+
+            SpellingReadWriteClass.WriteUserNameFile(filePath);
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Get spacing so when form expands can be positioned by this.
+        /// Get spacing so when form expands can be positioned by this.
         /// </summary>
         /// <created>art2m,5/22/2019</created>
-        /// <changed>art2m,5/22/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void GetInitialPositioningSpace()
         {
             var btmPos = this.grpUserControls.Top - this.grpUserControls.Height;
             this.space = btmPos - this.pnlSpellingControls.Top;
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Add new user to the users list.
+        /// Add new user to the users list.
         /// </summary>
         /// <param name="sender">the source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/22/2019</created>
-        /// <changed>art2m,5/22/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnAddNewUserButton_Click(object sender, EventArgs e)
         {
             SpellingPropertiesClass.UserName = string.Empty;
@@ -140,13 +160,15 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Display the form so user can edit there user name.
+        /// Display the form so user can edit there user name.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/22/2019</created>
-        /// <changed>art2m,5/22/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnEditUserNameButton_Click(object sender, EventArgs e)
         {
             using (var user = new UserNameEditDeleteForm())
@@ -155,49 +177,57 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Exit the program.
+        /// Exit the program.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/14/2019</created>
-        /// <changed>art2m,5/14/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Exit the program.
+        /// Exit the program.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/14/2019</created>
-        /// <changed>art2m,5/14/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnExitMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Call method to show practice words form.
+        /// Call method to show practice words form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/14/2019</created>
-        /// <changed>art2m,5/14/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnPracticeWordsButton_Click(object sender, EventArgs e)
         {
             ShowPracticeWordsForm();
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Display dialog for user to edit or delete a user from the user list.
+        /// Display dialog for user to edit or delete a user from the user list.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <created>art2m,5/22/2019</created>
-        /// <changed>art2m,5/22/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnRemoveUserNameMenuItem_Click(object sender, EventArgs e)
         {
             using (var user = new UserNameEditDeleteForm())
@@ -206,13 +236,15 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Select user so can display this users spelling lists.
+        /// Select user so can display this users spelling lists.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/22/2019</created>
-        /// <changed>art2m,5/22/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnSelectUserButton_Click(object sender, EventArgs e)
         {
             SpellingPropertiesClass.UserName = string.Empty;
@@ -234,49 +266,57 @@ namespace Art2MSpell.Source
             this.SetControlsState_AfterUserSelectOrAddUser();
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Call method to show spelling list form.
+        /// Call method to show spelling list form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/14/2019</created>
-        /// <changed>art2m,5/14/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnSpellingListButton_Click(object sender, EventArgs e)
         {
             ShowSpellingListForm();
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Call method show spelling list form.
+        /// Call method show spelling list form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnSpellingListFormShowMenuItem_Click(object sender, EventArgs e)
         {
             ShowSpellingListForm();
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Call method show practice words form.
+        /// Call method show practice words form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnSpellingPracticeWordsFormMenuItem_Click(object sender, EventArgs e)
         {
             ShowPracticeWordsForm();
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Display input box for user to enter new user name.
+        /// Display input box for user to enter new user name.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnUserAddNewMenuItem_Click(object sender, EventArgs e)
         {
             SpellingPropertiesClass.UserName = string.Empty;
@@ -313,13 +353,15 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Display user select dialog box for user to select name.
+        /// Display user select dialog box for user to select name.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void OnUserSelectMenuItem_Click(object sender, EventArgs e)
         {
             SpellingPropertiesClass.UserName = string.Empty;
@@ -339,9 +381,13 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Set class name so can be used in message boxes.
+        /// Set class name so can be used in message boxes.
         /// </summary>
+        /// <created>art2m,5/23/2019</created>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private static void SetClassName()
         {
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
@@ -351,11 +397,13 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Enable all other controls on form after user has either added new user or selected user.
+        /// Enable all other controls on form after user has either added new user or selected user.
         /// </summary>
         /// <created>art2m,5/22/2019</created>
-        /// <changed>art2m,5/22/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void SetControlsState_AfterUserSelectOrAddUser()
         {
             this.pnlSpellingControls.Enabled = true;
@@ -368,11 +416,13 @@ namespace Art2MSpell.Source
         }
 
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Set the controls initial colors.
+        /// Set the controls initial colors.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void SetInitialBackgroundColors()
         {
             this.BackColor = Color.Aquamarine;
@@ -388,11 +438,13 @@ namespace Art2MSpell.Source
             this.pnlSpellingControls.BackColor = Color.Blue;
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Set the states of controls on Initializing.
+        /// Set the states of controls on Initializing.
         /// </summary>
         /// <created>art2m,5/22/2019</created>
-        /// <changed>art2m,5/22/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void SetInitialControlsState()
         {
             this.SpellTopMenuItem.Enabled = false;
@@ -402,11 +454,13 @@ namespace Art2MSpell.Source
             this.pnlSpellingControls.Enabled = false;
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Show the practice spelling words form.
+        /// Show the practice spelling words form.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private static void ShowPracticeWordsForm()
         {
             using (var frmSpellWords = new PracticeSpellingWordsForm())
@@ -415,11 +469,13 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Show the spelling list form.
+        /// Show the spelling list form.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
-        /// <changed>art2m,5/17/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private static void ShowSpellingListForm()
         {
             using (var frmSpellList = new SpellingWordsListForm())
@@ -428,13 +484,15 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     Center buttons on screen.
+        /// Center buttons on screen.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the data.</param>
         /// <created>art2m,5/14/2019</created>
-        /// <changed>art2m,5/14/2019</changed>
+        /// <changed>art2m,5/23/2019</changed>
+        /// ********************************************************************************
         private void SpellItMainForm_Resize(object sender, EventArgs e)
         {
             this.grpUserControls.Left = (this.ClientSize.Width - this.grpUserControls.Width) / 2;
