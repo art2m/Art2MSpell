@@ -29,7 +29,7 @@ namespace Art2MSpell.Collections
     /// <summary>
     /// This holds the user names list read from file then written to file if any changes made to user list.
     /// </summary>
-    public class UsersNameCollection : ISpellingWordsCollection
+    public  class UsersNameCollection 
 
     {
         /// <summary>
@@ -43,9 +43,9 @@ namespace Art2MSpell.Collections
         /// <param name="word">The word to be added to the collection.</param>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public void AddItem(string word)
+        public static void AddItem(string word)
         {
-            if (this.ContainsItem(word))
+            if (ContainsItem(word))
             {
                 return;
             }
@@ -58,7 +58,7 @@ namespace Art2MSpell.Collections
         /// </summary>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public void ClearCollection()
+        public static void ClearCollection()
         {
             WordsList.Clear();
         }
@@ -70,7 +70,7 @@ namespace Art2MSpell.Collections
         /// <returns>true if the word is in the collection else false.</returns>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public bool ContainsItem(string word)
+        public static bool ContainsItem(string word)
         {
             return WordsList.Contains(word);
         }
@@ -81,7 +81,7 @@ namespace Art2MSpell.Collections
         /// <returns>Array of all words in collection.</returns>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public string[] GetAllItems()
+        public static string[] GetAllItems()
         {
             var count = WordsList.Count;
 
@@ -108,7 +108,7 @@ namespace Art2MSpell.Collections
         /// <return>The word at this index.</return>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public string GetItemAt(int index)
+        public static string GetItemAt(int index)
         {
             return WordsList[index];
         }
@@ -120,7 +120,7 @@ namespace Art2MSpell.Collections
         /// <returns>the index or else -1.</returns>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public int GetItemIndex(string word)
+        public static int GetItemIndex(string word)
         {
             return WordsList.IndexOf(word);
         }
@@ -130,7 +130,7 @@ namespace Art2MSpell.Collections
         /// </summary>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public int ItemsCount()
+        public static int ItemsCount()
         {
             return WordsList.Count;
         }
@@ -142,7 +142,7 @@ namespace Art2MSpell.Collections
         /// <returns>true if removed else false.</returns>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public bool RemoveItem(string word)
+        public static bool RemoveItem(string word)
         {
             return WordsList.Remove(word);
         }
@@ -154,15 +154,15 @@ namespace Art2MSpell.Collections
         /// <returns>True if item is removed else false.</returns>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public bool RemoveItemAt(int index)
+        public static bool RemoveItemAt(int index)
         {
             // Get item to be removed for check that it is gone.
-            var item = this.GetItemAt(index);
+            var item = GetItemAt(index);
 
             WordsList.RemoveAt(index);
 
             // Check to see if item is no longer in collection
-            return !this.ContainsItem(item);
+            return !ContainsItem(item);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Art2MSpell.Collections
         /// </summary>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public void SortCollection()
+        public static void SortCollection()
         {
             WordsList.Sort();
         }

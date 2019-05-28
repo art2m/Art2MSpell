@@ -41,7 +41,7 @@ namespace Art2MSpell.Classes
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
             if (declaringType != null)
             {
-                MyMessages.NameOfClass = declaringType.Name;
+                MyMessagesClass.NameOfClass = declaringType.Name;
             }
         }
 
@@ -82,15 +82,15 @@ namespace Art2MSpell.Classes
         /// <changed>,5/10/2019</changed>
         public static bool CheckDuplicateWord(List<string> duplicate, string addWord)
         {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             if (!LoopThrewWordsList(duplicate, addWord))
             {
                 return false;
             }
 
-            MyMessages.InformationMessage = "The word entered is all ready in the list of spelling words. ";
-            MyMessages.ShowInformationMessageBox();
+            MyMessagesClass.InformationMessage = "The word entered is all ready in the list of spelling words. ";
+            MyMessagesClass.ShowInformationMessageBox();
 
             return true;
         }

@@ -39,7 +39,7 @@ namespace Art2MSpell.Classes
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
             if (declaringType != null)
             {
-                MyMessages.NameOfClass = declaringType.Name;
+                MyMessagesClass.NameOfClass = declaringType.Name;
             }
         }
 
@@ -51,7 +51,7 @@ namespace Art2MSpell.Classes
         /// <changed>art2m,5/19/2019</changed>
         private static string CreateUserSpellingListFileName()
         {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             var user = SpellingPropertiesClass.UserName;
 
@@ -90,7 +90,7 @@ namespace Art2MSpell.Classes
         /// <changed>art2m,5/12/2019</changed>
         public static bool WriteWordsToFile(string filePath)
         {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             if (!SpellingReadWriteClass.WriteSpellingWordsToFile(filePath))
             {
@@ -98,7 +98,7 @@ namespace Art2MSpell.Classes
             }
 
             const string MsgSuccess = "Your spelling list has been created successfully.";
-            MyMessages.ShowInformationMessage(MsgSuccess, MyMessages.NameOfMethod);
+            MyMessagesClass.ShowInformationMessage(MsgSuccess, MyMessagesClass.NameOfMethod);
             return true;
         }
     }

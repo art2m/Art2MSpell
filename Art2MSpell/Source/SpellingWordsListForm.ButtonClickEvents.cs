@@ -54,7 +54,7 @@ namespace Art2MSpell.Source
         {
             var addWord = this.cboWord.Text.Trim();
 
-            if (!Validation.ValidateSpellingWord(addWord))
+            if (!ValidationClass.ValidateSpellingWord(addWord))
             {
                 this.SetButtonsEnabledState_AddToListButtonClicked();
                 this.ChangeControlsBackgroundColors();
@@ -117,12 +117,12 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnButtonClose_Click(object sender, EventArgs e)
         {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
             if (SpellingPropertiesClass.SpellingListIsDirty)
             {
                 const string Msg =
                     "You have an unsaved spelling words list! Do you wish to save the list before exiting. ";
-                var dlgResult = MyMessages.ShowQuestionMessage(Msg, MyMessages.NameOfMethod);
+                var dlgResult = MyMessagesClass.ShowQuestionMessage(Msg, MyMessagesClass.NameOfMethod);
                 if (dlgResult == DialogResult.Yes)
                 {
                     return;
@@ -163,32 +163,32 @@ namespace Art2MSpell.Source
             catch (DirectoryNotFoundException ex)
             {
                 var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
+                MyMessagesClass.ShowErrorMessageBox(msg, className, methodName);
             }
             catch (NotSupportedException ex)
             {
                 var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
+                MyMessagesClass.ShowErrorMessageBox(msg, className, methodName);
             }
             catch (PathTooLongException ex)
             {
                 var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
+                MyMessagesClass.ShowErrorMessageBox(msg, className, methodName);
             }
             catch (UnauthorizedAccessException ex)
             {
                 var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
+                MyMessagesClass.ShowErrorMessageBox(msg, className, methodName);
             }
             catch (ArgumentException ex)
             {
                 var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
+                MyMessagesClass.ShowErrorMessageBox(msg, className, methodName);
             }
             catch (IOException ex)
             {
                 var msg = ex.ToString();
-                MyMessages.ShowErrorMessageBox(msg, className, methodName);
+                MyMessagesClass.ShowErrorMessageBox(msg, className, methodName);
             }
         }
 
@@ -245,8 +245,6 @@ namespace Art2MSpell.Source
                 saveDlg.ShowDialog();
                 SpellingPropertiesClass.SpellingListPath = saveDlg.FileName;
             }
-
-            // TODO: Save the users spelling list file to selected path. preface with user name.
 
             this.SaveSpellingWordsToSpellingList();
             SpellingPropertiesClass.CreatingNewSpellingList = false;

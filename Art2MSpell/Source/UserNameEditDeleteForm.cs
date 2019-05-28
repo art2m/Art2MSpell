@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  23  2019
+// 05  28  2019
 // 
 // 05  21   2019
 // 
@@ -41,8 +41,6 @@ namespace Art2MSpell.Source
     /// </summary>
     public partial class UserNameEditDeleteForm : Form
     {
-        private readonly UsersNameCollection usnc = new UsersNameCollection();
-
         /// ********************************************************************************
         /// <summary>
         ///     Collection that holds the paths to use
@@ -76,12 +74,19 @@ namespace Art2MSpell.Source
             this.txtName.Enabled = true;
         }
 
+        /// ********************************************************************************
+        /// <summary>
+        ///     Get user name from properties class display in text box for editing or
+        ///     deleting.
+        /// </summary>
+        /// <created>art2m,5/28/2019</created>
+        /// <changed>art2m,5/28/2019</changed>
+        /// ********************************************************************************
         private void CurrentUsersName()
         {
             this.txtName.Text = SpellingPropertiesClass.UserName;
             this.txtName.Enabled = false;
         }
-
 
         /// <summary>
         ///     Display all of the users spelling list in the list box.
@@ -90,28 +95,10 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/22/2019</changed>
         private void DisplayUsersSpellingList()
         {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
-            var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
-
-            dirPath = DirectoryFileOperations.CombineStringsMakeDirectoryPath(dirPath, dirName);
-
-            if (string.IsNullOrEmpty(dirPath))
-            {
-                return;
-            }
-
-            var fileName = SpellingPropertiesClass.SpellingListPathsFileName;
-
-            var filePath = DirectoryFileOperations.CombineDirectoryPathFileNameCheckCreateFile(dirPath, fileName);
-
-            if (string.IsNullOrEmpty(filePath))
-            {
-                return;
-            }
-
-            var retVal = SpellingReadWriteClass.ReadUsersSpellingListPathsFile(filePath);
+            var retVal =
+                SpellingReadWriteClass.ReadUsersSpellingListPathsFile(SpellingPropertiesClass.UserNameFilePath);
 
             if (!retVal)
             {
@@ -138,51 +125,6 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        ///     Get the path to file containing all users names.
-        /// </summary>
-        /// <returns></returns>
-        /// <created>art2m,5/23/2019</created>
-        /// <changed>art2m,5/23/2019</changed>
-        /// ********************************************************************************
-        private static string GetAllUserNamesFile(string userDirPath)
-        {
-            var pathUserListName = SpellingPropertiesClass.SpellingListPathsFileName;
-
-            var filePath =
-                DirectoryFileOperations.CombineDirectoryPathFileNameCheckCreateFile(userDirPath, pathUserListName);
-
-            return string.IsNullOrEmpty(filePath) ? string.Empty : filePath;
-        }
-
-        /// ********************************************************************************
-        /// <summary>
-        ///     Get the path to the users spelling list directory.
-        /// </summary>
-        /// <returns></returns>
-        /// <created>art2m,5/23/2019</created>
-        /// <changed>art2m,5/23/2019</changed>
-        /// ********************************************************************************
-        private static string GetUsersSpellingListDirectoryPath()
-        {
-            var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
-
-            var pathArt2MSpell = DirectoryFileOperations.CombineStringsMakeDirectoryPath(dirPath, dirName);
-
-            if (string.IsNullOrEmpty(pathArt2MSpell))
-            {
-                return string.Empty;
-            }
-
-            var userName = SpellingPropertiesClass.UserName;
-
-            var userDirPath = DirectoryFileOperations.CombineStringsMakeDirectoryPath(pathArt2MSpell, userName);
-
-            return string.IsNullOrEmpty(userDirPath) ? string.Empty : userDirPath;
-        }
-
-        /// ********************************************************************************
-        /// <summary>
         ///     Close this window.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -200,32 +142,37 @@ namespace Art2MSpell.Source
         ///     Delete this user from the all users list file. then delete this users
         ///     spelling list directory.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Instance containing the event data.</param>
         /// <created>art2m,5/23/2019</created>
         /// <changed>art2m,5/23/2019</changed>
         /// ********************************************************************************
         private void OnDeleteUserButton_Click(object sender, EventArgs e)
         {
-            var userDirPath = GetUsersSpellingListDirectoryPath();
+            var userDirPath = SpellingPropertiesClass.CurrentUserSpellingListDirectory;
 
             if (string.IsNullOrEmpty(userDirPath))
             {
                 return;
             }
 
-            var filePath = GetAllUserNamesFile(userDirPath);
+            var filePath = SpellingPropertiesClass.UserNameFilePath;
 
             if (string.IsNullOrEmpty(filePath))
             {
                 return;
             }
 
-            var retVal = this.ReadTheUserNameFileIntoCollection(filePath);
+            var retVal = ReadTheUserNameFileIntoCollection(filePath);
+
+            if (!retVal)
+            {
+                return;
+            }
 
             Directory.Delete(userDirPath, true);
 
-            //SpellingReadWriteClass.ReadUserNameFile(filePath);
+            SpellingReadWriteClass.WriteUserNameFile(filePath);
         }
 
         /// ********************************************************************************
@@ -237,7 +184,7 @@ namespace Art2MSpell.Source
         /// <created>art2m,5/23/2019</created>
         /// <changed>art2m,5/23/2019</changed>
         /// ********************************************************************************
-        private bool ReadTheUserNameFileIntoCollection(string filePath)
+        private static bool ReadTheUserNameFileIntoCollection(string filePath)
         {
             var retVal = SpellingReadWriteClass.ReadUserNameFile(filePath);
 
@@ -247,23 +194,18 @@ namespace Art2MSpell.Source
                 return false;
             }
 
-            retVal = this.usnc.ContainsItem(SpellingPropertiesClass.UserName);
+            retVal = UsersNameCollection.ContainsItem(SpellingPropertiesClass.UserName);
 
             if (!retVal)
             {
                 return false;
             }
 
-            var index = this.usnc.GetItemIndex(SpellingPropertiesClass.UserName);
+            var index = UsersNameCollection.GetItemIndex(SpellingPropertiesClass.UserName);
 
-            retVal = this.usnc.RemoveItemAt(index);
+            retVal = UsersNameCollection.RemoveItemAt(index);
 
-            if (!retVal)
-            {
-                return false;
-            }
-
-            return true;
+            return retVal;
         }
 
         /// <summary>
@@ -274,7 +216,7 @@ namespace Art2MSpell.Source
         private void SetInitialBackgroundColors()
         {
             this.BackColor = Color.SaddleBrown;
-            this.btnClose.BackColor = Color.Bisque;
+            this.btnClose.BackColor = Color.RosyBrown;
             this.btnEdit.BackColor = Color.LightSteelBlue;
             this.btnDelete.BackColor = Color.Red;
             this.lblInfo.BackColor = Color.Goldenrod;

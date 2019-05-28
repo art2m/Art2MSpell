@@ -1,65 +1,298 @@
-﻿using Art2MSpell.Classes;
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// Art2MSpellTests
+// 
+// DirectoryFilesOperationTest.cs
+// 
+// Art2M
+// 
+// art2m@live.com
+// 
+// 05  24  2019
+// 
+// 05  23   2019
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Art2MSpell.Classes.Tests
 {
+    using System;
     using System.IO;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    [TestClass()]
+    [TestClass]
     public class DirectoryFilesOperationTest
     {
-        [TestMethod()]
-        public void CreateUserSpellingListDirectoryTest_ValidTest()
+        /// ********************************************************************************
+        /// <summary>
+        ///     Check if directory all ready exists if not create it. Calls Create user
+        ///     Spelling  list directory. Should always be true.
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        [TestMethod]
+        public void CheckDirectoryExistsCreateDirectory_TestDirectoryExistsOrIsCreated()
         {
             // Assign
-            var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            const string DirName = "Art2MSpell";
-            const string UserName = "Beep";
+            SpellingPropertiesClass.AppDataDirectoryPath =
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+            var dirPath1 = SpellingPropertiesClass.AppDataDirectoryPath;
 
             // Act
-            var dirArt2MSpell = DirectoryFileOperations.CombineStringsMakeDirectoryPath(dirPath, DirName);
-
-            var userDir = Path.Combine(dirArt2MSpell, UserName);
-
-            if (!Directory.Exists(userDir))
-            {
-                Directory.CreateDirectory(userDir);
-            }
+            var dirPath = DirectoryFileOperationsClass.CheckDirectoryExistsCreateDirectory(dirPath1);
 
             // Assert
-            Assert.IsTrue(Directory.Exists(userDir));
+            Assert.IsTrue(Directory.Exists(dirPath));
         }
 
-        [TestMethod()]
-        public void CheckDirectoryExistsCreateDirectoryTest()
+        /// ********************************************************************************
+        /// <summary>
+        ///     Check file exists if not create it. should all ways be true.
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        [TestMethod]
+        public void CombineDirectoryPathFileNameCheckCreateFile_TestCheckFileExistsOrCreateFile()
         {
-            Assert.Fail();
+            // Assign
+            var dirPath1 = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
+
+            const string FileName = "Ar2mSpellUserList";
+
+            // Act
+            var dirPath = DirectoryFileOperationsClass.CombineStringsMakeDirectoryPath(dirPath1, dirName);
+
+            var filePath = DirectoryFileOperationsClass.CombineDirectoryPathFileNameCheckCreateFile(dirPath, FileName);
+
+            // Assert
+            Assert.IsTrue(File.Exists(filePath));
         }
 
-        [TestMethod()]
-        public void CombineStringsMakeDirectoryPathTest()
+        /// ********************************************************************************
+        /// <summary>
+        ///     Combine three directories check if they exist. Should always be true.
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        [TestMethod]
+        public void CombineStringsMakeDirectoryPath_TestCombineThreeDirectories()
         {
-            Assert.Fail();
+            // Assign
+            const string DirPath1 = @"C:\Users\art2m_000";
+
+            SpellingPropertiesClass.AppDataDirectoryPath =
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+            var dirPath2 = SpellingPropertiesClass.AppDataDirectoryPath;
+
+            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
+
+            // Act
+            var dirPath = DirectoryFileOperationsClass.CombineStringsMakeDirectoryPath(
+                DirPath1, dirPath2, dirName);
+
+            // Assert
+            Assert.IsTrue(Directory.Exists(dirPath));
         }
 
-        [TestMethod()]
-        public void CombineStringsMakeDirectoryPathTest1()
+        /// ********************************************************************************
+        /// <summary>
+        ///     Combine directory path and directory name. Check to see that they exist.
+        ///     Should always be true.
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        [TestMethod]
+        public void CombineStringsMakeDirectoryPath_TestCombineTwoDirectories()
+
         {
-            Assert.Fail();
+            // Assign
+            SpellingPropertiesClass.AppDataDirectoryPath =
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+            var dirPath = SpellingPropertiesClass.AppDataDirectoryPath;
+
+            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
+
+            // Act
+            dirPath = DirectoryFileOperationsClass.CombineStringsMakeDirectoryPath(dirPath, dirName);
+
+            // Assert
+            Assert.IsTrue(Directory.Exists(dirPath));
         }
 
-        [TestMethod()]
-        public void CombineStringsMakeDirectoryPathTest2()
+        [TestMethod]
+        public void CombineStringsMakeDirectoryPath_TestCombineFourDirectories()
         {
-            Assert.Fail();
+            const string DirPath1 = @"C:\";
+
+            const string DirPath2 = @"Users\art2m_000";
+
+            SpellingPropertiesClass.AppDataDirectoryPath =
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+            var dirPath3 = SpellingPropertiesClass.AppDataDirectoryPath;
+
+            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
+
+            // Act
+            var dirPath = DirectoryFileOperationsClass.CombineStringsMakeDirectoryPath(
+                DirPath1, DirPath2, dirPath3, dirName);
+
+            // Assert
+            Assert.IsTrue(Directory.Exists(dirPath));
         }
 
-        [TestMethod()]
-        public void CombineDirectoryPathFileNameCheckCreateFileTest()
+        /// ********************************************************************************
+        /// <summary>
+        ///     Check Directory path throws argument exception. Always asserts false.
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        [TestMethod]
+        public void CreateUserSpellingListDirectory_TestArgumentDirectoryNotFoundException()
         {
-            Assert.Fail();
+            // Assign
+            var dirPath = string.Empty;
+
+            SpellingPropertiesClass.UserName = string.Empty;
+
+            // Act
+            var retVal = DirectoryFileOperationsClass.CreateUserSpellingListDirectory(dirPath);
+
+            // Assert
+            Assert.IsFalse(retVal);
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///     Check Argument null exception is thrown. Should always assert false.;
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        [TestMethod]
+        public void CreateUserSpellingListDirectory_TestArgumentNullException()
+        {
+            // Assign
+            const string DirPath = null;
+
+            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
+
+            SpellingPropertiesClass.UserName = "Beep";
+
+            // Act
+            var retVal = DirectoryFileOperationsClass.CreateUserSpellingListDirectory(DirPath);
+
+            // Assert
+            Assert.IsFalse(retVal);
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///     Check argument path to long exception is thrown. Should always assert false.
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        [TestMethod]
+        public void CreateUserSpellingListDirectory_TestArgumentPathToLongException()
+        {
+            // Assign
+            const string DirPath = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+            SpellingPropertiesClass.UserName = "Beep";
+
+            // Act
+            var retVal = DirectoryFileOperationsClass.CreateUserSpellingListDirectory(DirPath);
+
+            // Assert
+            Assert.IsFalse(retVal);
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        /// Check Invalid characters in path string exception thrown should always be false.
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        [TestMethod]
+        public void CreateUserSpellingListDirectory_TestInvalidCharactersInPathString()
+        {
+            // Assign
+            const string DirPath = @"c:\Are<Done >";
+
+            // Act
+            var retVal = DirectoryFileOperationsClass.CreateUserSpellingListDirectory(DirPath);
+
+            // Assert
+
+            Assert.IsFalse(retVal);
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///     Check that the users spelling list directory all ready exists else
+        ///     create it. Should all ways assert true.
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        [TestMethod]
+        public void CreateUserSpellingListDirectory_TestDirectoryExistsOrIsCreated()
+        {
+            // Assign
+            SpellingPropertiesClass.AppDataDirectoryPath =
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
+
+            SpellingPropertiesClass.UserName = "Beep";
+
+            // Act
+
+            var retVal = DirectoryFileOperationsClass.CreateUserSpellingListDirectory(
+                SpellingPropertiesClass.AppDataDirectoryPath);
+
+            // Assert
+            Assert.IsTrue(retVal);
         }
     }
 }
-

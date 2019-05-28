@@ -272,6 +272,8 @@ namespace Art2MSpell.Source
             SpellingWordsListClass.SaveSpellingListPath();
 
             this.SetSaveOperationProperties();
+
+             // TODO: Save the users spelling list file to selected path. preface with user name.
         }
 
         /// <summary>

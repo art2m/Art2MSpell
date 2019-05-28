@@ -35,6 +35,7 @@
             this.SpellTopMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSpellingForm = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPracticeForm = new System.Windows.Forms.ToolStripMenuItem();
+            this.showDeleteSpellingListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UserTopMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuUserAddNew = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuUserSelect = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,13 +46,14 @@
             this.ExitButton = new System.Windows.Forms.Button();
             this.btnPracticeSpellingWords = new System.Windows.Forms.Button();
             this.btnSpellingList = new System.Windows.Forms.Button();
-            this.pnlSpellingControls = new System.Windows.Forms.Panel();
-            this.pnlUserNewSelect = new System.Windows.Forms.Panel();
             this.btnSelect = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.pnlEditDeleteUser = new System.Windows.Forms.Panel();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDeleteLists = new System.Windows.Forms.Button();
+            this.pnlSpellingControls = new System.Windows.Forms.Panel();
+            this.pnlUserNewSelect = new System.Windows.Forms.Panel();
+            this.pnlEditDeleteUser = new System.Windows.Forms.Panel();
             this.grpUserControls = new System.Windows.Forms.GroupBox();
             this.MainMenuMenuStrip.SuspendLayout();
             this.pnlSpellingControls.SuspendLayout();
@@ -92,7 +94,8 @@
             // 
             this.SpellTopMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuSpellingForm,
-            this.mnuPracticeForm});
+            this.mnuPracticeForm,
+            this.showDeleteSpellingListsToolStripMenuItem});
             this.SpellTopMenuItem.Name = "SpellTopMenuItem";
             this.SpellTopMenuItem.Size = new System.Drawing.Size(44, 20);
             this.SpellTopMenuItem.Text = "Spell";
@@ -112,6 +115,13 @@
             this.mnuPracticeForm.Text = "Show Practice Spelling Words Form";
             this.mnuPracticeForm.Click += new System.EventHandler(this.OnSpellingPracticeWordsFormMenuItem_Click);
             // 
+            // showDeleteSpellingListsToolStripMenuItem
+            // 
+            this.showDeleteSpellingListsToolStripMenuItem.Name = "showDeleteSpellingListsToolStripMenuItem";
+            this.showDeleteSpellingListsToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
+            this.showDeleteSpellingListsToolStripMenuItem.Text = "Show Delete Spelling Lists";
+            this.showDeleteSpellingListsToolStripMenuItem.Click += new System.EventHandler(this.OnDeleteSpellingListMenuItem_Click);
+            // 
             // UserTopMenuItem
             // 
             this.UserTopMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -127,33 +137,33 @@
             // mnuUserAddNew
             // 
             this.mnuUserAddNew.Name = "mnuUserAddNew";
-            this.mnuUserAddNew.Size = new System.Drawing.Size(155, 22);
+            this.mnuUserAddNew.Size = new System.Drawing.Size(180, 22);
             this.mnuUserAddNew.Text = "Add New User";
             this.mnuUserAddNew.Click += new System.EventHandler(this.OnUserAddNewMenuItem_Click);
             // 
             // mnuUserSelect
             // 
             this.mnuUserSelect.Name = "mnuUserSelect";
-            this.mnuUserSelect.Size = new System.Drawing.Size(155, 22);
+            this.mnuUserSelect.Size = new System.Drawing.Size(180, 22);
             this.mnuUserSelect.Text = "Select User ";
             this.mnuUserSelect.Click += new System.EventHandler(this.OnUserSelectMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // mnuUserEdit
             // 
             this.mnuUserEdit.Name = "mnuUserEdit";
-            this.mnuUserEdit.Size = new System.Drawing.Size(155, 22);
+            this.mnuUserEdit.Size = new System.Drawing.Size(180, 22);
             this.mnuUserEdit.Text = "Edit User Name";
             this.mnuUserEdit.Click += new System.EventHandler(this.OnUserEditUserNameMenuItem_Click);
             // 
             // mnuUserRemove
             // 
             this.mnuUserRemove.Name = "mnuUserRemove";
-            this.mnuUserRemove.Size = new System.Drawing.Size(155, 22);
+            this.mnuUserRemove.Size = new System.Drawing.Size(180, 22);
             this.mnuUserRemove.Text = "Remove User";
             this.mnuUserRemove.Click += new System.EventHandler(this.OnRemoveUserNameMenuItem_Click);
             // 
@@ -175,11 +185,11 @@
             this.btnPracticeSpellingWords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPracticeSpellingWords.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPracticeSpellingWords.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPracticeSpellingWords.Location = new System.Drawing.Point(75, 21);
+            this.btnPracticeSpellingWords.Location = new System.Drawing.Point(14, 26);
             this.btnPracticeSpellingWords.Name = "btnPracticeSpellingWords";
-            this.btnPracticeSpellingWords.Size = new System.Drawing.Size(160, 44);
+            this.btnPracticeSpellingWords.Size = new System.Drawing.Size(119, 34);
             this.btnPracticeSpellingWords.TabIndex = 5;
-            this.btnPracticeSpellingWords.Text = "Practice Spelling Words";
+            this.btnPracticeSpellingWords.Text = "Practice Spelling";
             this.spellItToolTip.SetToolTip(this.btnPracticeSpellingWords, "Display spelling words to spell.");
             this.btnPracticeSpellingWords.UseVisualStyleBackColor = true;
             this.btnPracticeSpellingWords.Click += new System.EventHandler(this.OnPracticeWordsButton_Click);
@@ -189,36 +199,15 @@
             this.btnSpellingList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSpellingList.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSpellingList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSpellingList.Location = new System.Drawing.Point(286, 21);
+            this.btnSpellingList.Location = new System.Drawing.Point(390, 26);
             this.btnSpellingList.Margin = new System.Windows.Forms.Padding(100, 0, 0, 0);
             this.btnSpellingList.Name = "btnSpellingList";
-            this.btnSpellingList.Size = new System.Drawing.Size(160, 44);
+            this.btnSpellingList.Size = new System.Drawing.Size(119, 34);
             this.btnSpellingList.TabIndex = 6;
-            this.btnSpellingList.Text = "Spelling List";
+            this.btnSpellingList.Text = "Add List - Words";
             this.spellItToolTip.SetToolTip(this.btnSpellingList, "Create, edit, or delete a spelling list.");
             this.btnSpellingList.UseVisualStyleBackColor = true;
             this.btnSpellingList.Click += new System.EventHandler(this.OnSpellingListButton_Click);
-            // 
-            // pnlSpellingControls
-            // 
-            this.pnlSpellingControls.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.pnlSpellingControls.Controls.Add(this.btnPracticeSpellingWords);
-            this.pnlSpellingControls.Controls.Add(this.btnSpellingList);
-            this.pnlSpellingControls.Location = new System.Drawing.Point(132, 338);
-            this.pnlSpellingControls.Name = "pnlSpellingControls";
-            this.pnlSpellingControls.Size = new System.Drawing.Size(521, 89);
-            this.pnlSpellingControls.TabIndex = 7;
-            // 
-            // pnlUserNewSelect
-            // 
-            this.pnlUserNewSelect.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.pnlUserNewSelect.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlUserNewSelect.Controls.Add(this.btnSelect);
-            this.pnlUserNewSelect.Controls.Add(this.btnAdd);
-            this.pnlUserNewSelect.Location = new System.Drawing.Point(16, 19);
-            this.pnlUserNewSelect.Name = "pnlUserNewSelect";
-            this.pnlUserNewSelect.Size = new System.Drawing.Size(521, 89);
-            this.pnlUserNewSelect.TabIndex = 8;
             // 
             // btnSelect
             // 
@@ -244,16 +233,6 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.OnAddNewUserButton_Click);
             // 
-            // pnlEditDeleteUser
-            // 
-            this.pnlEditDeleteUser.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.pnlEditDeleteUser.Controls.Add(this.btnDelete);
-            this.pnlEditDeleteUser.Controls.Add(this.btnEdit);
-            this.pnlEditDeleteUser.Location = new System.Drawing.Point(16, 127);
-            this.pnlEditDeleteUser.Name = "pnlEditDeleteUser";
-            this.pnlEditDeleteUser.Size = new System.Drawing.Size(521, 89);
-            this.pnlEditDeleteUser.TabIndex = 9;
-            // 
             // btnDelete
             // 
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -261,7 +240,7 @@
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(119, 34);
             this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "Delete User";
+            this.btnDelete.Text = "Remove User";
             this.spellItToolTip.SetToolTip(this.btnDelete, "Delete user from users file.");
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.OnDeleteUserNameButton_Click);
@@ -277,6 +256,52 @@
             this.spellItToolTip.SetToolTip(this.btnEdit, "Fix any name isues.");
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.OnEditUserNameButton_Click);
+            // 
+            // btnDeleteLists
+            // 
+            this.btnDeleteLists.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteLists.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDeleteLists.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteLists.Location = new System.Drawing.Point(202, 26);
+            this.btnDeleteLists.Name = "btnDeleteLists";
+            this.btnDeleteLists.Size = new System.Drawing.Size(119, 34);
+            this.btnDeleteLists.TabIndex = 7;
+            this.btnDeleteLists.Text = "Delete Lists";
+            this.spellItToolTip.SetToolTip(this.btnDeleteLists, "Display form to delete Spelling lists.");
+            this.btnDeleteLists.UseVisualStyleBackColor = true;
+            this.btnDeleteLists.Click += new System.EventHandler(this.OnDeleteSpellingListButton_Click);
+            // 
+            // pnlSpellingControls
+            // 
+            this.pnlSpellingControls.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.pnlSpellingControls.Controls.Add(this.btnDeleteLists);
+            this.pnlSpellingControls.Controls.Add(this.btnPracticeSpellingWords);
+            this.pnlSpellingControls.Controls.Add(this.btnSpellingList);
+            this.pnlSpellingControls.Location = new System.Drawing.Point(132, 338);
+            this.pnlSpellingControls.Name = "pnlSpellingControls";
+            this.pnlSpellingControls.Size = new System.Drawing.Size(521, 89);
+            this.pnlSpellingControls.TabIndex = 7;
+            // 
+            // pnlUserNewSelect
+            // 
+            this.pnlUserNewSelect.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.pnlUserNewSelect.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlUserNewSelect.Controls.Add(this.btnSelect);
+            this.pnlUserNewSelect.Controls.Add(this.btnAdd);
+            this.pnlUserNewSelect.Location = new System.Drawing.Point(16, 19);
+            this.pnlUserNewSelect.Name = "pnlUserNewSelect";
+            this.pnlUserNewSelect.Size = new System.Drawing.Size(521, 89);
+            this.pnlUserNewSelect.TabIndex = 8;
+            // 
+            // pnlEditDeleteUser
+            // 
+            this.pnlEditDeleteUser.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.pnlEditDeleteUser.Controls.Add(this.btnDelete);
+            this.pnlEditDeleteUser.Controls.Add(this.btnEdit);
+            this.pnlEditDeleteUser.Location = new System.Drawing.Point(16, 127);
+            this.pnlEditDeleteUser.Name = "pnlEditDeleteUser";
+            this.pnlEditDeleteUser.Size = new System.Drawing.Size(521, 89);
+            this.pnlEditDeleteUser.TabIndex = 9;
             // 
             // grpUserControls
             // 
@@ -343,6 +368,8 @@
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.GroupBox grpUserControls;
+        private System.Windows.Forms.Button btnDeleteLists;
+        private System.Windows.Forms.ToolStripMenuItem showDeleteSpellingListsToolStripMenuItem;
     }
 }
 

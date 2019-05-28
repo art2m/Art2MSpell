@@ -123,11 +123,32 @@ namespace Art2MSpell.Classes
         /// <summary>
         /// Holds the name of the current user.
         /// </summary>
-        public static string UserName { get; set; }
+        public static string UserName { get; set; } = string.Empty;
 
         /// <summary>
         /// Holds the name of the file that holds paths to all of the users spelling lists.
         /// </summary>
         public static string SpellingListPathsFileName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Stores the path to appData directory.
+        /// </summary>
+        public static string AppDataDirectoryPath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Holds the path to the user name file.
+        /// </summary>
+        public static string UserNameFilePath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Holds directory path to the Art2MSpell directory. stores all files
+        /// and directories for the program.
+        /// </summary>
+        public static string Art2MSpellDirectoryPath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Stores the current user directory path.
+        /// </summary>
+        public static string CurrentUserSpellingListDirectory { get; set; } = string.Empty;
     }
 }

@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  22  2019
+// 05  26  2019
 // 
 // 05  05   2019
 // 
@@ -24,19 +24,29 @@
 namespace Art2MSpell.Source
 {
     using System;
+    using System.Diagnostics;
     using System.Drawing;
+    using System.IO;
     using System.Reflection;
     using System.Windows.Forms;
     using Classes;
     using Collections;
+    using static Classes.MyMessagesClass;
 
     /// ********************************************************************************
     /// <summary>
-    /// The main win class.
+    ///     The main win class.
     /// </summary>
     /// ********************************************************************************
     public partial class Art2MSpellMainForm : Form
     {
+        private const string V = "Unable_to_locate_the_AppData_Directory";
+
+        private const string V1 =
+            "Unable to locate App data Directory. This operation is not supported on this system.";
+
+        private const string V2 = "This user all ready exists. Go to select user to begin.";
+
         /// <summary>
         ///     The height space between group box and panel.
         /// </summary>
@@ -44,7 +54,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Initializes a new instance of the <see cref="Art2MSpellMainForm" /> class.
+        ///     Initializes a new instance of the <see cref="Art2MSpellMainForm" /> class.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/23/2019</created>
@@ -57,33 +67,35 @@ namespace Art2MSpell.Source
             this.SetInitialBackgroundColors();
             this.SetInitialControlsState();
             this.GetInitialPositioningSpace();
+            SetClassName();
+            GetPathToAppDataDirectory();
+            this.GetPathToArt2MSpellDirectory();
+            this.ReadUserNameFile();
         }
 
         /// ********************************************************************************
         /// <summary>
-        /// Add new users name to theAr2mSpell User List file.
+        ///     Add new users name to theAr2mSpell User List file.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/23/2019</changed>
         /// ********************************************************************************
         private static void AddNewUserToUserNameFile()
         {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
-            var unc = new UsersNameCollection();
-
-            if (unc.ContainsItem(SpellingPropertiesClass.UserName))
+            if (UsersNameCollection.ContainsItem(SpellingPropertiesClass.UserName))
             {
-                MyMessages.InformationMessage = "This user all ready exists.";
-                MyMessages.ShowInformationMessageBox();
+                InformationMessage = V2;
+                ShowInformationMessageBox();
             }
 
-            unc.AddItem(SpellingPropertiesClass.UserName);
+            UsersNameCollection.AddItem(SpellingPropertiesClass.UserName);
 
-            var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var dirPath = SpellingPropertiesClass.AppDataDirectoryPath;
             var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
 
-            dirPath = DirectoryFileOperations.CombineStringsMakeDirectoryPath(dirPath, dirName);
+            dirPath = DirectoryFileOperationsClass.CombineStringsMakeDirectoryPath(dirPath, dirName);
 
             if (string.IsNullOrEmpty(dirPath))
             {
@@ -92,7 +104,9 @@ namespace Art2MSpell.Source
 
             var fileName = SpellingPropertiesClass.GetArt2MSpellUserListFileName;
 
-            var filePath = DirectoryFileOperations.CombineDirectoryPathFileNameCheckCreateFile(dirPath, fileName);
+            var filePath = DirectoryFileOperationsClass.CombineDirectoryPathFileNameCheckCreateFile(
+                dirPath,
+                fileName);
 
             if (string.IsNullOrEmpty(filePath))
             {
@@ -104,7 +118,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Get spacing so when form expands can be positioned by this.
+        ///     Get spacing so when form expands can be positioned by this.
         /// </summary>
         /// <created>art2m,5/22/2019</created>
         /// <changed>art2m,5/23/2019</changed>
@@ -117,7 +131,65 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Add new user to the users list.
+        ///     Get AppData Directory path and save into Spelling Properties class.
+        /// </summary>
+        /// <created>art2m,5/24/2019</created>
+        /// <changed>art2m,5/24/2019</changed>
+        /// ********************************************************************************
+        private static void GetPathToAppDataDirectory()
+        {
+            try
+            {
+                NameOfMethod = MethodBase.GetCurrentMethod().Name;
+
+                SpellingPropertiesClass.AppDataDirectoryPath =
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            }
+            catch (ArgumentNullException ex)
+            {
+                ErrorMessage = V;
+
+                Debug.WriteLine(ex.ToString());
+
+                ShowErrorMessageBox();
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                ErrorMessage = V;
+
+                Debug.WriteLine(ex.ToString());
+                ShowErrorMessageBox();
+            }
+            catch (PlatformNotSupportedException ex)
+            {
+                ErrorMessage = V1;
+
+                Debug.WriteLine(ex.ToString());
+
+                ShowErrorMessageBox();
+            }
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///     Get directory path to Art2MSpell Directory path used in other places.
+        /// </summary>
+        /// <created>art2m,5/26/2019</created>
+        /// <changed>art2m,5/26/2019</changed>
+        /// ********************************************************************************
+        private void GetPathToArt2MSpellDirectory()
+        {
+            var dirPath = SpellingPropertiesClass.AppDataDirectoryPath;
+            var dirName = SpellingPropertiesClass.GetArt2MSpellDirectoryName;
+
+            dirPath = DirectoryFileOperationsClass.CombineStringsMakeDirectoryPath(dirPath, dirName);
+
+            SpellingPropertiesClass.Art2MSpellDirectoryPath = dirPath;
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///     Add new user to the users list.
         /// </summary>
         /// <param name="sender">the source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -128,7 +200,7 @@ namespace Art2MSpell.Source
         {
             SpellingPropertiesClass.UserName = string.Empty;
 
-            using (var dlgInput = new UserCreateNew())
+            using (var dlgInput = new UserCreateNewForm())
             {
                 var dlgResult = dlgInput.ShowDialog();
 
@@ -143,6 +215,40 @@ namespace Art2MSpell.Source
             AddNewUserToUserNameFile();
 
             this.SetControlsState_AfterUserSelectOrAddUser();
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///     Show form to delete spelling lists.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Instance containing event data.</param>
+        /// <created>art2m,5/25/2019</created>
+        /// <changed>art2m,5/25/2019</changed>
+        /// ********************************************************************************
+        private void OnDeleteSpellingListButton_Click(object sender, EventArgs e)
+        {
+            using (var del = new DeleteSpellingListsForm())
+            {
+                del.ShowDialog();
+            }
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///     Show form to delete spelling lists.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Instance conatining the event data.</param>
+        /// <created>art2m,5/25/2019</created>
+        /// <changed>art2m,5/25/2019</changed>
+        /// ********************************************************************************
+        private void OnDeleteSpellingListMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var del = new DeleteSpellingListsForm())
+            {
+                del.ShowDialog();
+            }
         }
 
         /// <summary>
@@ -162,7 +268,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Display the form so user can edit there user name.
+        ///     Display the form so user can edit there user name.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -179,7 +285,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Exit the program.
+        ///     Exit the program.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -193,7 +299,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Exit the program.
+        ///     Exit the program.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -207,7 +313,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Call method to show practice words form.
+        ///     Call method to show practice words form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -221,7 +327,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Display dialog for user to edit or delete a user from the user list.
+        ///     Display dialog for user to edit or delete a user from the user list.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -238,7 +344,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Select user so can display this users spelling lists.
+        ///     Select user so can display this users spelling lists.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -249,7 +355,7 @@ namespace Art2MSpell.Source
         {
             SpellingPropertiesClass.UserName = string.Empty;
 
-            using (var dlgInput = new UserCreateNew())
+            using (var dlgInput = new UserCreateNewForm())
             {
                 var dlgResult = dlgInput.ShowDialog();
 
@@ -268,7 +374,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Call method to show spelling list form.
+        ///     Call method to show spelling list form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -282,7 +388,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Call method show spelling list form.
+        ///     Call method show spelling list form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -296,7 +402,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Call method show practice words form.
+        ///     Call method show practice words form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -310,7 +416,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Display input box for user to enter new user name.
+        ///     Display input box for user to enter new user name.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -321,7 +427,7 @@ namespace Art2MSpell.Source
         {
             SpellingPropertiesClass.UserName = string.Empty;
 
-            using (var dlgInput = new UserCreateNew())
+            using (var dlgInput = new UserCreateNewForm())
             {
                 var dlgResult = dlgInput.ShowDialog();
 
@@ -355,7 +461,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Display user select dialog box for user to select name.
+        ///     Display user select dialog box for user to select name.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -366,7 +472,7 @@ namespace Art2MSpell.Source
         {
             SpellingPropertiesClass.UserName = string.Empty;
 
-            using (var dlgUser = new UserSelectDialogBox())
+            using (var dlgUser = new UserSelectListForm())
             {
                 var dlgResult = dlgUser.ShowDialog();
 
@@ -383,7 +489,33 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Set class name so can be used in message boxes.
+        ///     Read user name file into the collection so it can be used in other places.
+        /// </summary>
+        /// <created>art2m,5/26/2019</created>
+        /// <changed>art2m,5/26/2019</changed>
+        /// ********************************************************************************
+        private void ReadUserNameFile()
+        {
+           
+            var fileName = SpellingPropertiesClass.GetArt2MSpellUserListFileName;
+
+            var filePath = DirectoryFileOperationsClass.CombineDirectoryPathFileNameCheckCreateFile(
+                SpellingPropertiesClass.Art2MSpellDirectoryPath,
+                fileName);
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return;
+            }
+
+            SpellingPropertiesClass.UserNameFilePath = filePath;
+
+            SpellingReadWriteClass.ReadUsersSpellingListPathsFile(filePath);
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///     Set class name so can be used in message boxes.
         /// </summary>
         /// <created>art2m,5/23/2019</created>
         /// <changed>art2m,5/23/2019</changed>
@@ -393,13 +525,13 @@ namespace Art2MSpell.Source
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
             if (declaringType != null)
             {
-                MyMessages.NameOfClass = declaringType.Name;
+                NameOfClass = declaringType.Name;
             }
         }
 
         /// ********************************************************************************
         /// <summary>
-        /// Enable all other controls on form after user has either added new user or selected user.
+        ///     Enable all other controls on form after user has either added new user or selected user.
         /// </summary>
         /// <created>art2m,5/22/2019</created>
         /// <changed>art2m,5/23/2019</changed>
@@ -415,10 +547,9 @@ namespace Art2MSpell.Source
             this.mnuUserEdit.Enabled = true;
         }
 
-
         /// ********************************************************************************
         /// <summary>
-        /// Set the controls initial colors.
+        ///     Set the controls initial colors.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/23/2019</changed>
@@ -427,20 +558,21 @@ namespace Art2MSpell.Source
         {
             this.BackColor = Color.Aquamarine;
             this.btnSpellingList.BackColor = Color.LightSeaGreen;
-            this.btnPracticeSpellingWords.BackColor = Color.Chartreuse;
+            this.btnPracticeSpellingWords.BackColor = Color.LightSeaGreen;
             this.ExitButton.BackColor = Color.RosyBrown;
             this.grpUserControls.BackColor = Color.Coral;
             this.pnlUserNewSelect.BackColor = Color.BurlyWood;
-            this.btnAdd.BackColor = Color.DarkSeaGreen;
+            this.btnAdd.BackColor = Color.LightSteelBlue;
             this.btnSelect.BackColor = Color.LightSkyBlue;
-            this.btnDelete.BackColor = Color.Red;
+            this.btnDelete.BackColor = Color.LightSteelBlue;
             this.btnEdit.BackColor = Color.LightSteelBlue;
             this.pnlSpellingControls.BackColor = Color.Blue;
+            this.btnDeleteLists.BackColor = Color.LightSeaGreen;
         }
 
         /// ********************************************************************************
         /// <summary>
-        /// Set the states of controls on Initializing.
+        ///     Set the states of controls on Initializing.
         /// </summary>
         /// <created>art2m,5/22/2019</created>
         /// <changed>art2m,5/23/2019</changed>
@@ -456,7 +588,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Show the practice spelling words form.
+        ///     Show the practice spelling words form.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/23/2019</changed>
@@ -471,7 +603,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Show the spelling list form.
+        ///     Show the spelling list form.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/23/2019</changed>
@@ -486,7 +618,7 @@ namespace Art2MSpell.Source
 
         /// ********************************************************************************
         /// <summary>
-        /// Center buttons on screen.
+        ///     Center buttons on screen.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the data.</param>
@@ -502,7 +634,7 @@ namespace Art2MSpell.Source
 
             this.grpUserControls.Top = (this.ClientSize.Height - half) / 4;
 
-            this.pnlSpellingControls.Top = (this.grpUserControls.Top - this.grpUserControls.Height - this.space);
+            this.pnlSpellingControls.Top = this.grpUserControls.Top - this.grpUserControls.Height - this.space;
 
             //this.pnlSpellingControls.Top = 
         }

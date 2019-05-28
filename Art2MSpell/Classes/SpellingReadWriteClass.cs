@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  17  2019
+// 05  28  2019
 // 
 // 05  17   2019
 // 
@@ -32,14 +32,14 @@ namespace Art2MSpell.Classes
 
     /// ********************************************************************************
     /// <summary>
-    /// used to read write spelling list user list and read header from spelling list files.
+    ///     used to read write spelling list user list and read header from spelling list files.
     /// </summary>
     /// ********************************************************************************
     public static class SpellingReadWriteClass
     {
         /// ********************************************************************************
         /// <summary>
-        /// Declare object to Spelling Words Collection.
+        ///     Declare object to Spelling Words Collection.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/21/2019</created>
@@ -49,17 +49,7 @@ namespace Art2MSpell.Classes
 
         /// ********************************************************************************
         /// <summary>
-        /// Collection containing the user names.
-        /// </summary>
-        /// <returns></returns>
-        /// <created>art2m,5/21/2019</created>
-        /// <changed>art2m,5/23/2019</changed>
-        /// ********************************************************************************
-        private static readonly UsersNameCollection Unc = new UsersNameCollection();
-
-        /// ********************************************************************************
-        /// <summary>
-        /// Collection containing all of the paths to this users spelling list files.
+        ///     Collection containing all of the paths to this users spelling list files.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/23/2019</created>
@@ -69,7 +59,7 @@ namespace Art2MSpell.Classes
 
         /// ********************************************************************************
         /// <summary>
-        /// Used to get class name. For user with error messages.
+        ///     Used to get class name. For user with error messages.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/21/2019</created>
@@ -80,13 +70,99 @@ namespace Art2MSpell.Classes
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
             if (declaringType != null)
             {
-                MyMessages.NameOfClass = declaringType.Name;
+                MyMessagesClass.NameOfClass = declaringType.Name;
             }
         }
 
         /// ********************************************************************************
         /// <summary>
-        /// Validate real spelling list by reading header from file should be Art2MmSpell!!
+        ///     OverWrite file using the User Collection after a user has been removed from
+        ///     the list.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        /// <created>art2m,5/28/2019</created>
+        /// <changed>art2m,5/28/2019</changed>
+        /// ********************************************************************************
+        private static bool OverWriteUserNameFile(string filePath)
+        {
+            try
+            {
+                MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+
+                using (var writer = new StreamWriter(filePath, false))
+                {
+                    for (var index = 0; index < UsersNameCollection.ItemsCount(); index++)
+                    {
+                        writer.WriteLine(UsersNameCollection.GetItemAt(index));
+                    }
+                }
+
+                return true;
+            }
+            catch (ArgumentNullException ex)
+            {
+                MyMessagesClass.ErrorMessage = "The path variable contains a null string. " + filePath;
+
+                Debug.WriteLine(ex.ToString());
+
+                MyMessagesClass.ShowErrorMessageBox();
+
+                return false;
+            }
+            catch (ArgumentException ex)
+            {
+                MyMessagesClass.ErrorMessage = "The file path value is a null string. " + filePath;
+
+                Debug.WriteLine(ex.ToString());
+
+                MyMessagesClass.ShowErrorMessageBox();
+
+                return false;
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                MyMessagesClass.ErrorMessage = "Unable to locate the directory.";
+
+                Debug.WriteLine(ex.ToString());
+
+                MyMessagesClass.ShowErrorMessageBox();
+
+                return false;
+            }
+            catch (PathTooLongException ex)
+            {
+                MyMessagesClass.ErrorMessage = "the file path is to long.";
+
+                Debug.WriteLine(ex.ToString());
+
+                MyMessagesClass.ShowErrorMessageBox();
+
+                return false;
+            }
+            catch (SecurityException ex)
+            {
+                MyMessagesClass.ErrorMessage = "The operation has caused a security violation.";
+
+                Debug.WriteLine(ex.ToString());
+
+                return false;
+            }
+            catch (IOException ex)
+            {
+                MyMessagesClass.ErrorMessage = "File path has invalid characters in it. " + filePath;
+
+                Debug.WriteLine(ex.ToString());
+
+                MyMessagesClass.ShowErrorMessageBox();
+
+                return false;
+            }
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///     Validate real spelling list by reading header from file should be Art2MmSpell!!
         /// </summary>
         /// <param name="filePath">The path to the file.</param>
         /// <returns>True if valid spelling list else false.</returns>
@@ -101,52 +177,52 @@ namespace Art2MSpell.Classes
                 {
                     var word = fileRead.ReadLine();
 
-                    return Validation.ValidateThisIsArt2MSpellSpellingList(word);
+                    return ValidationClass.ValidateThisIsArt2MSpellSpellingList(word);
                 }
             }
             catch (ArgumentNullException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is a null string. " + filePath;
+                MyMessagesClass.ErrorMessage = "The file path value is a null string. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
                 return false;
             }
             catch (ArgumentException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is an empty string.";
+                MyMessagesClass.ErrorMessage = "The file path value is an empty string.";
 
                 Debug.WriteLine(ex.ToString());
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (FileNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate this file. " + filePath;
+                MyMessagesClass.ErrorMessage = "Unable to locate this file. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
                 return false;
             }
             catch (DirectoryNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate the directory.";
+                MyMessagesClass.ErrorMessage = "Unable to locate the directory.";
 
                 Debug.WriteLine(ex.ToString());
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (IOException ex)
             {
-                MyMessages.ErrorMessage = "File path has invalid characters in it.";
+                MyMessagesClass.ErrorMessage = "File path has invalid characters in it.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
@@ -154,7 +230,7 @@ namespace Art2MSpell.Classes
 
         /// ********************************************************************************
         /// <summary>
-        /// Reads the spelling list from the file the user has opened.
+        ///     Reads the spelling list from the file the user has opened.
         /// </summary>
         /// <param name="filePath">The file path to the spelling list user wishes to open.</param>
         /// <returns>True if the spelling list words are added to collection else false.</returns>
@@ -163,7 +239,7 @@ namespace Art2MSpell.Classes
         /// ********************************************************************************
         public static bool ReadSpellingListFile(string filePath)
         {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             var swc = new SpellingWordsCollection();
 
@@ -174,54 +250,57 @@ namespace Art2MSpell.Classes
                 using (var fileRead = new StreamReader(filePath))
                 {
                     string word;
-                    while ((word = fileRead.ReadLine()) != null) ValidateWordFromSpellingListAddToCollection(word);
+                    while ((word = fileRead.ReadLine()) != null)
+                    {
+                        ValidateWordFromSpellingListAddToCollection(word);
+                    }
                 }
 
                 return true;
             }
             catch (ArgumentNullException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is a null string. " + filePath;
+                MyMessagesClass.ErrorMessage = "The file path value is a null string. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
                 return false;
             }
             catch (ArgumentException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is an empty string.";
+                MyMessagesClass.ErrorMessage = "The file path value is an empty string.";
 
                 Debug.WriteLine(ex.ToString());
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (FileNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate this file. " + filePath;
+                MyMessagesClass.ErrorMessage = "Unable to locate this file. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
                 return false;
             }
             catch (DirectoryNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate the directory.";
+                MyMessagesClass.ErrorMessage = "Unable to locate the directory.";
 
                 Debug.WriteLine(ex.ToString());
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (IOException ex)
             {
-                MyMessages.ErrorMessage = "File path has invalid characters in it.";
+                MyMessagesClass.ErrorMessage = "File path has invalid characters in it.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
@@ -229,10 +308,10 @@ namespace Art2MSpell.Classes
 
         /// ********************************************************************************
         /// <summary>
-        /// Read user name file into collection.
-        /// so user can log in with there name. This
-        /// is used to keep each users spelling list together so they can choose
-        /// an all ready saved spelling list to practice.
+        ///     Read user name file into collection.
+        ///     so user can log in with there name. This
+        ///     is used to keep each users spelling list together so they can choose
+        ///     an all ready saved spelling list to practice.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/20/2019</created>
@@ -240,61 +319,64 @@ namespace Art2MSpell.Classes
         /// ********************************************************************************
         public static bool ReadUserNameFile(string filePath)
         {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             try
             {
                 using (var reader = new StreamReader(filePath))
                 {
                     string user;
-                    while ((user = reader.ReadLine()) != null) Unc.AddItem(user.Trim());
+                    while ((user = reader.ReadLine()) != null)
+                    {
+                        UsersNameCollection.AddItem(user.Trim());
+                    }
                 }
 
                 return true;
             }
             catch (ArgumentNullException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is a null string. " + filePath;
+                MyMessagesClass.ErrorMessage = "The file path value is a null string. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
                 return false;
             }
             catch (ArgumentException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is an empty string.";
+                MyMessagesClass.ErrorMessage = "The file path value is an empty string.";
 
                 Debug.WriteLine(ex.ToString());
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (FileNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate this file. " + filePath;
+                MyMessagesClass.ErrorMessage = "Unable to locate this file. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
                 return false;
             }
             catch (DirectoryNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate the directory.";
+                MyMessagesClass.ErrorMessage = "Unable to locate the directory.";
 
                 Debug.WriteLine(ex.ToString());
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (IOException ex)
             {
-                MyMessages.ErrorMessage = "File path has invalid characters in it.";
+                MyMessagesClass.ErrorMessage = "File path has invalid characters in it.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
@@ -302,7 +384,7 @@ namespace Art2MSpell.Classes
 
         /// ********************************************************************************
         /// <summary>
-        /// Reads file that contains all of the paths To users spelling List file.
+        ///     Reads file that contains all of the paths To users spelling List file.
         /// </summary>
         /// <returns>True if file read is successful.</returns>
         /// <created>art2m,5/23/2019</created>
@@ -320,54 +402,57 @@ namespace Art2MSpell.Classes
                 using (var reader = new StreamReader(filePath))
                 {
                     string user;
-                    while ((user = reader.ReadLine()) != null) usp.AddItem(user.Trim());
+                    while ((user = reader.ReadLine()) != null)
+                    {
+                        UsersNameCollection.AddItem(user.Trim());
+                    }
                 }
 
                 return true;
             }
             catch (ArgumentNullException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is a null string. " + filePath;
+                MyMessagesClass.ErrorMessage = "The file path value is a null string. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
                 return false;
             }
             catch (ArgumentException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is an empty string.";
+                MyMessagesClass.ErrorMessage = "The file path value is an empty string.";
 
                 Debug.WriteLine(ex.ToString());
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (FileNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate this file. " + filePath;
+                MyMessagesClass.ErrorMessage = "Unable to locate this file. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
                 return false;
             }
             catch (DirectoryNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate the directory.";
+                MyMessagesClass.ErrorMessage = "Unable to locate the directory.";
 
                 Debug.WriteLine(ex.ToString());
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (IOException ex)
             {
-                MyMessages.ErrorMessage = "File path has invalid characters in it.";
+                MyMessagesClass.ErrorMessage = "File path has invalid characters in it.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
@@ -375,21 +460,26 @@ namespace Art2MSpell.Classes
 
         /// ********************************************************************************
         /// <summary>
-        /// Writes file that contains all of the paths to users spelling list file.
+        ///     Validate word then if valid place into the collection.
         /// </summary>
-        /// <returns></returns>
-        /// <created>art2m,5/23/2019</created>
+        /// <param name="word"></param>
+        /// <created>art2m,5/21/2019</created>
         /// <changed>art2m,5/23/2019</changed>
         /// ********************************************************************************
-        public static bool WriteUsersSpellingListPathsFile()
+        private static void ValidateWordFromSpellingListAddToCollection(string word)
         {
-            return true;
-        }
+            // check for valid spell list by checking words are all letters and not empty.
+            if (!ValidationClass.ValidateSpellingWord(word))
+            {
+                return;
+            }
 
+            Swc.AddItem(word);
+        }
 
         /// ********************************************************************************
         /// <summary>
-        /// Write spelling words list to file.
+        ///     Write spelling words list to file.
         /// </summary>
         /// <param name="filePath">Path to write file to.</param>
         /// <returns>True if file is written else false.</returns>
@@ -422,57 +512,57 @@ namespace Art2MSpell.Classes
             }
             catch (UnauthorizedAccessException ex)
             {
-                MyMessages.ErrorMessage = "You do not have access writes for this operation.";
+                MyMessagesClass.ErrorMessage = "You do not have access writes for this operation.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (ArgumentNullException ex)
             {
-                MyMessages.ErrorMessage = "The path variable contains a null string. " + filePath;
+                MyMessagesClass.ErrorMessage = "The path variable contains a null string. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (ArgumentException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is a null string. " + filePath;
+                MyMessagesClass.ErrorMessage = "The file path value is a null string. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (DirectoryNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate the directory.";
+                MyMessagesClass.ErrorMessage = "Unable to locate the directory.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (PathTooLongException ex)
             {
-                MyMessages.ErrorMessage = "the file path is to long.";
+                MyMessagesClass.ErrorMessage = "the file path is to long.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (SecurityException ex)
             {
-                MyMessages.ErrorMessage = "The operation has caused a security violation.";
+                MyMessagesClass.ErrorMessage = "The operation has caused a security violation.";
 
                 Debug.WriteLine(ex.ToString());
 
@@ -480,11 +570,11 @@ namespace Art2MSpell.Classes
             }
             catch (IOException ex)
             {
-                MyMessages.ErrorMessage = "File path has invalid characters in it. " + filePath;
+                MyMessagesClass.ErrorMessage = "File path has invalid characters in it. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
@@ -492,7 +582,7 @@ namespace Art2MSpell.Classes
 
         /// ********************************************************************************
         /// <summary>
-        /// If adding new user  then write there name to the Art2MSpell user names file.
+        ///     If adding new user  then write there name to the Art2MSpell user names file.
         /// </summary>
         /// <returns>True if write successful else false.</returns>
         /// <created>art2m,5/17/2019</created>
@@ -500,7 +590,7 @@ namespace Art2MSpell.Classes
         /// ********************************************************************************
         public static bool WriteUserNameFile(string filePath)
         {
-            MyMessages.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             try
             {
@@ -514,57 +604,57 @@ namespace Art2MSpell.Classes
             }
             catch (UnauthorizedAccessException ex)
             {
-                MyMessages.ErrorMessage = "You do not have access writes for this operation.";
+                MyMessagesClass.ErrorMessage = "You do not have access writes for this operation.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (ArgumentNullException ex)
             {
-                MyMessages.ErrorMessage = "The path variable contains a null string. " + filePath;
+                MyMessagesClass.ErrorMessage = "The path variable contains a null string. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (ArgumentException ex)
             {
-                MyMessages.ErrorMessage = "The file path value is a null string. " + filePath;
+                MyMessagesClass.ErrorMessage = "The file path value is a null string. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (DirectoryNotFoundException ex)
             {
-                MyMessages.ErrorMessage = "Unable to locate the directory.";
+                MyMessagesClass.ErrorMessage = "Unable to locate the directory.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (PathTooLongException ex)
             {
-                MyMessages.ErrorMessage = "the file path is to long.";
+                MyMessagesClass.ErrorMessage = "the file path is to long.";
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
             catch (SecurityException ex)
             {
-                MyMessages.ErrorMessage = "The operation has caused a security violation.";
+                MyMessagesClass.ErrorMessage = "The operation has caused a security violation.";
 
                 Debug.WriteLine(ex.ToString());
 
@@ -572,11 +662,11 @@ namespace Art2MSpell.Classes
             }
             catch (IOException ex)
             {
-                MyMessages.ErrorMessage = "File path has invalid characters in it. " + filePath;
+                MyMessagesClass.ErrorMessage = "File path has invalid characters in it. " + filePath;
 
                 Debug.WriteLine(ex.ToString());
 
-                MyMessages.ShowErrorMessageBox();
+                MyMessagesClass.ShowErrorMessageBox();
 
                 return false;
             }
@@ -584,21 +674,15 @@ namespace Art2MSpell.Classes
 
         /// ********************************************************************************
         /// <summary>
-        /// Validate word then if valid place into the collection.
+        ///     Writes file that contains all of the paths to users spelling list file.
         /// </summary>
-        /// <param name="word"></param>
-        /// <created>art2m,5/21/2019</created>
+        /// <returns></returns>
+        /// <created>art2m,5/23/2019</created>
         /// <changed>art2m,5/23/2019</changed>
         /// ********************************************************************************
-        private static void ValidateWordFromSpellingListAddToCollection(string word)
+        public static bool WriteUsersSpellingListPathsFile()
         {
-            // check for valid spell list by checking words are all letters and not empty.
-            if (!Validation.ValidateSpellingWord(word))
-            {
-                return;
-            }
-
-            Swc.AddItem(word);
+            return true;
         }
     }
 }

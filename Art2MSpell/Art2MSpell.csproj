@@ -92,14 +92,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\DirectoryFileOperations.cs" />
-    <Compile Include="Classes\MyMessages.cs" />
+    <Compile Include="Classes\DirectoryFileOperationsClass.cs" />
+    <Compile Include="Classes\MyMessagesClass.cs" />
     <Compile Include="Classes\SpellingListClass.cs" />
     <Compile Include="Classes\SpellingPropertiesClass.cs" />
     <Compile Include="Classes\SpellingReadWriteClass.cs" />
     <Compile Include="Classes\SpellingWordsListClass.cs" />
     <Compile Include="Collections\UsersSpellingListCollection.cs" />
-    <Compile Include="Classes\Validation.cs">
+    <Compile Include="Classes\ValidationClass.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Collections\ISpellingWordsCollection.cs" />
@@ -108,11 +108,17 @@
     <Compile Include="Collections\SuggestedWordsCollection.cs" />
     <Compile Include="Collections\UsersNameCollection.cs" />
     <Compile Include="Collections\UserSpellingFilePathsCollection.cs" />
-    <Compile Include="Source\UserCreateNew.cs">
+    <Compile Include="Source\DeleteSpellingListsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\UserCreateNew.Designer.cs">
-      <DependentUpon>UserCreateNew.cs</DependentUpon>
+    <Compile Include="Source\DeleteSpellingListsForm.Designer.cs">
+      <DependentUpon>DeleteSpellingListsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\UserCreateNewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\UserCreateNewForm.Designer.cs">
+      <DependentUpon>UserCreateNewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\PracticeSpellingWordsForm.BackgroundColor.cs">
       <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>
@@ -173,14 +179,17 @@
     <Compile Include="Source\UserNameEditDeleteForm.Designer.cs">
       <DependentUpon>UserNameEditDeleteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\UserSelectDialogBox.cs">
+    <Compile Include="Source\UserSelectListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\UserSelectDialogBox.Designer.cs">
-      <DependentUpon>UserSelectDialogBox.cs</DependentUpon>
+    <Compile Include="Source\UserSelectListForm.Designer.cs">
+      <DependentUpon>UserSelectListForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Source\UserCreateNew.resx">
-      <DependentUpon>UserCreateNew.cs</DependentUpon>
+    <EmbeddedResource Include="Source\DeleteSpellingListsForm.resx">
+      <DependentUpon>DeleteSpellingListsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\UserCreateNewForm.resx">
+      <DependentUpon>UserCreateNewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\PracticeSpellingWordsForm.resx">
       <DependentUpon>PracticeSpellingWordsForm.cs</DependentUpon>
@@ -196,6 +205,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Source\SpellingWordsListForm.resx">
       <DependentUpon>SpellingWordsListForm.cs</DependentUpon>
@@ -203,8 +213,8 @@
     <EmbeddedResource Include="Source\UserNameEditDeleteForm.resx">
       <DependentUpon>UserNameEditDeleteForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\UserSelectDialogBox.resx">
-      <DependentUpon>UserSelectDialogBox.cs</DependentUpon>
+    <EmbeddedResource Include="Source\UserSelectListForm.resx">
+      <DependentUpon>UserSelectListForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Art2MSpell_TemporaryKey.pfx" />
     <None Include="packages.config" />
