@@ -23,6 +23,8 @@ using System.Collections.Generic;
 
 namespace Art2MSpell.Collections
 {
+    using System.Linq;
+
     /// <summary>
     /// Spelling Words Collection Holds words from current spelling list.
     /// </summary>
@@ -162,6 +164,21 @@ namespace Art2MSpell.Collections
         public void SortCollection()
         {
             WordsList.Sort();
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        ///  Fill collection with list of spelling words from list box.
+        /// </summary>
+        /// <param name="words"></param>
+        /// <created>art2m,5/29/2019</created>
+        /// <changed>art2m,5/29/2019</changed>
+        /// ********************************************************************************
+        public void FillCollection(List<string> words)
+        {
+            this.ClearCollection();
+
+            WordsList.AddRange(words);
         }
 
         #endregion Public Methods

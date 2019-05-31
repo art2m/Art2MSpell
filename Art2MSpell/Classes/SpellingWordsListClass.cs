@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  20  2019
+// 05  31  2019
 // 
 // 05  19   2019
 // 
@@ -23,13 +23,15 @@
 
 namespace Art2MSpell.Classes
 {
-    using System.IO;
+    using System.Collections.Generic;
     using System.Reflection;
+    using System.Windows.Forms;
+    using Source;
 
     public static class SpellingWordsListClass
     {
         /// <summary>
-        /// Get class name for use with message boxes.
+        ///     Get class name for use with message boxes.
         /// </summary>
         /// <returns></returns>
         /// <created>art2m,5/22/2019</created>
@@ -44,55 +46,63 @@ namespace Art2MSpell.Classes
         }
 
         /// <summary>
-        ///     Save spelling list file in the users name directory.
-        /// </summary>
-        /// <returns>Path where the users spelling list is to be saved.</returns>
-        /// <created>art2m,5/19/2019</created>
-        /// <changed>art2m,5/19/2019</changed>
-        private static string CreateUserSpellingListFileName()
-        {
-            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-
-            var user = SpellingPropertiesClass.UserName;
-
-            return Path.Combine(user, SpellingPropertiesClass.SpellingListPath);
-        }
-
-        /// <summary>
         ///     Save the path to where user saved spelling list to.
         ///     Used to give user a selection of spelling lists to open.
         /// </summary>
+        /// <param name="words"></param>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
-        public static void SaveSpellingListPath()
+        public static void SaveSpellingListPath(IEnumerable<string> words)
         {
-            var filePath = CreateUserSpellingListFileName();
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
-            WriteWordsToFile(filePath);
-        }
+            var dirPath = SpellingPropertiesClass.CurrentUserSpellingListDirectory;
 
-        /// <summary>
-        ///     Loop threw the misspelled words so user can respell those they got wrong.
-        /// </summary>
-        /// <created>art2m,5/16/2019</created>
-        /// <changed>art2m,5/16/2019</changed>
-        public static void SpellMisspelledWords()
-        {
-            // TODO: Spell each word in the misspelled words. 
+            DialogResult retVal;
+            const string Caption = "Name spelling list.";
+            const string Prompt = "You must enter a name for this spelling list. It can be name and date.";
+            var value = string.Empty;
+
+            using (var dlgInput = new InputDialog())
+            {
+                retVal = dlgInput.GetFileName(Caption, Prompt, ref value);
+            }
+
+            if (DialogResult.OK == retVal)
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    MyMessagesClass.WarningMessage = "You need to name this file in order to save it.";
+                    MyMessagesClass.ShowWarningMessageBox();
+                    return;
+                }
+
+                var filePath = DirectoryFileOperationsClass.CombineDirectoryPathFileNameCheckCreateFile(
+                    dirPath,
+                    value);
+
+                WriteWordsToFile(filePath, words);
+            }
+            else
+            {
+                MyMessagesClass.WarningMessage = "You need to name this file in order to save it.";
+                MyMessagesClass.ShowWarningMessageBox();
+            }
         }
 
         /// <summary>
         ///     write spelling words from collection to file.
         /// </summary>
         /// <param name="filePath">The path to the spelling list file.</param>
+        /// <param name="words">Collection of spelling words.</param>
         /// <returns>true if spelling list is written to file else false.</returns>
         /// <created>art2m,5/12/2019</created>
         /// <changed>art2m,5/12/2019</changed>
-        public static bool WriteWordsToFile(string filePath)
+        public static bool WriteWordsToFile(string filePath, IEnumerable<string> words)
         {
             MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
-            if (!SpellingReadWriteClass.WriteSpellingWordsToFile(filePath))
+            if (!SpellingReadWriteClass.WriteSpellingWordsToFile(filePath, words))
             {
                 return false;
             }

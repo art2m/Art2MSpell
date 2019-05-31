@@ -102,7 +102,7 @@ namespace Art2MSpell.Source
                 return;
             }
 
-            var fileName = SpellingPropertiesClass.GetArt2MSpellUserListFileName;
+            var fileName = SpellingPropertiesClass.GetArt2MSpellUserListDirectory;
 
             var filePath = DirectoryFileOperationsClass.CombineDirectoryPathFileNameCheckCreateFile(
                 dirPath,
@@ -497,7 +497,7 @@ namespace Art2MSpell.Source
         private void ReadUserNameFile()
         {
            
-            var fileName = SpellingPropertiesClass.GetArt2MSpellUserListFileName;
+            var fileName = SpellingPropertiesClass.GetArt2MSpellUserListDirectory;
 
             var filePath = DirectoryFileOperationsClass.CombineDirectoryPathFileNameCheckCreateFile(
                 SpellingPropertiesClass.Art2MSpellDirectoryPath,

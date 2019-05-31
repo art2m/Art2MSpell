@@ -28,7 +28,9 @@ namespace Art2MSpell.Classes
     using System.Linq;
     using System.Reflection;
     using System.Speech.Synthesis;
+    using System.Windows.Forms;
     using Collections;
+    using JetBrains.Annotations;
     using NHunspell;
 
     /// <summary>
@@ -36,6 +38,8 @@ namespace Art2MSpell.Classes
     /// </summary>
     public static class SpellingListClass
     {
+        private static readonly MisspelledWordsCollection mwc;
+
         static SpellingListClass()
         {
             var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
@@ -43,6 +47,8 @@ namespace Art2MSpell.Classes
             {
                 MyMessagesClass.NameOfClass = declaringType.Name;
             }
+
+            mwc = new MisspelledWordsCollection();
         }
 
         /// <summary>Declare speech synthesizer object.</summary>
@@ -112,7 +118,13 @@ namespace Art2MSpell.Classes
                     return true;
                 }
 
+                mwc.AddItem(word);
+
+                MyMessagesClass.InformationMessage = string.Concat("This word is not spelled correctly:  ", word);
+                MyMessagesClass.ShowInformationMessageBox();
+
                 CheckDictionary(word);
+
                 return false;
             }
         }
@@ -159,7 +171,6 @@ namespace Art2MSpell.Classes
         {
             Ss.Speak(word);
         }
-
 
         /// <summary>
         ///     Compare the words in the list with new word to add.

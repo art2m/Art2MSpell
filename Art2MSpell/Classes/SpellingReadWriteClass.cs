@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  28  2019
+// 05  31  2019
 // 
 // 05  17   2019
 // 
@@ -24,8 +24,10 @@
 namespace Art2MSpell.Classes
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using System.Security;
     using Collections;
@@ -37,26 +39,6 @@ namespace Art2MSpell.Classes
     /// ********************************************************************************
     public static class SpellingReadWriteClass
     {
-        /// ********************************************************************************
-        /// <summary>
-        ///     Declare object to Spelling Words Collection.
-        /// </summary>
-        /// <returns></returns>
-        /// <created>art2m,5/21/2019</created>
-        /// <changed>art2m,5/23/2019</changed>
-        /// ********************************************************************************
-        private static readonly SpellingWordsCollection Swc = new SpellingWordsCollection();
-
-        /// ********************************************************************************
-        /// <summary>
-        ///     Collection containing all of the paths to this users spelling list files.
-        /// </summary>
-        /// <returns></returns>
-        /// <created>art2m,5/23/2019</created>
-        /// <changed>art2m,5/23/2019</changed>
-        /// ********************************************************************************
-        private static readonly UserSpellingFilePathsCollection usp = new UserSpellingFilePathsCollection();
-
         /// ********************************************************************************
         /// <summary>
         ///     Used to get class name. For user with error messages.
@@ -71,92 +53,6 @@ namespace Art2MSpell.Classes
             if (declaringType != null)
             {
                 MyMessagesClass.NameOfClass = declaringType.Name;
-            }
-        }
-
-        /// ********************************************************************************
-        /// <summary>
-        ///     OverWrite file using the User Collection after a user has been removed from
-        ///     the list.
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        /// <created>art2m,5/28/2019</created>
-        /// <changed>art2m,5/28/2019</changed>
-        /// ********************************************************************************
-        private static bool OverWriteUserNameFile(string filePath)
-        {
-            try
-            {
-                MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
-
-                using (var writer = new StreamWriter(filePath, false))
-                {
-                    for (var index = 0; index < UsersNameCollection.ItemsCount(); index++)
-                    {
-                        writer.WriteLine(UsersNameCollection.GetItemAt(index));
-                    }
-                }
-
-                return true;
-            }
-            catch (ArgumentNullException ex)
-            {
-                MyMessagesClass.ErrorMessage = "The path variable contains a null string. " + filePath;
-
-                Debug.WriteLine(ex.ToString());
-
-                MyMessagesClass.ShowErrorMessageBox();
-
-                return false;
-            }
-            catch (ArgumentException ex)
-            {
-                MyMessagesClass.ErrorMessage = "The file path value is a null string. " + filePath;
-
-                Debug.WriteLine(ex.ToString());
-
-                MyMessagesClass.ShowErrorMessageBox();
-
-                return false;
-            }
-            catch (DirectoryNotFoundException ex)
-            {
-                MyMessagesClass.ErrorMessage = "Unable to locate the directory.";
-
-                Debug.WriteLine(ex.ToString());
-
-                MyMessagesClass.ShowErrorMessageBox();
-
-                return false;
-            }
-            catch (PathTooLongException ex)
-            {
-                MyMessagesClass.ErrorMessage = "the file path is to long.";
-
-                Debug.WriteLine(ex.ToString());
-
-                MyMessagesClass.ShowErrorMessageBox();
-
-                return false;
-            }
-            catch (SecurityException ex)
-            {
-                MyMessagesClass.ErrorMessage = "The operation has caused a security violation.";
-
-                Debug.WriteLine(ex.ToString());
-
-                return false;
-            }
-            catch (IOException ex)
-            {
-                MyMessagesClass.ErrorMessage = "File path has invalid characters in it. " + filePath;
-
-                Debug.WriteLine(ex.ToString());
-
-                MyMessagesClass.ShowErrorMessageBox();
-
-                return false;
             }
         }
 
@@ -237,26 +133,29 @@ namespace Art2MSpell.Classes
         /// <created>art2m,5/10/2019</created>
         /// <changed>art2m,5/23/2019</changed>
         /// ********************************************************************************
-        public static bool ReadSpellingListFile(string filePath)
+        public static List<string> ReadSpellingListFile(string filePath)
         {
             MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
-            var swc = new SpellingWordsCollection();
-
             try
             {
-                swc.ClearCollection();
-
+                string[] spell;
                 using (var fileRead = new StreamReader(filePath))
                 {
-                    string word;
-                    while ((word = fileRead.ReadLine()) != null)
-                    {
-                        ValidateWordFromSpellingListAddToCollection(word);
-                    }
+                    spell = fileRead.ReadToEnd().Split(',');
                 }
 
-                return true;
+                return new List<string>(spell);
+            }
+            catch (OutOfMemoryException ex)
+            {
+                MyMessagesClass.ErrorMessage = "Not enough memory to continue. Try closing other windows.";
+
+                Debug.WriteLine(ex.ToString());
+
+                MyMessagesClass.ShowErrorMessageBox();
+
+                return new List<string>(Array.Empty<string>());
             }
             catch (ArgumentNullException ex)
             {
@@ -265,7 +164,8 @@ namespace Art2MSpell.Classes
                 Debug.WriteLine(ex.ToString());
 
                 MyMessagesClass.ShowErrorMessageBox();
-                return false;
+
+                return new List<string>(Array.Empty<string>());
             }
             catch (ArgumentException ex)
             {
@@ -274,7 +174,7 @@ namespace Art2MSpell.Classes
                 Debug.WriteLine(ex.ToString());
                 MyMessagesClass.ShowErrorMessageBox();
 
-                return false;
+                return new List<string>(Array.Empty<string>());
             }
             catch (FileNotFoundException ex)
             {
@@ -283,7 +183,7 @@ namespace Art2MSpell.Classes
                 Debug.WriteLine(ex.ToString());
 
                 MyMessagesClass.ShowErrorMessageBox();
-                return false;
+                return new List<string>(Array.Empty<string>());
             }
             catch (DirectoryNotFoundException ex)
             {
@@ -292,7 +192,7 @@ namespace Art2MSpell.Classes
                 Debug.WriteLine(ex.ToString());
                 MyMessagesClass.ShowErrorMessageBox();
 
-                return false;
+                return new List<string>(Array.Empty<string>());
             }
             catch (IOException ex)
             {
@@ -302,7 +202,7 @@ namespace Art2MSpell.Classes
 
                 MyMessagesClass.ShowErrorMessageBox();
 
-                return false;
+                return new List<string>(Array.Empty<string>());
             }
         }
 
@@ -460,54 +360,20 @@ namespace Art2MSpell.Classes
 
         /// ********************************************************************************
         /// <summary>
-        ///     Validate word then if valid place into the collection.
-        /// </summary>
-        /// <param name="word"></param>
-        /// <created>art2m,5/21/2019</created>
-        /// <changed>art2m,5/23/2019</changed>
-        /// ********************************************************************************
-        private static void ValidateWordFromSpellingListAddToCollection(string word)
-        {
-            // check for valid spell list by checking words are all letters and not empty.
-            if (!ValidationClass.ValidateSpellingWord(word))
-            {
-                return;
-            }
-
-            Swc.AddItem(word);
-        }
-
-        /// ********************************************************************************
-        /// <summary>
         ///     Write spelling words list to file.
         /// </summary>
         /// <param name="filePath">Path to write file to.</param>
+        /// <param name="words"></param>
         /// <returns>True if file is written else false.</returns>
         /// <created>art2m,5/20/2019</created>
         /// <changed>art2m,5/23/2019</changed>
         /// ********************************************************************************
-        public static bool WriteSpellingWordsToFile(string filePath)
+        public static bool WriteSpellingWordsToFile(string filePath, IEnumerable<string> words)
         {
-            var swc = new SpellingWordsCollection();
-
+            var wordsCsv = string.Join(",", words.ToArray());
             try
             {
-                StreamWriter fileWrite;
-                using (fileWrite = new StreamWriter(filePath, false))
-                {
-                    var cnt = swc.ItemsCount();
-
-                    fileWrite.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
-
-                    Debug.WriteLine(SpellingPropertiesClass.GetArt2MSpellHeader);
-
-                    for (var i = 0; i < cnt; i++)
-                    {
-                        var word = swc.GetItemAt(i);
-                        fileWrite.WriteLine(word);
-                    }
-                }
-
+                File.WriteAllText(filePath, wordsCsv);
                 return true;
             }
             catch (UnauthorizedAccessException ex)

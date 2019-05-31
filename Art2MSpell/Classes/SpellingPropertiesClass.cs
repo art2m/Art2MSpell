@@ -35,9 +35,10 @@ namespace Art2MSpell.Classes
         /// </summary>
         private const string Art2MSpellHeader = "Art2MSpell!!";
 
-        private const string Art2MSpellUserListFileName = "Ar2mSpellUserList";
+        private const string Art2MSpellUserListDirectory = "Ar2mSpellUserList";
 
-        /// <summary>Gets or sets a value indicating whether
+        /// <summary>
+        /// Gets or sets a value indicating whether
         /// [Spelling list is a spell it spelling list].
         /// </summary>
         /// <value><c>true</c> if [spell it spelling list];
@@ -83,7 +84,7 @@ namespace Art2MSpell.Classes
         /// <summary>
         /// Get The name of the user name list file.
         /// </summary>
-        public static string GetArt2MSpellUserListFileName => Art2MSpellUserListFileName;
+        public static string GetArt2MSpellUserListDirectory => Art2MSpellUserListDirectory;
 
         /// <summary>Gets or sets a value indicating whether [opened spelling list].</summary>
         /// <value>
@@ -126,28 +127,22 @@ namespace Art2MSpell.Classes
         public static string UserName { get; set; } = string.Empty;
 
         /// <summary>
-        /// Holds the name of the file that holds paths to all of the users spelling lists.
-        /// </summary>
-        public static string SpellingListPathsFileName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Stores the path to appData directory.
-        /// </summary>
+        /// Path to App Data directory Art2MSpell directory and all sub directories stored here.
         public static string AppDataDirectoryPath { get; set; } = string.Empty;
 
         /// <summary>
-        /// Holds the path to the user name file.
+        /// Path to file where all of the users names are stored.
         /// </summary>
         public static string UserNameFilePath { get; set; } = string.Empty;
 
         /// <summary>
-        /// Holds directory path to the Art2MSpell directory. stores all files
-        /// and directories for the program.
+        /// path to the Art2MSpell directory. Users directory where all spelling lists are stored.
         /// </summary>
         public static string Art2MSpellDirectoryPath { get; set; } = string.Empty;
 
         /// <summary>
-        /// Stores the current user directory path.
+        /// Holds the path to the current users directory. Where all of users spelling
+        /// list files are stored.
         /// </summary>
         public static string CurrentUserSpellingListDirectory { get; set; } = string.Empty;
     }

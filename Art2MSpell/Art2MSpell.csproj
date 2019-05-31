@@ -114,6 +114,18 @@
     <Compile Include="Source\DeleteSpellingListsForm.Designer.cs">
       <DependentUpon>DeleteSpellingListsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\InputDialog.Designer.cs">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\SelectSpellingListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\SelectSpellingListForm.Designer.cs">
+      <DependentUpon>SelectSpellingListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\UserCreateNewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +199,12 @@
     </Compile>
     <EmbeddedResource Include="Source\DeleteSpellingListsForm.resx">
       <DependentUpon>DeleteSpellingListsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\InputDialog.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\SelectSpellingListForm.resx">
+      <DependentUpon>SelectSpellingListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\UserCreateNewForm.resx">
       <DependentUpon>UserCreateNewForm.cs</DependentUpon>

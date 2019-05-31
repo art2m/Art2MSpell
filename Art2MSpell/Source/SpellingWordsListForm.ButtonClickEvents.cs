@@ -52,25 +52,11 @@ namespace Art2MSpell.Source
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnButtonAddWordToList_Click(object sender, EventArgs e)
         {
-            var addWord = this.cboWord.Text.Trim();
+           
 
-            if (!ValidationClass.ValidateSpellingWord(addWord))
-            {
-                this.SetButtonsEnabledState_AddToListButtonClicked();
-                this.ChangeControlsBackgroundColors();
+            this.AddWordToListBox();
 
-                return;
-            }
-
-            if (!this.AddWordToListBox(addWord))
-            {
-                return;
-            }
-
-            this.SetButtonsEnabledState_AddToListButtonClicked();
-            this.ChangeControlsBackgroundColors();
-            this.SetTabOrderAddWordToList();
-            this.SetTabOrderAddNewWordButton();
+            
         }
 
         /// <summary>
@@ -238,12 +224,6 @@ namespace Art2MSpell.Source
             if (this.lstWords.Items.Count < 1)
             {
                 return;
-            }
-
-            using (var saveDlg = new SaveFileDialog())
-            {
-                saveDlg.ShowDialog();
-                SpellingPropertiesClass.SpellingListPath = saveDlg.FileName;
             }
 
             this.SaveSpellingWordsToSpellingList();

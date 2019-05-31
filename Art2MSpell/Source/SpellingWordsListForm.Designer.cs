@@ -49,7 +49,6 @@
             this.btnAddWordToList = new System.Windows.Forms.Button();
             this.btnCreateNewList = new System.Windows.Forms.Button();
             this.SpellingListOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.SpellingListSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.btnClose = new System.Windows.Forms.Button();
             this.flpLeftPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.btnDeleteList = new System.Windows.Forms.Button();
@@ -83,12 +82,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(100, 6);
             // 
             // mnuClose
             // 
             this.mnuClose.Name = "mnuClose";
-            this.mnuClose.Size = new System.Drawing.Size(180, 22);
+            this.mnuClose.Size = new System.Drawing.Size(103, 22);
             this.mnuClose.Text = "Close";
             // 
             // SpellTopMenuItem
@@ -264,13 +263,6 @@
             this.SpellingListOpenFileDialog.InitialDirectory = "Documents";
             this.SpellingListOpenFileDialog.Title = "Select Spelling List";
             // 
-            // SpellingListSaveFileDialog
-            // 
-            this.SpellingListSaveFileDialog.CheckFileExists = true;
-            this.SpellingListSaveFileDialog.FileName = "SaveSpellingListDialog";
-            this.SpellingListSaveFileDialog.Filter = "text files (*.text)|*.text";
-            this.SpellingListSaveFileDialog.InitialDirectory = "Documents";
-            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -371,7 +363,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuClose;
         private System.Windows.Forms.ToolTip spelListToolTip;
         private System.Windows.Forms.OpenFileDialog SpellingListOpenFileDialog;
-        private System.Windows.Forms.SaveFileDialog SpellingListSaveFileDialog;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.FlowLayoutPanel flpLeftPanel;

@@ -6,7 +6,7 @@
 // 
 // art2m@live.com
 // 
-// 05  22  2019
+// 05  29  2019
 // 
 // 05  05   2019
 // 
@@ -27,8 +27,11 @@ namespace Art2MSpell.Source
 
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
+    using System.Linq;
+    using System.Reflection;
+    using System.Speech.Synthesis;
     using System.Windows.Forms;
+    using System.Windows.Forms.VisualStyles;
     using Classes;
     using Collections;
 
@@ -40,22 +43,18 @@ namespace Art2MSpell.Source
     /// <seealso cref="System.Windows.Forms.Form" />
     public partial class SpellingWordsListForm : Form
     {
-        /// <summary>Holds items from list box so they can be checked against word to be added for duplicate.</summary>
-        private List<string> duplicate;
+        private List<string> words = new List<string>();
 
         /// <summary>Initializes a new instance of the <see cref="SpellingWordsListForm" /> class.</summary>
         public SpellingWordsListForm()
         {
             this.InitializeComponent();
+            GetClassName();
             this.SetButtonsEnabledState_FormLoadEvent();
             this.ChangeControlsBackgroundColors();
             SpellingPropertiesClass.SpellingListPath = string.Empty;
             this.SetTabOrderFormLoad();
-
-            // TODO: Add Save And Get spelling list paths!
-            // TODO: Add collection for words spelled wrong. So they can respell wrong!
-            // TODO: Add menu items for opening, creating new spelling list., user saved spelling lists.
-            // TODO: Make a delete for deleting user from users list.
+            this.cboWord.Text = string.Empty;
         }
 
         /// <summary>
@@ -87,18 +86,17 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private bool CheckWordSpelling(string word)
         {
-            var msw = new MisspelledWordsCollection();
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
 
             if (SpellingListClass.CheckWordSpelling(word))
             {
+                this.lstWords.Items.Add(word);
+
+                this.words = this.lstWords.Items.OfType<string>().ToList();
+
+                //SpellingWords.FillCollection(lstWords.Items.OfType<string>().ToList());
                 return true;
             }
-
-            msw.AddItem(word);
-
-            var msg = string.Concat("This word is not spelled correctly:  ", word);
-            const string Caption = "Spelling Incorrect.";
-            MessageBox.Show(msg, Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             this.AddSuggestions();
 
@@ -106,7 +104,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Create new spelling list for entering a new list of spelling words.
+        ///     Create new spelling list for entering a new list of spelling words.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/17/2019</changed>
@@ -121,7 +119,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Save the contents of lstWords list box to list.
+        ///     Save the contents of lstWords list box to list.
         /// </summary>
         /// <created>art2m,5/19/2019</created>
         /// <changed>art2m,5/19/2019</changed>
@@ -135,6 +133,22 @@ namespace Art2MSpell.Source
             }
         }
 
+        /// ********************************************************************************
+        /// <summary>
+        /// Uses for messa
+        /// </summary>
+        /// <created>art2m,5/29/2019</created>
+        /// <changed>art2m,5/29/2019</changed>
+        /// ********************************************************************************
+        private static void GetClassName()
+        {
+            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
+            if (declaringType != null)
+            {
+                MyMessagesClass.NameOfClass = declaringType.Name;
+            }
+        }
+
         /// <summary>
         ///     Get spelling words from file and place into collection for editing.
         /// </summary>
@@ -143,22 +157,20 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/12/2019</changed>
         private bool GetWordsFromFile()
         {
-            if (!SpellingListClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
+            var userWords = SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath);
+
+            if (userWords.Count == 0)
             {
                 return false;
             }
 
-            if (!SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath))
-            {
-                return false;
-            }
+            this.AddWordsToListBox(userWords);
 
-            this.FillListBoxWithWordsList();
             return true;
         }
 
         /// <summary>
-        /// Call method to create new spelling list.
+        ///     Call method to create new spelling list.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -173,7 +185,7 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Call method create new spelling list.
+        ///     Call method create new spelling list.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Instance containing the event data.</param>
@@ -236,30 +248,41 @@ namespace Art2MSpell.Source
         }
 
         /// <summary>
-        /// Open spelling list so user can edit the list or delete the list.
+        ///     Open spelling list so user can edit the list or delete the list.
         /// </summary>
         /// <created>art2m,5/17/2019</created>
         /// <changed>art2m,5/17/2019</changed>
         private void OpenSpellingList()
         {
-            using (var openDlg = new OpenFileDialog())
+            MyMessagesClass.NameOfMethod = MethodBase.GetCurrentMethod().Name;
+
+            var value = string.Empty;
+
+            DialogResult retVal;
+
+            using (var dlgInput = new SelectSpellingListForm())
             {
-                openDlg.ShowDialog();
-
-                SpellingPropertiesClass.SpellingListPath = openDlg.FileName;
-                SpellingPropertiesClass.OpenedSpellingList = true;
-                SpellingPropertiesClass.CreatingNewSpellingList = false;
-
-                this.lstWords.Items.Clear();
-
-                if (!this.GetWordsFromFile())
-                {
-                    return;
-                }
-
-                this.SetButtonsEnabledState_OpenSpellingListButtonStateClicked();
-                this.ChangeControlsBackgroundColors();
+                retVal = dlgInput.GetSpellingListPath(ref value);
             }
+
+            if (DialogResult.OK != retVal)
+            {
+                return;
+            }
+
+            SpellingPropertiesClass.SpellingListPath = value;
+            SpellingPropertiesClass.OpenedSpellingList = true;
+            SpellingPropertiesClass.CreatingNewSpellingList = false;
+
+            this.lstWords.Items.Clear();
+
+            if (!this.GetWordsFromFile())
+            {
+                return;
+            }
+
+            this.SetButtonsEnabledState_OpenSpellingListButtonStateClicked();
+            this.ChangeControlsBackgroundColors();
         }
 
         /// <summary>
@@ -267,13 +290,9 @@ namespace Art2MSpell.Source
         /// </summary>
         private void SaveSpellingWordsToSpellingList()
         {
-            this.FillListFromListBox();
-
-            SpellingWordsListClass.SaveSpellingListPath();
+            SpellingWordsListClass.SaveSpellingListPath(this.words);
 
             this.SetSaveOperationProperties();
-
-             // TODO: Save the users spelling list file to selected path. preface with user name.
         }
 
         /// <summary>

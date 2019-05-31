@@ -36,14 +36,9 @@ namespace Art2MSpell.Source
     public partial class PracticeSpellingWordsForm : Form
     {
         /// <summary>
-        /// array of list box words.
+        ///     array of list box words.
         /// </summary>
-        private string[] allWords;
-
-        /// <summary>
-        /// Holds misspelled words.
-        /// </summary>
-        private List<string> misspelled = new List<string>();
+        private List<string> words = new List<string>();
 
         /// <summary>
         ///     The number of words spelled correctly.
@@ -90,11 +85,6 @@ namespace Art2MSpell.Source
             this.SetRepeatWordButton_BackgroundColor();
             this.SetScoreGroupBox_BackgroundColor();
             this.SetStartButton_BackgroundColor();
-
-            // TODO: Add Save And Get spelling list paths!
-            // TODO: Add collection for words spelled wrong. So they can respell wrong!
-            // TODO: Add thread support.
-            // TODO: Add resize form.
         }
 
         /// <summary>
@@ -121,8 +111,6 @@ namespace Art2MSpell.Source
                 sb.Append("Your spelling of the word ");
                 sb.Append(word);
                 sb.Append(" is wrong!");
-
-                this.misspelled.Add(word);
             }
 
             this.ShowWordsScore();
@@ -132,9 +120,11 @@ namespace Art2MSpell.Source
 
         /// <summary>Gets the spelling words from spelling list.</summary>
         /// <returns>True if spelling list files is read into the collection else false,</returns>
-        private static bool GetSpellingWordsFromSpellingList()
+        private bool GetSpellingWordsFromSpellingList()
         {
-            return SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath);
+            this.words = SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath);
+
+            return this.words.Count > 0;
         }
 
         /// <summary>
@@ -145,8 +135,6 @@ namespace Art2MSpell.Source
         /// <changed>art2m,5/13/2019</changed>
         private bool GetWordsFromFile()
         {
-            var swc = new SpellingWordsCollection();
-
             if (!SpellingReadWriteClass.ReadHeader(SpellingPropertiesClass.SpellingListPath))
             {
                 return false;
@@ -155,16 +143,14 @@ namespace Art2MSpell.Source
             SpellingPropertiesClass.FirstWordIsArt2MSpellHeader = true;
             SpellingPropertiesClass.Art2MSpellSpellingList = true;
 
-            if (!SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath))
+            this.words = SpellingReadWriteClass.ReadSpellingListFile(SpellingPropertiesClass.SpellingListPath);
+
+            if (this.words.Count == 0)
             {
                 return false;
             }
 
-            this.allWords = new string[swc.ItemsCount() - 1];
-
-            this.allWords = swc.GetAllItems();
-
-            this.txtTotalWords.Text = FormattableString.Invariant($"{swc.ItemsCount()}");
+            this.txtTotalWords.Text = FormattableString.Invariant($"{this.words.Count}");
 
             return true;
         }
@@ -213,7 +199,7 @@ namespace Art2MSpell.Source
             this.index++;
 
             // Reached end of spelling list words.
-            if (this.index == this.allWords.Length)
+            if (this.index == (this.words.Count - 1))
             {
                 this.SetButtonsEnabledState_NextWordButtonClicked();
                 this.SetNextWordButton_BackgroundColor();
@@ -224,7 +210,7 @@ namespace Art2MSpell.Source
                 return;
             }
 
-            var word = this.allWords[this.index];
+            var word = this.words[this.index];
             SaySpellingWord(word);
 
             this.txtSpellWord.Text = string.Empty;
@@ -267,7 +253,7 @@ namespace Art2MSpell.Source
 
                 SpellingPropertiesClass.SpellingListPath = openDlg.FileName;
 
-                if (!GetSpellingWordsFromSpellingList())
+                if (!this.GetSpellingWordsFromSpellingList())
                 {
                     return;
                 }
@@ -344,7 +330,7 @@ namespace Art2MSpell.Source
             this.SetButtonEnabledState_StartButtonClicked();
             this.ChangeControls_BackgroundColors();
 
-            var word = this.allWords[this.index];
+            var word = this.words[this.index];
             SaySpellingWord(word);
         }
 
@@ -410,11 +396,6 @@ namespace Art2MSpell.Source
             this.ChangeControls_BackgroundColors();
 
             SpellingPropertiesClass.SpellingListPath = string.Empty;
-        }
-
-        private void PracticeSpellingWordsForm_Resize(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }

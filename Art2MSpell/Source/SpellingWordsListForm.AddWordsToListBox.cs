@@ -6,9 +6,9 @@
 // 
 // art2m@live.com
 // 
-// 05  17  2019
+// 05  31  2019
 // 
-//      2019
+// 05  17   2019
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,95 +25,92 @@ namespace Art2MSpell.Source
 {
     using System.Collections.Generic;
     using Classes;
-    using Collections;
 
     /// <summary>
-    /// List box operations.
+    ///     List box operations.
     /// </summary>
     public partial class SpellingWordsListForm
     {
+        /// ********************************************************************************
         /// <summary>
-        ///     Add spelling words list from file to the list box.
+        /// Add spelling userWords list from file to the list box.
         /// </summary>
+        /// <param name="userWords">list containing the spelling words to be displayed.</param>
         /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        private void AddWordsToListBox()
+        /// <changed>art2m,5/31/2019</changed>
+        /// ********************************************************************************
+        private void AddWordsToListBox(IReadOnlyCollection<string> userWords)
         {
-            var swc = new SpellingWordsCollection();
-
-            for (var index = 0; index < swc.ItemsCount(); index++)
-            {
-                this.lstWords.Items.Add(swc.GetItemAt(index));
-            }
+            this.lstWords.DataSource = userWords;
+            this.lstWords.Enabled = true;
+            this.SetWordsListBox_BackgroundColor();
         }
 
+        /// ********************************************************************************
         /// <summary>
-        ///     add the word to spelling list box
+        /// add the word to spelling list box. add word user entered in combo box
+        /// to the list box.
         /// </summary>
-        /// <param name="word">The word to be added.</param>
         /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        private bool AddWordToListBox(string word)
+        /// <changed>art2m,5/31/2019</changed>
+        /// ********************************************************************************
+        private void AddWordToListBox()
         {
+            var word = this.cboWord.Text.Trim();
+
+            if (string.IsNullOrEmpty(word))
+            {
+                this.SetButtonsEnabledState_AddToListButtonClicked();
+                this.ChangeControlsBackgroundColors();
+
+                return;
+            }
+
+            // Do not add word to list box if it all ready contains the word.
             if (this.CheckListBoxForWord(word))
             {
                 this.SetAddingWordProperties();
-                return false;
+                return;
             }
 
-            // If true found duplicate word.
+            // Validate word user is adding has correct spelling.
             if (!this.CheckWordSpelling(word))
-            {
-                return false;
-            }
-
-            this.lstWords.Items.Add(word);
-
-            SpellingListClass.SpeakString(word);
-            this.SetAddingWordProperties();
-
-            return true;
-        }
-
-        /// <summary>
-        ///     Check to see if the word is all ready contained in the list box.
-        /// </summary>
-        /// <param name="word">The word to be added to the list box.</param>
-        /// <returns>True if no duplicate word found in the list box else false.</returns>
-        /// <created>art2m,5/12/2019</created>
-        /// <changed>art2m,5/12/2019</changed>
-        private bool CheckListBoxForWord(string word)
-        {
-            this.duplicate = new List<string>();
-
-            foreach (var item in this.lstWords.Items)
-            {
-                this.duplicate.Add(item.ToString());
-            }
-
-            if (!SpellingListClass.CheckDuplicateWord(this.duplicate, word))
-            {
-                return false;
-            }
-
-            this.cboWord.Text = string.Empty;
-            this.cboWord.Focus();
-            return true;
-        }
-
-        /// <summary>
-        ///     Fills the ListBox with words list.
-        /// </summary>
-        private void FillListBoxWithWordsList()
-        {
-            var swc = new SpellingWordsCollection();
-
-            if (swc.ItemsCount() < 1)
             {
                 return;
             }
 
-            this.AddWordsToListBox();
+            // say word to validate to user word is being added to the list box.
+            SpellingListClass.SpeakString(word);
+
+            this.SetAddingWordProperties();
+
+            this.SetButtonsEnabledState_AddToListButtonClicked();
+            this.ChangeControlsBackgroundColors();
+            this.SetTabOrderAddWordToList();
+            this.SetTabOrderAddNewWordButton();
+        }
+
+        /// ********************************************************************************
+        /// <summary>
+        /// Check to see if the word is all ready contained in the list box.
+        /// </summary>
+        /// <param name="word">The word to be added to the list box.</param>
+        /// <returns>True if no duplicate word found in the list box else false.</returns>
+        /// <created>art2m,5/12/2019</created>
+        /// <changed>art2m,5/31/2019</changed>
+        /// ********************************************************************************
+        private bool CheckListBoxForWord(string word)
+        {
+            // List<string> list = this.lstWords.Items.OfType<string>().ToList();
+
+            if (this.lstWords.Items.Contains(word))
+            {
+                return true;
+            }
+
+            this.cboWord.Text = string.Empty;
+            this.cboWord.Focus();
+            return false;
         }
     }
 }
